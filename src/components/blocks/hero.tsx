@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 
-interface HeroProps extends React.HTMLAttributes<HTMLElement> {
+interface HeroProps {
+  className?: string
   gradient?: boolean
   blur?: boolean
   title?: React.ReactNode
@@ -41,7 +42,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
       <section
         ref={ref}
         className={cn(
-          "relative z-0 flex min-h-[80vh] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-background",
+          "relative z-0 flex min-h-[80vh] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-primary-dark",
           className,
         )}
         {...props}
@@ -53,7 +54,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
             )}
 
             {/* Main glow */}
-            <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-[-30%] rounded-full bg-primary/60 opacity-80 blur-3xl" />
+            <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-[-30%] rounded-full bg-accent/60 opacity-80 blur-3xl" />
 
             {/* Lamp effect */}
             <motion.div
@@ -61,7 +62,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               viewport={{ once: true }}
               transition={{ ease: "easeInOut", delay: 0.3, duration: 0.8 }}
               whileInView={{ width: "16rem" }}
-              className="absolute top-0 z-30 h-36 -translate-y-[20%] rounded-full bg-primary/60 blur-2xl"
+              className="absolute top-0 z-30 h-36 -translate-y-[20%] rounded-full bg-accent/60 blur-2xl"
             />
 
             {/* Top line */}
@@ -70,7 +71,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               viewport={{ once: true }}
               transition={{ ease: "easeInOut", delay: 0.3, duration: 0.8 }}
               whileInView={{ width: "30rem" }}
-              className="absolute inset-auto z-50 h-0.5 -translate-y-[-10%] bg-primary/60"
+              className="absolute inset-auto z-50 h-0.5 -translate-y-[-10%] bg-accent/60"
             />
 
             {/* Left gradient cone */}
@@ -85,10 +86,10 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               style={{
                 backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
               }}
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-primary/60 via-transparent to-transparent [--conic-position:from_70deg_at_center_top]"
+              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-accent/60 via-transparent to-transparent [--conic-position:from_70deg_at_center_top]"
             >
-              <div className="absolute w-[100%] left-0 bg-background h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
-              <div className="absolute w-40 h-[100%] left-0 bg-background bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" />
+              <div className="absolute w-[100%] left-0 bg-primary-dark h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
+              <div className="absolute w-40 h-[100%] left-0 bg-primary-dark bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" />
             </motion.div>
 
             {/* Right gradient cone */}
@@ -103,10 +104,10 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               style={{
                 backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
               }}
-              className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-primary/60 [--conic-position:from_290deg_at_center_top]"
+              className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-accent/60 [--conic-position:from_290deg_at_center_top]"
             >
-              <div className="absolute w-40 h-[100%] right-0 bg-background bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" />
-              <div className="absolute w-[100%] right-0 bg-background h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
+              <div className="absolute w-40 h-[100%] right-0 bg-primary-dark bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" />
+              <div className="absolute w-[100%] right-0 bg-primary-dark h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
             </motion.div>
           </div>
         )}
@@ -121,7 +122,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
           <div className="flex flex-col items-center text-center space-y-4">
             <h1
               className={cn(
-                "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight",
+                "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white",
                 titleClassName,
               )}
             >
@@ -130,7 +131,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
             {subtitle && (
               <p
                 className={cn(
-                  "text-xl text-muted-foreground",
+                  "text-xl text-gray-200",
                   subtitleClassName,
                 )}
               >
@@ -143,6 +144,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
                   <Button
                     key={index}
                     variant={action.variant || "default"}
+                    className={action.variant === "default" ? "bg-accent hover:bg-accent-dark text-primary-dark" : ""}
                     asChild
                   >
                     <Link to={action.href}>{action.label}</Link>
