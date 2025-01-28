@@ -49,11 +49,18 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
 
     const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
 
+    const scrollToSection = (id: string) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
     return (
       <section
         ref={containerRef}
         className={cn(
-          "relative z-0 flex min-h-[80vh] w-full flex-col items-center justify-center overflow-hidden bg-primary-dark pt-20 md:pt-24", // Hier fügen wir den Abstand oben hinzu
+          "relative z-0 flex min-h-[80vh] w-full flex-col items-center justify-center overflow-hidden bg-primary-dark pt-20 md:pt-24",
           className,
         )}
         {...props}
@@ -128,7 +135,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
           viewport={{ once: true }}
           transition={{ ease: "easeInOut", delay: 0.3, duration: 0.8 }}
           whileInView={{ y: 0, opacity: 1 }}
-          className="relative z-50 container flex flex-col lg:flex-row justify-between items-center flex-1 px-5 md:px-10 gap-8 py-8 md:py-12" // Padding oben und unten hinzugefügt
+          className="relative z-50 container flex flex-col lg:flex-row justify-between items-center flex-1 px-5 md:px-10 gap-8 py-8 md:py-12"
         >
           <div className="flex flex-col items-start text-left space-y-4 w-full lg:w-1/2">
             <h1
@@ -161,9 +168,13 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
                         : "backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20",
                       "transition-all duration-300"
                     )}
-                    asChild
+                    onClick={() => {
+                      if (action.href.startsWith('#')) {
+                        scrollToSection(action.href.substring(1));
+                      }
+                    }}
                   >
-                    <Link to={action.href}>{action.label}</Link>
+                    {action.label}
                   </Button>
                 ))}
               </div>
