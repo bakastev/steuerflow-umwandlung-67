@@ -2,31 +2,44 @@ import { Award, Briefcase, Users, TrendingUp, Building } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
+import { useToast } from "@/hooks/use-toast";
 
 export const Expert = () => {
   const [showExtendedContent, setShowExtendedContent] = useState(false);
   const { behaviorRef, predictEngagement } = useTFTracking();
+  const { toast } = useToast();
   
   useEffect(() => {
     const checkEngagement = async () => {
       const expertSection = document.getElementById('expert-section');
       if (!expertSection) return;
 
-      const { dwellTimes } = behaviorRef.current;
+      const { dwellTimes, mouseMovements, textSelections } = behaviorRef.current;
       const expertDwellTime = dwellTimes['expert-section'] || 0;
+      const expertMouseMoves = mouseMovements['expert-section'] || 0;
+      const expertTextSelections = textSelections['expert-section'] || 0;
       
-      // Wenn der Nutzer mehr als 10 Sekunden im Bereich verweilt
-      if (expertDwellTime > 10000 && !showExtendedContent) {
+      // Kombinierte Engagement-Metrik
+      const isHighlyEngaged = 
+        expertDwellTime > 8000 && // 8 Sekunden
+        expertMouseMoves > 20 && // Signifikante Mausbewegungen
+        !showExtendedContent; // Noch nicht erweitert
+      
+      if (isHighlyEngaged) {
         const result = await predictEngagement();
         if (result.score > 0.4) {
           setShowExtendedContent(true);
+          toast({
+            title: "Inhalt personalisiert",
+            description: "Wir zeigen Ihnen weitere Details zu Riccardo's Expertise, da Sie sich besonders für seinen Werdegang interessieren.",
+          });
         }
       }
     };
 
     const interval = setInterval(checkEngagement, 2000);
     return () => clearInterval(interval);
-  }, [showExtendedContent, behaviorRef]);
+  }, [showExtendedContent, behaviorRef, toast]);
 
   return (
     <section id="expert-section" className="py-20 bg-primary-dark">
