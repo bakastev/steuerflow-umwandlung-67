@@ -60,7 +60,7 @@ export const HeroComponent = () => {
       <PersonalizedVideo
         playbackId="GZQlEubrnobCOtuod1LmW3dIgCws02yfjl20288aULwFs"
         engagement={lastPrediction.current}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4"
+        className="absolute bottom-8 right-8 w-full max-w-md z-50"
       />
       
       <AnimatedStats />
