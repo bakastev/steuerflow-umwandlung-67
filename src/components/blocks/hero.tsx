@@ -128,9 +128,9 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
           viewport={{ once: true }}
           transition={{ ease: "easeInOut", delay: 0.3, duration: 0.8 }}
           whileInView={{ y: 0, opacity: 1 }}
-          className="relative z-50 container flex justify-between items-center flex-1 px-5 md:px-10 gap-4"
+          className="relative z-50 container flex flex-col lg:flex-row justify-between items-center flex-1 px-5 md:px-10 gap-8"
         >
-          <div className="flex flex-col items-start text-left space-y-4 max-w-2xl">
+          <div className="flex flex-col items-start text-left space-y-4 w-full lg:w-1/2">
             <h1
               className={cn(
                 "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white",
@@ -175,7 +175,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               style={{ y: imageY }}
-              className="hidden lg:block w-1/2"
+              className="w-full lg:w-1/2"
             >
               <img
                 src={image}

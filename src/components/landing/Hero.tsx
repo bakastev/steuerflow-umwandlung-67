@@ -22,7 +22,7 @@ export const HeroComponent = () => {
           <>
             Wie du es als Geschäftsführer/Gesellschafter einer GmbH es schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
             <br />
-            <div className="mt-4 flex items-start gap-4 text-accent text-sm">
+            <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">
                 <Scale className="h-4 w-4" />
                 <span>Leicht</span>
@@ -45,8 +45,8 @@ export const HeroComponent = () => {
             variant: "default"
           }
         ]}
-        titleClassName="text-white"
-        subtitleClassName="text-gray-200"
+        titleClassName="text-white text-left"
+        subtitleClassName="text-gray-200 text-left"
         actionsClassName="mt-8"
         image="/DSFinanzfreigestelltesBild.png"
       />
