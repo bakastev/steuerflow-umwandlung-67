@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
-import { useEffect, useRef } from "react";
 
 const problems = [
   "Ihre Gewinne bleiben in der GmbH gefangen und Sie zahlen unnötig hohe Steuern.",
@@ -8,34 +8,6 @@ const problems = [
 ];
 
 export const Problems = () => {
-  const problemRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px'
-      }
-    );
-
-    problemRefs.current.forEach((ref) => {
-      if (ref) {
-        ref.classList.add('opacity-0');
-        observer.observe(ref);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -44,17 +16,21 @@ export const Problems = () => {
         </h2>
         <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
           {problems.map((problem, index) => (
-            <div 
+            <motion.div
               key={index}
-              ref={el => problemRefs.current[index] = el}
-              className="flex items-start gap-4 p-8 bg-white rounded-lg shadow-md w-full max-w-2xl transform transition-all duration-500 animate-fadeInScroll"
-              style={{ 
-                transitionDelay: `${index * 200}ms`,
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.5,
+                delay: index * 0.2,
+                ease: "easeOut"
               }}
+              className="flex items-start gap-4 p-8 bg-white rounded-lg shadow-md w-full max-w-2xl"
             >
               <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
               <p className="text-gray-700 text-lg">{problem}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
