@@ -1,5 +1,4 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { AlertCircle } from "lucide-react";
 import { useRef } from "react";
 
 const problems = [
@@ -40,7 +39,7 @@ export const Problems = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Die größten Herausforderungen für Geschäftsführer
           </h2>
-          <div className="relative flex flex-col items-center gap-8 max-w-4xl mx-auto">
+          <div className="relative flex flex-col items-center gap-24 max-w-4xl mx-auto">
             {problems.map((problem, index) => {
               const opacity = useTransform(
                 scrollYProgress,
@@ -53,20 +52,28 @@ export const Problems = () => {
                 [0, 1, 1, 0]
               );
 
+              const scale = useTransform(
+                scrollYProgress,
+                [
+                  index * 0.3,
+                  index * 0.3 + 0.1,
+                  index * 0.3 + 0.2,
+                  index * 0.3 + 0.3
+                ],
+                [0.8, 1, 1, 0.8]
+              );
+
               return (
-                <motion.div
+                <motion.p
                   key={index}
-                  style={{ opacity }}
-                  className="absolute flex items-start gap-4 p-8 rounded-lg w-full max-w-2xl
-                    bg-white/10 backdrop-blur-md
-                    border border-white/20
-                    shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]
-                    hover:bg-white/15 transition-all duration-300
-                    before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-30"
+                  style={{ opacity, scale }}
+                  className="text-2xl md:text-3xl font-semibold text-center text-white 
+                    max-w-3xl mx-auto leading-relaxed
+                    [text-shadow:_0_4px_12px_rgba(0,0,0,0.3)]
+                    transition-all duration-300"
                 >
-                  <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
-                  <p className="text-gray-200 text-lg relative z-10">{problem}</p>
-                </motion.div>
+                  {problem}
+                </motion.p>
               );
             })}
           </div>
