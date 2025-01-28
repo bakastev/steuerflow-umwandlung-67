@@ -67,7 +67,7 @@ export const MultiStepForm = () => {
           <div className="space-y-4 animate-fadeIn">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Ihr Name
+                Dein Name
               </label>
               <Input
                 placeholder="Max Mustermann"
@@ -80,7 +80,7 @@ export const MultiStepForm = () => {
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Ihre E-Mail
+                Deine E-Mail
               </label>
               <Input
                 placeholder="max@musterfirma.de"
@@ -99,7 +99,7 @@ export const MultiStepForm = () => {
           <div className="space-y-4 animate-fadeIn">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Ihre Telefonnummer
+                Deine Telefonnummer
               </label>
               <Input
                 placeholder="+49 123 456789"
@@ -113,7 +113,7 @@ export const MultiStepForm = () => {
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Ihr Unternehmen
+                Dein Unternehmen
               </label>
               <Input
                 placeholder="Musterfirma GmbH"
@@ -130,7 +130,7 @@ export const MultiStepForm = () => {
         {step === 3 && (
           <div className="space-y-6 animate-fadeIn">
             <h3 className="text-lg font-medium text-gray-900 text-center">
-              Ihre Angaben
+              Deine Angaben
             </h3>
             <div className="bg-gray-50 p-4 rounded-lg space-y-3">
               <div className="flex justify-between">

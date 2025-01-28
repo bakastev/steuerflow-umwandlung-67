@@ -8,7 +8,7 @@ const solutions = [
   },
   {
     title: "Steuerberater-Kommunikation",
-    description: "Wir setzen die Strategie mit deinem Steuerberater um, sodass du dich auf dein Business konzentrieren kannst.",
+    description: "Wir setzen die Strategie mit deinem Steuerberater um, damit du dich auf dein Business konzentrieren kannst.",
   },
   {
     title: "Klarheit und Transparenz",

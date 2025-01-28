@@ -16,7 +16,7 @@ export const CTASection = () => {
           className="bg-accent/80 hover:bg-accent-light text-primary-dark font-bold px-8 py-6 text-lg mb-8 animate-fadeIn backdrop-blur-md border border-accent/20 transition-all duration-300"
           style={{ animationDelay: "0.4s" }}
         >
-          Kostenloses Erstgespräch sichern
+          Dein kostenloses Erstgespräch sichern
         </Button>
         <div className="flex items-center justify-center gap-2 text-gray-300 animate-fadeIn" style={{ animationDelay: "0.6s" }}>
           <Clock className="w-5 h-5" />

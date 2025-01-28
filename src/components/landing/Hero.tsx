@@ -20,7 +20,7 @@ export const HeroComponent = () => {
         title="Geschäftsvermögen in Privatvermögen umwandeln"
         subtitle={
           <>
-            Wie du es als Geschäftsführer/Gesellschafter einer GmbH es schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
+            Wie du es als Geschäftsführer/Gesellschafter einer GmbH schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
             <br />
             <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">

@@ -9,15 +9,15 @@ import { motion } from "framer-motion";
 const faqs = [
   {
     question: "Wie funktioniert die steuerfreie ETF-Investition?",
-    answer: "Sie können monatlich bis zu 644€ steuerfrei aus Ihrer GmbH in ETFs investieren. Bei GmbHs, die älter als 3 Jahre sind, ist sogar eine Investition von bis zu 10.000€ monatlich möglich.",
+    answer: "Du kannst monatlich bis zu 644€ steuerfrei aus deiner GmbH in ETFs investieren. Bei GmbHs, die älter als 3 Jahre sind, ist sogar eine Investition von bis zu 10.000€ monatlich möglich.",
   },
   {
     question: "Ist die Methode wirklich legal?",
-    answer: "Ja, absolut. Wir nutzen ausschließlich vom Gesetzgeber vorgesehene Möglichkeiten und arbeiten eng mit Ihrem Steuerberater zusammen.",
+    answer: "Ja, absolut. Wir nutzen ausschließlich vom Gesetzgeber vorgesehene Möglichkeiten und arbeiten eng mit deinem Steuerberater zusammen.",
   },
   {
     question: "Wie lange dauert die Implementierung?",
-    answer: "Die Entscheidungsfindung dauert in der Regel nur eine Stunde. Die Implementierung erfolgt dann schnell und unkompliziert mit einem Telefonat und einer E-Mail an Ihren Steuerberater.",
+    answer: "Die Entscheidungsfindung dauert in der Regel nur eine Stunde. Die Implementierung erfolgt dann schnell und unkompliziert mit einem Telefonat und einer E-Mail an deinen Steuerberater.",
   },
 ];
 
