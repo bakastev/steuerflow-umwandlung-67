@@ -31,13 +31,15 @@ export const HeroComponent = () => {
             <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">
                 <Scale className="h-4 w-4" />
-                <span>Le<div className="flex items-center gap-2">
+                <span>Legal</span>
+              </div>
+              <div className="flex items-center gap-2">
                 <Gavel className="h-4 w-4" />
-                <span>legal</span>
+                <span>Sicher</span>
               </div>
               <div className="flex items-center gap-2">
                 <DollarSign className="h-4 w-4" />
-                <span>steueroptimiert!</span>
+                <span>Steueroptimiert!</span>
               </div>
             </div>
           </>
@@ -72,4 +74,4 @@ export const HeroComponent = () => {
   );
 };
 
-export { HeroComponent as Hero }
+export { HeroComponent as Hero };
