@@ -18,11 +18,6 @@ import { Scale, Gavel, DollarSign, Brain } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 
-interface EngagementInsights {
-  score: number;
-  insights: string[];
-}
-
 const OptimizedIndex = () => {
   const { predictEngagement, behaviorRef } = useTFTracking();
   const { toast } = useToast();
@@ -32,34 +27,36 @@ const OptimizedIndex = () => {
 
   useEffect(() => {
     const checkEngagement = async () => {
+      console.log("Checking engagement...");
       const result = await predictEngagement();
       setEngagementInsights(result);
       setEngagementProgress(result.score * 100);
       
-      if (result.score > 0.4) {
+      // Erhöhter Schwellenwert für personalisierte Inhalte
+      if (result.score > 0.7 && !showExtraContent) {
         setShowExtraContent(true);
         toast({
           title: "KI-Personalisierung aktiv",
           description: "Basierend auf Ihrem Interesse haben wir zusätzliche Informationen für Sie freigeschaltet.",
+          className: "fixed top-4 left-4 z-[100]",
         });
       }
     };
 
-    // Häufigere Überprüfung für besseres Feedback
     const interval = setInterval(checkEngagement, 5000);
     return () => clearInterval(interval);
-  }, [predictEngagement, toast]);
+  }, [predictEngagement, showExtraContent, toast]);
 
   return (
     <div className="min-h-screen">
-      {/* KI-Insights Panel */}
+      {/* KI-Insights Panel mit höherem z-index */}
       <AnimatePresence>
         {engagementInsights && (
           <motion.div 
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
-            className="fixed bottom-4 right-4 z-50 bg-white/95 dark:bg-primary/95 p-6 rounded-lg shadow-lg backdrop-blur-md max-w-sm"
+            className="fixed bottom-4 right-4 z-[90] bg-white/95 dark:bg-primary/95 p-6 rounded-lg shadow-lg backdrop-blur-md max-w-sm"
           >
             <div className="flex items-center gap-2 mb-4">
               <Brain className="h-5 w-5 text-accent" />

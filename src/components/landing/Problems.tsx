@@ -15,7 +15,7 @@ export const Problems = () => {
   });
 
   return (
-    <section className="relative h-[400vh]" ref={containerRef}>
+    <section id="problems-section" className="relative h-[400vh]" ref={containerRef}>
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
         {/* Animierter Hintergrund-Verlauf */}
         <div className="absolute inset-0 z-0">

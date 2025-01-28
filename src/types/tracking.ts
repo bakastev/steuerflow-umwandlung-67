@@ -26,7 +26,8 @@ export const KNOWN_SECTIONS = {
   'benefits-section': 'Vorteile und Mehrwert',
   'testimonials-section': 'Kundenstimmen',
   'contact-section': 'Kontaktbereich',
-  'strategy-flow-section': 'Strategieablauf'
+  'strategy-flow-section': 'Strategieablauf',
+  'faqs-section': 'Häufig gestellte Fragen'
 } as const;
 
 export type KnownSection = keyof typeof KNOWN_SECTIONS;

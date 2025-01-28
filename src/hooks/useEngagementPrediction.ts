@@ -6,6 +6,9 @@ export const useEngagementPrediction = () => {
     behaviorRef: React.RefObject<UserBehavior>,
     scrollSpeedSamples: number[]
   ) => {
+    console.log("Starting engagement prediction...");
+    console.log("Current behavior state:", behaviorRef.current);
+    
     const { 
       timeOnPage, 
       scrollDepth, 
@@ -28,28 +31,39 @@ export const useEngagementPrediction = () => {
     const sectionEngagement: { [key: string]: number } = {};
     const insights: string[] = [];
 
+    console.log("Processing sections...");
+    
     (Object.keys(KNOWN_SECTIONS) as KnownSection[]).forEach(sectionId => {
       const dwell = dwellTimes[sectionId] || 0;
       const moves = mouseMovements[sectionId] || 0;
       const selections = textSelections[sectionId] || 0;
       const interactions = elementInteractions[sectionId] || 0;
       
-      // Gewichtete Berechnung des Engagements
+      console.log(`Section ${sectionId} metrics:`, {
+        dwell,
+        moves,
+        selections,
+        interactions
+      });
+      
+      // Verbesserte Gewichtung für genauere Engagement-Berechnung
       const engagementScore = (
-        (dwell / 10000) * 0.4 +    // 40% Gewichtung für Verweilzeit
-        (moves / 100) * 0.3 +      // 30% Gewichtung für Mausbewegungen
+        (dwell / 8000) * 0.4 +     // 40% Gewichtung, normalisiert auf 8 Sekunden
+        (moves / 50) * 0.3 +       // 30% Gewichtung, normalisiert auf 50 Bewegungen
         (selections * 0.2) +       // 20% Gewichtung für Textselektionen
-        (interactions / 5) * 0.1   // 10% Gewichtung für Interaktionen
+        (interactions / 3) * 0.1   // 10% Gewichtung, normalisiert auf 3 Interaktionen
       );
 
-      sectionEngagement[sectionId] = engagementScore;
+      sectionEngagement[sectionId] = Math.min(engagementScore, 1);
+
+      console.log(`Section ${sectionId} engagement score:`, engagementScore);
 
       // Generiere spezifische Insights basierend auf dem Engagement-Level
-      if (engagementScore > 0.8) {
+      if (engagementScore > 0.7) {
         insights.push(`Besonders hohes Interesse am ${KNOWN_SECTIONS[sectionId]}`);
-      } else if (engagementScore > 0.6) {
-        insights.push(`Erhöhtes Interesse am ${KNOWN_SECTIONS[sectionId]}`);
       } else if (engagementScore > 0.4) {
+        insights.push(`Erhöhtes Interesse am ${KNOWN_SECTIONS[sectionId]}`);
+      } else if (engagementScore > 0.2) {
         insights.push(`Moderates Interesse am ${KNOWN_SECTIONS[sectionId]}`);
       }
     });
@@ -72,6 +86,9 @@ export const useEngagementPrediction = () => {
 
     const prediction = model.predict(input) as tf.Tensor;
     const score = (await prediction.data())[0];
+
+    console.log("Final engagement score:", score);
+    console.log("Generated insights:", insights);
 
     // Sortiere Insights nach Engagement-Level
     insights.sort((a, b) => {
