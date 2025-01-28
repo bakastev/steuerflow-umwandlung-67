@@ -8,25 +8,28 @@ const logos = [
 
 export const TrustBar = () => {
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-12 bg-white">
+      <div className="container mx-auto">
         <h3 className="text-center text-lg text-gray-600 mb-8">
           Bekannt aus
         </h3>
-        <Marquee speed={40} className="py-8">
-          {logos.map((logo, index) => (
-            <div
-              key={index}
-              className="mx-24 flex items-center justify-center"
-            >
-              <img 
-                src={logo} 
-                alt={`Partner Logo ${index + 1}`}
-                className="h-32 w-auto object-contain"
-              />
-            </div>
-          ))}
-        </Marquee>
+        <div className="w-full overflow-hidden">
+          <Marquee speed={40}>
+            {logos.map((logo, index) => (
+              <div
+                key={index}
+                className="mx-24 flex items-center justify-center"
+              >
+                <img 
+                  src={logo} 
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-40 w-auto object-contain"
+                  style={{ maxWidth: 'none' }}
+                />
+              </div>
+            ))}
+          </Marquee>
+        </div>
       </div>
     </section>
   );
