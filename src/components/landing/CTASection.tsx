@@ -3,7 +3,7 @@ import { Clock } from "lucide-react";
 
 export const CTASection = () => {
   return (
-    <section className="py-20 bg-primary text-white">
+    <section className="py-20 bg-primary text-white" id="contact">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 animate-fadeIn">
           Bist du bereit, Steuern zur Chefsache zu machen?
@@ -13,7 +13,7 @@ export const CTASection = () => {
         </p>
         <Button 
           size="lg"
-          className="bg-accent hover:bg-accent-light text-primary-dark font-bold px-8 py-6 text-lg mb-8 animate-fadeIn"
+          className="bg-accent/80 hover:bg-accent-light text-primary-dark font-bold px-8 py-6 text-lg mb-8 animate-fadeIn backdrop-blur-md border border-accent/20 transition-all duration-300"
           style={{ animationDelay: "0.4s" }}
         >
           Kostenloses Erstgespräch sichern

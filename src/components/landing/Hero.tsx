@@ -1,4 +1,3 @@
-import { Hero } from "@/components/blocks/hero"
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedStats } from "./AnimatedStats";
@@ -22,17 +21,17 @@ export const HeroComponent = () => {
           <>
             Wie du es als Geschäftsführer/Gesellschafter einer GmbH es schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
             <br />
-            <div className="mt-4 flex items-center justify-center gap-4 text-accent">
+            <div className="mt-4 flex items-start gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">
-                <Scale className="h-6 w-6" />
+                <Scale className="h-4 w-4" />
                 <span>Leicht</span>
               </div>
               <div className="flex items-center gap-2">
-                <Gavel className="h-6 w-6" />
+                <Gavel className="h-4 w-4" />
                 <span>legal</span>
               </div>
               <div className="flex items-center gap-2">
-                <DollarSign className="h-6 w-6" />
+                <DollarSign className="h-4 w-4" />
                 <span>steueroptimiert!</span>
               </div>
             </div>

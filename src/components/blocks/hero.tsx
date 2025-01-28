@@ -155,7 +155,12 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
                   <Button
                     key={index}
                     variant={action.variant || "default"}
-                    className={action.variant === "default" ? "bg-accent hover:bg-accent-dark text-primary-dark" : ""}
+                    className={cn(
+                      action.variant === "default" 
+                        ? "bg-accent/80 hover:bg-accent-dark text-primary-dark backdrop-blur-md border border-accent/20" 
+                        : "backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20",
+                      "transition-all duration-300"
+                    )}
                     asChild
                   >
                     <Link to={action.href}>{action.label}</Link>
