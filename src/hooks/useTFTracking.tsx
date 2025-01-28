@@ -15,12 +15,23 @@ interface UserBehavior {
   lastActivity: number;
   activeTimeWindows: number[];
   mouseMovements: {
-    [key: string]: number;  // Tracking der Mausbewegungen pro Sektion
+    [key: string]: number;
   };
   textSelections: {
-    [key: string]: number;  // Tracking von Textselektionen pro Sektion
+    [key: string]: number;
   };
 }
+
+// Definiere die bekannten Sektionen und ihre Beschreibungen
+const KNOWN_SECTIONS = {
+  'expert-section': 'Experten-Profil und Werdegang',
+  'problems-section': 'Problemstellungen und Herausforderungen',
+  'solution-section': 'Lösungsansätze',
+  'process-section': 'Prozessablauf',
+  'benefits-section': 'Vorteile und Mehrwert',
+  'testimonials-section': 'Kundenstimmen',
+  'contact-section': 'Kontaktbereich'
+};
 
 export const useTFTracking = () => {
   const { toast } = useToast();
@@ -66,12 +77,12 @@ export const useTFTracking = () => {
       behaviorRef.current.scrollDepth = Math.max(behaviorRef.current.scrollDepth, scrollPercentage);
 
       // Identifiziere aktuelle Sektion
-      const sections = document.querySelectorAll('section');
+      const sections = document.querySelectorAll('section[id]');
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= windowHeight/2 && rect.bottom >= windowHeight/2) {
-          const sectionId = section.id || 'unknown';
-          if (sectionId !== currentSection) {
+          const sectionId = section.id;
+          if (sectionId !== currentSection && KNOWN_SECTIONS[sectionId as keyof typeof KNOWN_SECTIONS]) {
             setCurrentSection(sectionId);
             updateDwellTime(sectionId);
           }
@@ -82,11 +93,10 @@ export const useTFTracking = () => {
     const handleMouseMove = (event: MouseEvent) => {
       const target = document.elementFromPoint(event.clientX, event.clientY);
       if (target) {
-        const section = target.closest('section');
-        if (section) {
-          const sectionId = section.id || 'unknown';
-          behaviorRef.current.mouseMovements[sectionId] = 
-            (behaviorRef.current.mouseMovements[sectionId] || 0) + 1;
+        const section = target.closest('section[id]');
+        if (section && section.id && KNOWN_SECTIONS[section.id as keyof typeof KNOWN_SECTIONS]) {
+          behaviorRef.current.mouseMovements[section.id] = 
+            (behaviorRef.current.mouseMovements[section.id] || 0) + 1;
         }
       }
     };
@@ -95,22 +105,20 @@ export const useTFTracking = () => {
       const selection = window.getSelection();
       if (selection && selection.toString().length > 0) {
         const range = selection.getRangeAt(0);
-        const section = range.commonAncestorContainer.parentElement?.closest('section');
-        if (section) {
-          const sectionId = section.id || 'unknown';
-          behaviorRef.current.textSelections[sectionId] = 
-            (behaviorRef.current.textSelections[sectionId] || 0) + 1;
+        const section = range.commonAncestorContainer.parentElement?.closest('section[id]');
+        if (section && section.id && KNOWN_SECTIONS[section.id as keyof typeof KNOWN_SECTIONS]) {
+          behaviorRef.current.textSelections[section.id] = 
+            (behaviorRef.current.textSelections[section.id] || 0) + 1;
         }
       }
     };
 
     const handleInteraction = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      const section = target.closest('section');
-      if (section) {
-        const sectionId = section.id || 'unknown';
-        behaviorRef.current.elementInteractions[sectionId] = 
-          (behaviorRef.current.elementInteractions[sectionId] || 0) + 1;
+      const section = target.closest('section[id]');
+      if (section && section.id && KNOWN_SECTIONS[section.id as keyof typeof KNOWN_SECTIONS]) {
+        behaviorRef.current.elementInteractions[section.id] = 
+          (behaviorRef.current.elementInteractions[section.id] || 0) + 1;
       }
       
       behaviorRef.current.lastActivity = Date.now();
@@ -118,6 +126,8 @@ export const useTFTracking = () => {
     };
 
     const updateDwellTime = (sectionId: string) => {
+      if (!KNOWN_SECTIONS[sectionId as keyof typeof KNOWN_SECTIONS]) return;
+      
       const currentTime = Date.now();
       const timeSpent = currentTime - behaviorRef.current.lastActivity;
       
@@ -151,20 +161,17 @@ export const useTFTracking = () => {
       textSelections
     } = behaviorRef.current;
     
-    // Durchschnittliche Scroll-Geschwindigkeit
     const avgScrollSpeed = scrollSpeedSamples.current.length > 0
       ? scrollSpeedSamples.current.reduce((a, b) => a + b, 0) / scrollSpeedSamples.current.length
       : 0;
 
-    // Normalisierung der Werte
     const normalizedTime = Math.min(timeOnPage / 300, 1);
     const normalizedScroll = scrollDepth / 100;
     const normalizedClicks = Math.min(clicks / 20, 1);
     const normalizedScrollSpeed = Math.max(0, 1 - (avgScrollSpeed * 10));
 
-    // Sektionsspezifische Engagement-Analyse
     const sectionEngagement: { [key: string]: number } = {};
-    Object.keys(dwellTimes).forEach(sectionId => {
+    Object.keys(KNOWN_SECTIONS).forEach(sectionId => {
       const dwell = dwellTimes[sectionId] || 0;
       const moves = mouseMovements[sectionId] || 0;
       const selections = textSelections[sectionId] || 0;
@@ -178,7 +185,6 @@ export const useTFTracking = () => {
       ) / 4;             // Durchschnitt der normalisierten Werte
     });
 
-    // TensorFlow Modell für Engagement-Vorhersage
     const model = tf.sequential({
       layers: [
         tf.layers.dense({ units: 8, inputShape: [5], activation: 'relu' }),
@@ -192,36 +198,23 @@ export const useTFTracking = () => {
       normalizedScroll,
       normalizedClicks,
       normalizedScrollSpeed,
-      Object.values(sectionEngagement).reduce((a, b) => Math.max(a, b), 0), // Höchstes Sektions-Engagement
+      Object.values(sectionEngagement).reduce((a, b) => Math.max(a, b), 0),
     ]]);
 
     const prediction = model.predict(input) as tf.Tensor;
     const score = (await prediction.data())[0];
 
-    // Insights basierend auf Sektions-Engagement
     const insights: string[] = [];
-    Object.entries(sectionEngagement).forEach(([sectionId, score]) => {
-      if (score > 0.6) {
-        switch(sectionId) {
-          case 'expert-section':
-            insights.push("Starkes Interesse am Experten-Profil und Werdegang");
-            break;
-          case 'problems-section':
-            insights.push("Intensive Auseinandersetzung mit Problemstellungen");
-            break;
-          case 'solution-section':
-            insights.push("Hohe Aufmerksamkeit für Lösungsansätze");
-            break;
-          case 'process-section':
-            insights.push("Detailliertes Interesse am Prozessablauf");
-            break;
-          default:
-            if (score > 0.8) {
-              insights.push(`Besonders hohes Engagement in ${sectionId}`);
-            }
+    Object.entries(sectionEngagement)
+      .filter(([_, score]) => score > 0.6)
+      .forEach(([sectionId, score]) => {
+        const sectionName = KNOWN_SECTIONS[sectionId as keyof typeof KNOWN_SECTIONS];
+        if (score > 0.8) {
+          insights.push(`Besonders hohes Interesse am ${sectionName}`);
+        } else {
+          insights.push(`Erhöhtes Interesse am ${sectionName}`);
         }
-      }
-    });
+      });
 
     return { score, insights };
   };
