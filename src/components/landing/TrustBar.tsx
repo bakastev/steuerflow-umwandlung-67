@@ -22,7 +22,7 @@ export const TrustBar = () => {
               <img 
                 src={logo} 
                 alt={`Partner Logo ${index + 1}`}
-                className="h-20 w-auto object-contain"
+                className="h-40 w-auto object-contain"
               />
             </div>
           ))}
