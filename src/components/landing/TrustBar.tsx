@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 
 const logos = [
   "/DSFInanzLogosfurLP.png",
-  "/DSFInanz LogosfurLP (2).png",
-  "/DSFInanz LogosfurLPneu.png"
+  "/DSFInanzLogosfurLP2.png",
+  "/DSFInanzLogosfurLPneu.png"
 ];
 
 export const TrustBar = () => {
