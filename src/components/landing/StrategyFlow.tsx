@@ -46,19 +46,19 @@ export const StrategyFlow = () => {
         </motion.h2>
         
         <div className="relative max-w-5xl mx-auto">
-          {/* Horizontale Verbindungslinie */}
-          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-accent/20" />
+          {/* Horizontale Verbindungslinie - nur auf Desktop sichtbar */}
+          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-accent/20 hidden md:block" />
           
-          <div className="relative flex justify-between items-center gap-8">
+          <div className="relative flex flex-col md:flex-row justify-between items-center gap-12 md:gap-8">
             {flowItems.map((item, index) => (
-              <div key={index} className="flex flex-col items-center gap-4 relative">
-                {/* Verbindungspfeil */}
+              <div key={index} className="flex flex-col items-center gap-4 relative w-full md:w-auto">
+                {/* Verbindungspfeil - nur auf Desktop sichtbar */}
                 {index < flowItems.length - 1 && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: index * 0.2 }}
-                    className="absolute left-full top-12 transform -translate-x-1/2 flex items-center"
+                    className="absolute left-1/2 md:left-full top-full md:top-12 transform -translate-x-1/2 flex items-center hidden md:flex"
                   >
                     {index === 1 ? (
                       <div className="flex flex-col items-center">
@@ -67,6 +67,18 @@ export const StrategyFlow = () => {
                     ) : (
                       <ArrowRight className="w-6 h-6 text-accent" />
                     )}
+                  </motion.div>
+                )}
+                
+                {/* Vertikaler Pfeil für Mobile - nur auf Mobile sichtbar */}
+                {index < flowItems.length - 1 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    className="md:hidden mt-4 mb-4"
+                  >
+                    <ArrowRight className="w-6 h-6 text-accent rotate-90" />
                   </motion.div>
                 )}
                 
