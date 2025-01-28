@@ -17,7 +17,6 @@ export const StrategyFlow = () => {
       setEngagement(result);
     };
 
-    // Häufigere Überprüfung des Engagements
     const interval = setInterval(checkEngagement, 1000);
     return () => clearInterval(interval);
   }, [predictVideoEngagement]);
@@ -56,10 +55,9 @@ export const StrategyFlow = () => {
   return (
     <section id="strategy-flow-section" className="py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
-        {/* Video-Integration - jetzt vor dem Flow-Content */}
         {engagement && (
           <PersonalizedVideo
-            playbackId="DS6P9utO902902tPtG5WhfzZz802qIf6Aq2"
+            playbackId="GZQlEubrnobCOtuod1LmW3dIgCws02yfjl20288aULwFs"
             engagement={engagement}
             className="mb-16"
           />
@@ -75,13 +73,11 @@ export const StrategyFlow = () => {
         </motion.h2>
         
         <div className="relative max-w-5xl mx-auto">
-          {/* Horizontale Verbindungslinie - nur auf Desktop sichtbar */}
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-accent/20 hidden md:block" />
           
           <div className="relative flex flex-col md:flex-row justify-between items-center gap-12 md:gap-8">
             {flowItems.map((item, index) => (
               <div key={index} className="flex flex-col items-center gap-4 relative w-full md:w-auto">
-                {/* Verbindungspfeil - nur auf Desktop sichtbar */}
                 {index < flowItems.length - 1 && (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -99,7 +95,6 @@ export const StrategyFlow = () => {
                   </motion.div>
                 )}
                 
-                {/* Vertikaler Pfeil für Mobile - nur auf Mobile sichtbar */}
                 {index < flowItems.length - 1 && (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -111,7 +106,6 @@ export const StrategyFlow = () => {
                   </motion.div>
                 )}
                 
-                {/* Icon Box */}
                 <motion.div
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
@@ -127,7 +121,6 @@ export const StrategyFlow = () => {
                   <item.icon className={`w-10 h-10 ${item.color}`} />
                 </motion.div>
                 
-                {/* Labels */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
