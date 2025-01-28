@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 const solutions = [
   {
@@ -21,26 +22,33 @@ const solutions = [
 
 export const Solution = () => {
   return (
-    <section className="py-20">
+    <section className="py-20 bg-primary-dark">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
+        >
           Was macht uns einzigartig?
-        </h2>
+        </motion.h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {solutions.map((solution, index) => (
-            <div 
+            <motion.div 
               key={index}
-              className="p-6 border border-gray-200 rounded-lg animate-fadeIn"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="p-6 border border-accent/20 rounded-lg bg-white/10 backdrop-blur-md"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-                  <Check className="w-5 h-5 text-white" />
+                  <Check className="w-5 h-5 text-primary-dark" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary">{solution.title}</h3>
+                <h3 className="text-xl font-semibold text-white">{solution.title}</h3>
               </div>
-              <p className="text-gray-600">{solution.description}</p>
-            </div>
+              <p className="text-gray-300">{solution.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>
