@@ -1,7 +1,10 @@
-import { Euro, TrendingUp, Calculator } from "lucide-react";
-import { motion } from "framer-motion";
+import { Euro, TrendingUp, Calculator, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { useTFTracking } from "@/hooks/useTFTracking";
+import { useToast } from "@/hooks/use-toast";
 
-const benefits = [
+const initialBenefits = [
   {
     title: "Steuerfreie ETF-Investitionen",
     description: "Nutzen Sie den monatlichen Freibetrag von 644€ für steuerfreie ETF-Anlagen aus Ihrer GmbH.",
@@ -19,11 +22,60 @@ const benefits = [
   },
 ];
 
+const extendedBenefits = [
+  {
+    title: "Optimierte Vermögensstruktur",
+    description: "Strategische Verteilung zwischen Privat- und Geschäftsvermögen für maximale Steuervorteile.",
+    icon: ArrowRight,
+  },
+  {
+    title: "Nachhaltige Altersvorsorge",
+    description: "Aufbau einer steueroptimalen Altersvorsorge durch clevere Kombination verschiedener Anlageformen.",
+    icon: ArrowRight,
+  }
+];
+
 export const Benefits = () => {
+  const [showExtendedContent, setShowExtendedContent] = useState(false);
+  const { behaviorRef, predictEngagement } = useTFTracking();
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    const checkEngagement = async () => {
+      const benefitsSection = document.getElementById('benefits-section');
+      if (!benefitsSection) return;
+
+      const { dwellTimes, mouseMovements } = behaviorRef.current;
+      const benefitsDwellTime = dwellTimes['benefits-section'] || 0;
+      const benefitsMouseMoves = mouseMovements['benefits-section'] || 0;
+      
+      // Reduzierte Schwellenwerte für schnellere Personalisierung
+      const isHighlyEngaged = 
+        benefitsDwellTime > 2000 && // 2 Sekunden
+        benefitsMouseMoves > 3 && 
+        !showExtendedContent;
+      
+      if (isHighlyEngaged) {
+        const result = await predictEngagement();
+        if (result.score > 0.15) { // Reduzierter Schwellenwert
+          setShowExtendedContent(true);
+          toast({
+            title: "Inhalt personalisiert",
+            description: "Wir zeigen Ihnen weitere maßgeschneiderte Vorteile basierend auf Ihrem Interesse.",
+            className: "fixed top-4 left-1/2 transform -translate-x-1/2 z-[100]",
+          });
+        }
+      }
+    };
+
+    const interval = setInterval(checkEngagement, 1000);
+    return () => clearInterval(interval);
+  }, [showExtendedContent, behaviorRef, toast]);
+
   return (
     <section id="benefits-section" className="relative py-20 bg-primary-dark overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark animate-pulse duration-[4000ms]" />
+        <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark" />
       </div>
       <div className="container relative mx-auto px-4">
         <motion.h2 
@@ -35,7 +87,7 @@ export const Benefits = () => {
           Ihre konkreten Vorteile
         </motion.h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {benefits.map((benefit, index) => (
+          {initialBenefits.map((benefit, index) => (
             <motion.div 
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -51,6 +103,33 @@ export const Benefits = () => {
             </motion.div>
           ))}
         </div>
+
+        <AnimatePresence>
+          {showExtendedContent && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+            >
+              {extendedBenefits.map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="backdrop-blur-md bg-white/10 p-8 rounded-lg shadow-xl border border-white/20"
+                >
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-4">
+                    <benefit.icon className="w-6 h-6 text-primary-dark" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-white">{benefit.title}</h3>
+                  <p className="text-gray-300">{benefit.description}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
