@@ -9,7 +9,6 @@ export const AnimatedStats = () => {
 
   useEffect(() => {
     if (isInView) {
-      // Animiere bis 100 für die Prozentangabe
       const percentInterval = setInterval(() => {
         setCount(prev => {
           if (prev < 100) return prev + 1;
@@ -18,7 +17,6 @@ export const AnimatedStats = () => {
         });
       }, 20);
 
-      // Animiere bis 724 für die Kundenanzahl
       const customersInterval = setInterval(() => {
         setCustomersCount(prev => {
           if (prev < 724) return prev + 7;
@@ -35,7 +33,7 @@ export const AnimatedStats = () => {
   }, [isInView]);
 
   return (
-    <section className="py-12 bg-white" ref={ref}>
+    <div className="py-8 bg-transparent" ref={ref}>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div 
@@ -44,10 +42,10 @@ export const AnimatedStats = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+            <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
               {count}%
             </div>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-200">
               unserer Kunden bewerten uns als "ausgezeichnet"
             </p>
           </motion.div>
@@ -58,15 +56,15 @@ export const AnimatedStats = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+            <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
               Über {customersCount}
             </div>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-200">
               Kunden vertrauen uns bereits
             </p>
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

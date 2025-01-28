@@ -1,6 +1,7 @@
 import { Hero } from "@/components/blocks/hero"
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { AnimatedStats } from "./AnimatedStats";
 
 export const HeroComponent = () => {
   const ref = useRef(null);
@@ -35,6 +36,7 @@ export const HeroComponent = () => {
         actionsClassName="mt-8"
         image="/DSFinanzfreigestelltesBild.png"
       />
+      <AnimatedStats />
       <motion.div 
         style={{ y, opacity }}
         className="absolute inset-0 -z-10"
