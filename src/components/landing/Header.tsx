@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
 export const Header = () => {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
       <div className="container mx-auto px-4">
@@ -19,7 +26,11 @@ export const Header = () => {
             <a href="#process" className="text-gray-600 hover:text-primary transition-colors scroll-smooth">Prozess</a>
             <a href="#about" className="text-gray-600 hover:text-primary transition-colors scroll-smooth">Über uns</a>
             <a href="#faqs" className="text-gray-600 hover:text-primary transition-colors scroll-smooth">FAQs</a>
-            <Button variant="default" className="bg-accent hover:bg-accent-light text-primary-dark">
+            <Button 
+              variant="default" 
+              className="bg-accent hover:bg-accent-light text-primary-dark"
+              onClick={() => scrollToSection('contact')}
+            >
               Erstgespräch buchen
             </Button>
           </nav>
