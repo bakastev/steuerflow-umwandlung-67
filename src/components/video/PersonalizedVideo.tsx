@@ -16,12 +16,12 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
 
   useEffect(() => {
     // Prüfen auf spezifisches Engagement in der Strategy-Flow-Section
-    if (engagement?.dwellTimeInStrategyFlow > 5000 && !shouldShow) {
+    if (engagement?.dwellTimeInStrategyFlow > 3000 && !shouldShow) {
       setShouldShow(true);
       toast({
         title: "Personalisiertes Video verfügbar",
         description: "Basierend auf Ihrem Interesse haben wir ein erklärendes Video für Sie freigeschaltet.",
-        className: "bg-primary-dark text-white border-accent",
+        className: "bg-primary-dark text-white border-accent z-[100]",
       });
       
       console.log("Video wird angezeigt", {
@@ -39,7 +39,7 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`${className} fixed inset-x-0 mx-auto z-50 max-w-4xl px-4`}
+      className={`${className} fixed inset-x-0 mx-auto z-[60] max-w-4xl px-4`}
     >
       <div className="relative">
         <div className="absolute -inset-1 bg-gradient-to-r from-accent/30 to-primary rounded-xl blur-lg" />

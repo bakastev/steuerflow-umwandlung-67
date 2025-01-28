@@ -13,10 +13,12 @@ export const StrategyFlow = () => {
   useEffect(() => {
     const checkEngagement = async () => {
       const result = await predictVideoEngagement();
+      console.log("Strategy Flow Engagement Check:", result);
       setEngagement(result);
     };
 
-    const interval = setInterval(checkEngagement, 2000);
+    // Häufigere Überprüfung des Engagements
+    const interval = setInterval(checkEngagement, 1000);
     return () => clearInterval(interval);
   }, [predictVideoEngagement]);
 
@@ -54,6 +56,15 @@ export const StrategyFlow = () => {
   return (
     <section id="strategy-flow-section" className="py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
+        {/* Video-Integration - jetzt vor dem Flow-Content */}
+        {engagement && (
+          <PersonalizedVideo
+            playbackId="DS6P9utO902902tPtG5WhfzZz802qIf6Aq2"
+            engagement={engagement}
+            className="mb-16"
+          />
+        )}
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -139,15 +150,6 @@ export const StrategyFlow = () => {
             ))}
           </div>
         </div>
-
-        {/* Video-Integration */}
-        {engagement && (
-          <PersonalizedVideo
-            playbackId="DS6P9utO902902tPtG5WhfzZz802qIf6Aq2"
-            engagement={engagement}
-            className="mt-16"
-          />
-        )}
       </div>
     </section>
   );
