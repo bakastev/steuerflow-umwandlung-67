@@ -4,7 +4,7 @@ export const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-center mb-8">
           <img 
-            src="/DS FInanz  Logos für LP (3).png" 
+            src="/DSFInanzLogosfuerLP3.png" 
             alt="DS Finanz Logo" 
             className="h-16 w-auto"
           />

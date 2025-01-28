@@ -8,7 +8,7 @@ export const Header = () => {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <img 
-              src="/DS FInanz  Logos für LP (3).png" 
+              src="/DSFInanzLogosfuerLP3.png" 
               alt="DS Finanz Logo" 
               className="h-12 w-auto"
             />
