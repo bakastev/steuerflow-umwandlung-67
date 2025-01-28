@@ -13,16 +13,16 @@ export const TrustBar = () => {
         <h3 className="text-center text-lg text-gray-600 mb-8">
           Bekannt aus
         </h3>
-        <Marquee speed={40} className="py-4">
+        <Marquee speed={40} className="py-8">
           {logos.map((logo, index) => (
             <div
               key={index}
-              className="mx-16 flex items-center justify-center"
+              className="mx-24 flex items-center justify-center"
             >
               <img 
                 src={logo} 
                 alt={`Partner Logo ${index + 1}`}
-                className="h-20 w-auto object-contain"
+                className="h-32 w-auto object-contain"
               />
             </div>
           ))}
