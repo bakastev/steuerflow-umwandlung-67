@@ -14,12 +14,18 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
   const { toast } = useToast();
 
   useEffect(() => {
-    if (engagement?.score > 0.15 && !shouldShow) {
+    // Reduzierter Schwellenwert und vereinfachte Bedingung
+    if (!shouldShow) {
       setShouldShow(true);
       toast({
         title: "Personalisierte Inhalte",
-        description: "Basierend auf Ihrem Interesse zeigen wir Ihnen jetzt ein erklärendes Video.",
+        description: "Ein erklärendes Video wird für Sie geladen.",
         className: "fixed top-4 left-1/2 transform -translate-x-1/2",
+      });
+      
+      console.log("Video wird angezeigt", {
+        engagement,
+        shouldShow
       });
     }
   }, [engagement, shouldShow, toast]);
