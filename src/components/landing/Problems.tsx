@@ -1,5 +1,4 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { AlertCircle } from "lucide-react";
 import { useRef } from "react";
 
 const problems = [
@@ -54,19 +53,13 @@ export const Problems = () => {
               );
 
               return (
-                <motion.div
+                <motion.p
                   key={index}
                   style={{ opacity }}
-                  className="absolute flex items-start gap-4 p-8 rounded-lg w-full max-w-2xl
-                    bg-white/10 backdrop-blur-md
-                    border border-white/20
-                    shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]
-                    hover:bg-white/15 transition-all duration-300
-                    before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-30"
+                  className="absolute text-2xl text-center text-accent drop-shadow-[0_0_10px_rgba(197,165,114,0.5)]"
                 >
-                  <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
-                  <p className="text-gray-200 text-lg relative z-10">{problem}</p>
-                </motion.div>
+                  {problem}
+                </motion.p>
               );
             })}
           </div>
