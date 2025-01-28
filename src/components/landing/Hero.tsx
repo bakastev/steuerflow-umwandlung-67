@@ -31,9 +31,7 @@ export const HeroComponent = () => {
             <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">
                 <Scale className="h-4 w-4" />
-                <span>Leicht</span>
-              </div>
-              <div className="flex items-center gap-2">
+                <span>Le<div className="flex items-center gap-2">
                 <Gavel className="h-4 w-4" />
                 <span>legal</span>
               </div>
@@ -58,7 +56,7 @@ export const HeroComponent = () => {
       />
       
       <PersonalizedVideo
-        playbackId="IHRE_MUX_PLAYBACK_ID" // Hier Ihre echte Mux Playback ID einsetzen
+        playbackId="GZQlEubrnobCOtuod1LmW3dIgCws02yfjl20288aULwFs"
         engagement={lastPrediction.current}
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4"
       />
