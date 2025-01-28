@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Scale, Gavel, DollarSign, Brain } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import { EngagementInsights } from "@/types/tracking";
 
 const OptimizedIndex = () => {
   const { predictEngagement, behaviorRef } = useTFTracking();

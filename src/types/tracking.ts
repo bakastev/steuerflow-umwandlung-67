@@ -18,6 +18,11 @@ export interface UserBehavior {
   };
 }
 
+export interface EngagementInsights {
+  score: number;
+  insights: string[];
+}
+
 export const KNOWN_SECTIONS = {
   'expert-section': 'Experten-Profil und Werdegang',
   'problems-section': 'Herausforderungen für Geschäftsführer',
