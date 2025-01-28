@@ -15,25 +15,26 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
   const { toast } = useToast();
 
   useEffect(() => {
-    // Prüfen auf spezifisches Engagement in der Strategy-Flow-Section
-    if (engagement?.dwellTimeInStrategyFlow > 3000 && !shouldShow) {
+    // Prüfen auf hohes Engagement (Score > 0.6) und ausreichende Verweilzeit
+    if (engagement?.score > 0.6 && engagement?.dwellTimeInStrategyFlow > 3000 && !shouldShow) {
       setShouldShow(true);
       toast({
         title: "Personalisiertes Video verfügbar",
         description: "Basierend auf Ihrem Interesse haben wir ein erklärendes Video für Sie freigeschaltet.",
-        className: "bg-primary-dark text-white border-accent z-[100]",
       });
       
       console.log("Video wird angezeigt", {
         engagement,
         shouldShow,
-        dwellTimeInStrategyFlow: engagement.dwellTimeInStrategyFlow
+        dwellTimeInStrategyFlow: engagement.dwellTimeInStrategyFlow,
+        score: engagement.score
       });
     }
   }, [engagement, shouldShow, toast]);
 
   if (!shouldShow) {
     console.log("Video wird nicht angezeigt:", {
+      score: engagement?.score,
       dwellTime: engagement?.dwellTimeInStrategyFlow,
       shouldShow
     });
