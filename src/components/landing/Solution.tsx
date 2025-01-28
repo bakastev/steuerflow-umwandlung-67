@@ -22,8 +22,11 @@ const solutions = [
 
 export const Solution = () => {
   return (
-    <section className="py-20 bg-primary-dark">
-      <div className="container mx-auto px-4">
+    <section className="relative py-20 bg-primary-dark overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark animate-pulse duration-[4000ms]" />
+      </div>
+      <div className="container relative mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +42,7 @@ export const Solution = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="p-6 border border-accent/20 rounded-lg bg-white/10 backdrop-blur-md"
+              className="p-6 rounded-lg backdrop-blur-md bg-white/10 border border-white/20 shadow-xl"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">

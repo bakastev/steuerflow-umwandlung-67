@@ -21,13 +21,16 @@ const benefits = [
 
 export const Benefits = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="relative py-20 bg-primary-dark overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark animate-pulse duration-[4000ms]" />
+      </div>
+      <div className="container relative mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-dark"
+          className="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
         >
           Ihre konkreten Vorteile
         </motion.h2>
@@ -38,7 +41,7 @@ export const Benefits = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-primary-dark p-8 rounded-lg shadow-xl border border-accent/20"
+              className="backdrop-blur-md bg-white/10 p-8 rounded-lg shadow-xl border border-white/20"
             >
               <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-4">
                 <benefit.icon className="w-6 h-6 text-primary-dark" />
