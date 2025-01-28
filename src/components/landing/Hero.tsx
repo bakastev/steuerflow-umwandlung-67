@@ -58,7 +58,7 @@ export const HeroComponent = () => {
       />
       
       <PersonalizedVideo
-        playbackId="YOUR_MUX_PLAYBACK_ID" // Hier deine Mux Playback ID einfügen
+        playbackId="IHRE_MUX_PLAYBACK_ID" // Hier Ihre echte Mux Playback ID einsetzen
         engagement={lastPrediction.current}
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4"
       />

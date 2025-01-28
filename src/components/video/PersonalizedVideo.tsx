@@ -20,6 +20,7 @@ export const PersonalizedVideo: React.FC<PersonalizedVideoProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
+    console.log("Current engagement state:", engagement);
     if (engagement.immediateShow || engagement.delayedShow || engagement.expandableShow) {
       setIsVisible(true);
       toast({
@@ -30,7 +31,10 @@ export const PersonalizedVideo: React.FC<PersonalizedVideoProps> = ({
     }
   }, [engagement, toast]);
 
-  if (!isVisible) return null;
+  if (!isVisible) {
+    console.log("Video is not visible, engagement conditions not met");
+    return null;
+  }
 
   return (
     <AnimatePresence>
