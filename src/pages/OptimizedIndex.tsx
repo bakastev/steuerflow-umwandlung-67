@@ -14,6 +14,7 @@ import { Footer } from "@/components/landing/Footer";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { useToast } from "@/hooks/use-toast";
+import { Scale, Gavel, DollarSign } from "lucide-react";
 
 interface EngagementInsights {
   score: number;
@@ -35,14 +36,12 @@ const OptimizedIndex = () => {
         setShowExtraContent(true);
       }
 
-      // Debug-Informationen in der Konsole
       console.log('Engagement Analyse:', {
         score: result.score,
         insights: result.insights
       });
     };
 
-    // Prüfe Engagement alle 15 Sekunden
     const interval = setInterval(checkEngagement, 15000);
     return () => clearInterval(interval);
   }, [predictEngagement]);
@@ -61,7 +60,40 @@ const OptimizedIndex = () => {
       )}
 
       <Header />
-      <Hero />
+      <Hero
+        title="Geschäftsvermögen in Privatvermögen umwandeln"
+        subtitle={
+          <>
+            Wie du es als Geschäftsführer/Gesellschafter einer GmbH schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
+            <br />
+            <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
+              <div className="flex items-center gap-2">
+                <Scale className="h-4 w-4" />
+                <span>Leicht</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Gavel className="h-4 w-4" />
+                <span>legal</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-4 w-4" />
+                <span>steueroptimiert!</span>
+              </div>
+            </div>
+          </>
+        }
+        actions={[
+          {
+            label: "Kostenloses Erstgespräch sichern",
+            href: "#contact",
+            variant: "default"
+          }
+        ]}
+        titleClassName="text-white text-left"
+        subtitleClassName="text-gray-200 text-left"
+        actionsClassName="mt-8"
+        image="/DSFinanzfreigestelltesBild.png"
+      />
       <TrustBar />
       <Problems />
       <StrategyFlow />
