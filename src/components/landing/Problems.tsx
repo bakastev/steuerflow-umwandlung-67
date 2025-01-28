@@ -71,7 +71,8 @@ export const Problems = () => {
                     max-w-3xl mx-auto leading-relaxed
                     [text-shadow:_0_0_20px_rgba(197,165,114,0.5)]
                     transition-all duration-300
-                    animate-fadeIn"
+                    animate-fadeIn
+                    absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 >
                   {problem}
                 </motion.p>
