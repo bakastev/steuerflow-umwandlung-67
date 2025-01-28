@@ -1,15 +1,20 @@
+import { Clock, CheckCircle, PhoneCall } from "lucide-react";
+
 const steps = [
   {
     title: "Erstgespräch buchen",
-    description: "Finde heraus, wie viel Steuern du einsparen kannst.",
+    description: "In nur einer Stunde klären wir Ihre individuelle Situation und zeigen Ihnen Ihre Einsparpotentiale.",
+    icon: Clock,
   },
   {
     title: "Strategie entwickeln",
-    description: "Gemeinsam mit uns und deinem Steuerberater setzen wir den Plan auf.",
+    description: "Wir entwickeln gemeinsam Ihre maßgeschneiderte Geschäftsführerstrategie - einfach und effizient.",
+    icon: CheckCircle,
   },
   {
-    title: "Umsetzung",
-    description: "Gewinne fließen steuerfrei in dein Privatvermögen – einfach, legal, effizient.",
+    title: "Schnelle Umsetzung",
+    description: "Ein Telefonat und eine E-Mail mit Ihrem Steuerberater genügen meist schon für die Implementierung.",
+    icon: PhoneCall,
   },
 ];
 
@@ -18,7 +23,7 @@ export const Process = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-          Wie funktioniert es?
+          So einfach geht's
         </h2>
         <div className="max-w-4xl mx-auto">
           <div className="relative">
@@ -35,7 +40,10 @@ export const Process = () => {
                   </div>
                 </div>
                 <div className="ml-12 md:ml-0 md:w-1/2 md:pl-8">
-                  <h3 className="text-xl font-semibold mb-2 text-primary">{step.title}</h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <step.icon className="w-5 h-5 text-accent" />
+                    <h3 className="text-xl font-semibold text-primary">{step.title}</h3>
+                  </div>
                   <p className="text-gray-600">{step.description}</p>
                 </div>
               </div>

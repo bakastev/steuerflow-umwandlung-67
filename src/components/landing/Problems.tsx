@@ -1,10 +1,11 @@
 import { AlertCircle } from "lucide-react";
 
 const problems = [
-  "Deine Gewinne bleiben in der GmbH gefangen.",
-  "Lohnsteuer und Sozialversicherungen machen Auszahlungen unattraktiv.",
-  "Steuerberater kümmern sich oft nicht ausreichend um die besten Strategien.",
-  "Steuern sind die größte Kostenposition deines Unternehmens, aber du hast keine Zeit, dich intensiv damit zu beschäftigen.",
+  "Ihre Gewinne bleiben in der GmbH gefangen und Sie zahlen unnötig hohe Steuern.",
+  "Ihr Steuerberater ist nur ein 'Steuerbegleiter' - ohne proaktive Strategieberatung.",
+  "Steuern sind Chefsache, aber Sie haben keine Zeit sich damit zu beschäftigen.",
+  "Lohnsteuer und Sozialversicherungen machen klassische Auszahlungen unattraktiv.",
+  "Sie verlieren jeden Monat Geld, weil Sie diese legalen Strategien nicht nutzen.",
 ];
 
 export const Problems = () => {
