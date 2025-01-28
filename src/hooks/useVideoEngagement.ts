@@ -25,12 +25,12 @@ export const useVideoEngagement = (behaviorRef: React.RefObject<UserBehavior>) =
       mouseMovements,
     } = behaviorRef.current;
 
-    // Angepasste Schwellenwerte für realistischere Trigger
+    // Deutlich reduzierte Schwellenwerte für Content-Anzeige
     const dwellTimeInStrategy = dwellTimes['strategy-flow-section'] || 0;
-    const normalizedDwellTime = Math.min(dwellTimeInStrategy / 15000, 1); // Reduziert von 30000
+    const normalizedDwellTime = Math.min(dwellTimeInStrategy / 5000, 1); // Von 15000 auf 5000 reduziert
     const normalizedScrollDepth = scrollDepth / 100;
-    const normalizedInteractions = Math.min((elementInteractions['strategy-flow-section'] || 0) / 3, 1);
-    const normalizedMouseMovements = Math.min((mouseMovements['strategy-flow-section'] || 0) / 25, 1);
+    const normalizedInteractions = Math.min((elementInteractions['strategy-flow-section'] || 0) / 2, 1);
+    const normalizedMouseMovements = Math.min((mouseMovements['strategy-flow-section'] || 0) / 15, 1);
 
     const input = tf.tensor2d([[
       normalizedDwellTime,
@@ -44,15 +44,15 @@ export const useVideoEngagement = (behaviorRef: React.RefObject<UserBehavior>) =
       return tf.sum(tf.mul(input, tf.tensor(weights))).dataSync()[0];
     });
 
-    // Angepasste Schwellenwerte für die verschiedenen Anzeigevarianten
+    // Stark reduzierte Schwellenwerte für frühere Anzeige
     const result = {
-      immediateShow: score > 0.6 && dwellTimeInStrategy > 15000, // Reduziert von 0.8 und 30000
-      delayedShow: score > 0.4 && scrollDepth > 30, // Reduziert von 0.6 und 40
-      expandableShow: score > 0.3 && (elementInteractions['strategy-flow-section'] || 0) > 2, // Reduziert von 0.4 und 3
+      immediateShow: score > 0.3 && dwellTimeInStrategy > 5000,  // Von 0.6 auf 0.3 reduziert
+      delayedShow: score > 0.2 && scrollDepth > 20,             // Von 0.4 auf 0.2 reduziert
+      expandableShow: score > 0.1 && (elementInteractions['strategy-flow-section'] || 0) > 1, // Von 0.3 auf 0.1 reduziert
       score
     };
 
-    console.log("Video engagement prediction:", result);
+    console.log("Content engagement prediction:", result);
     lastPrediction.current = result;
     return result;
   };

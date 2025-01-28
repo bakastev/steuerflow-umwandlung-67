@@ -25,14 +25,14 @@ export const PersonalizedVideo: React.FC<PersonalizedVideoProps> = ({
       setIsVisible(true);
       toast({
         title: "Personalisierte Inhalte",
-        description: "Basierend auf Ihrem Interesse haben wir ein erklärendes Video für Sie",
+        description: "Basierend auf Ihrem Interesse haben wir zusätzliche Informationen für Sie",
         className: "bg-accent text-primary-dark",
       });
     }
   }, [engagement, toast]);
 
   if (!isVisible) {
-    console.log("Video is not visible, engagement conditions not met");
+    console.log("Personalized content is not visible, engagement conditions not met");
     return null;
   }
 
@@ -45,24 +45,28 @@ export const PersonalizedVideo: React.FC<PersonalizedVideoProps> = ({
         className={className}
       >
         {engagement.immediateShow ? (
-          <MuxPlayer
-            playbackId={playbackId}
-            autoPlay
-            muted
-            className="w-full aspect-video rounded-lg shadow-lg"
-          />
+          <div className="bg-accent/10 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Exklusive Strategiedetails</h3>
+            <p className="text-gray-700 dark:text-gray-300">
+              Basierend auf Ihrem Interesse haben wir detaillierte Informationen zur 
+              Vermögensumwandlung für Sie freigeschaltet.
+            </p>
+          </div>
         ) : engagement.delayedShow ? (
-          <MuxPlayer
-            playbackId={playbackId}
-            className="w-full aspect-video rounded-lg shadow-lg"
-          />
+          <div className="bg-accent/5 p-6 rounded-lg">
+            <h3 className="text-lg font-medium mb-3">Zusätzliche Einblicke</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Entdecken Sie weitere Aspekte unserer Strategie zur optimalen 
+              Vermögensumwandlung.
+            </p>
+          </div>
         ) : (
           <div className="relative">
             <motion.button
               onClick={() => setIsExpanded(!isExpanded)}
               className="w-full p-4 bg-accent/10 rounded-lg text-accent hover:bg-accent/20 transition-colors"
             >
-              Mehr Details im Video erfahren
+              Mehr Details zur Strategie
             </motion.button>
             
             <AnimatePresence>
@@ -71,12 +75,12 @@ export const PersonalizedVideo: React.FC<PersonalizedVideoProps> = ({
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="mt-4"
+                  className="mt-4 p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg"
                 >
-                  <MuxPlayer
-                    playbackId={playbackId}
-                    className="w-full aspect-video rounded-lg shadow-lg"
-                  />
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    Hier finden Sie tiefergehende Informationen zu unseren 
+                    Strategien der Vermögensumwandlung und steuerlichen Optimierung.
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
