@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlayCircle } from "lucide-react";
+import { useState } from "react";
 
 interface Testimonial {
   name: string;
@@ -48,12 +49,15 @@ const testimonials: Testimonial[] = [
   }
 ];
 
-const getYouTubeEmbedUrl = (url: string) => {
-  const videoId = url.split('/').pop();
-  return `https://www.youtube.com/embed/${videoId}`;
+const getYouTubeVideoId = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
 };
 
 export const Testimonials = () => {
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+
   return (
     <section className="py-20 bg-primary-dark">
       <div className="container mx-auto px-4">
@@ -72,54 +76,68 @@ export const Testimonials = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Card className="bg-primary-light border-accent/20 overflow-hidden h-full">
-                <CardContent className="p-0">
-                  <div className="relative aspect-video bg-black/50 group cursor-pointer">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={getYouTubeEmbedUrl(testimonial.videoUrl)}
-                      title={`Testimonial von ${testimonial.name}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/60 group-hover:bg-black/40 transition-colors">
-                      <div className="text-center p-4">
-                        <div className="mb-4">
-                          <img 
-                            src="/DSFInanzLogosfurLP.png" 
-                            alt="DS Finanz Logo" 
-                            className="h-8 mx-auto mb-2"
+          {testimonials.map((testimonial, index) => {
+            const videoId = getYouTubeVideoId(testimonial.videoUrl);
+            const isPlaying = playingVideo === videoId;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Card className="bg-primary-light border-accent/20 overflow-hidden h-full">
+                  <CardContent className="p-0">
+                    <div className="relative aspect-video bg-black/50">
+                      {videoId && (
+                        <>
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${videoId}${isPlaying ? '?autoplay=1' : ''}`}
+                            title={`Testimonial von ${testimonial.name}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute inset-0 w-full h-full"
                           />
-                          <h3 className="text-white font-bold mb-1">{testimonial.name}</h3>
-                          <p className="text-xs text-accent uppercase font-bold">
-                            Erfahrungsbericht
-                          </p>
-                        </div>
-                        <p className="text-sm text-white font-bold leading-tight">
-                          {testimonial.thumbnailText}
-                        </p>
-                        <PlayCircle className="w-12 h-12 text-accent mx-auto mt-4 group-hover:scale-110 transition-transform" />
-                      </div>
+                          {!isPlaying && (
+                            <div 
+                              className="absolute inset-0 flex items-center justify-center bg-black/60 hover:bg-black/40 transition-colors cursor-pointer"
+                              onClick={() => setPlayingVideo(videoId)}
+                            >
+                              <div className="text-center p-4">
+                                <div className="mb-4">
+                                  <img 
+                                    src="/DSFInanzLogosfurLP.png" 
+                                    alt="DS Finanz Logo" 
+                                    className="h-8 mx-auto mb-2"
+                                  />
+                                  <h3 className="text-white font-bold mb-1">{testimonial.name}</h3>
+                                  <p className="text-xs text-accent uppercase font-bold">
+                                    Erfahrungsbericht
+                                  </p>
+                                </div>
+                                <p className="text-sm text-white font-bold leading-tight">
+                                  {testimonial.thumbnailText}
+                                </p>
+                                <PlayCircle className="w-12 h-12 text-accent mx-auto mt-4 group-hover:scale-110 transition-transform" />
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <p className="text-gray-300 text-sm">
-                      {testimonial.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                    <div className="p-6">
+                      <p className="text-gray-300 text-sm">
+                        {testimonial.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
