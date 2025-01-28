@@ -32,14 +32,20 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
     }
   }, [engagement, shouldShow, toast]);
 
-  if (!shouldShow) return null;
+  if (!shouldShow) {
+    console.log("Video wird nicht angezeigt:", {
+      dwellTime: engagement?.dwellTimeInStrategyFlow,
+      shouldShow
+    });
+    return null;
+  }
 
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`${className} fixed inset-x-0 mx-auto z-[60] max-w-4xl px-4`}
+      className={`${className} relative w-full max-w-4xl mx-auto`}
     >
       <div className="relative">
         <div className="absolute -inset-1 bg-gradient-to-r from-accent/30 to-primary rounded-xl blur-lg" />
