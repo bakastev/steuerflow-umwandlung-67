@@ -20,6 +20,7 @@ interface HeroProps {
   titleClassName?: string
   subtitleClassName?: string
   actionsClassName?: string
+  image?: string
 }
 
 const Hero = React.forwardRef<HTMLElement, HeroProps>(
@@ -34,6 +35,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
       titleClassName,
       subtitleClassName,
       actionsClassName,
+      image,
       ...props
     },
     ref,
@@ -117,9 +119,9 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
           viewport={{ once: true }}
           transition={{ ease: "easeInOut", delay: 0.3, duration: 0.8 }}
           whileInView={{ y: 0, opacity: 1 }}
-          className="relative z-50 container flex justify-center flex-1 flex-col px-5 md:px-10 gap-4 -translate-y-20"
+          className="relative z-50 container flex justify-between items-center flex-1 px-5 md:px-10 gap-4"
         >
-          <div className="flex flex-col items-center text-center space-y-4">
+          <div className="flex flex-col items-start text-left space-y-4 max-w-2xl">
             <h1
               className={cn(
                 "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white",
@@ -153,11 +155,25 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               </div>
             )}
           </div>
+          {image && (
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="hidden lg:block w-1/2"
+            >
+              <img
+                src={image}
+                alt="Hero Image"
+                className="w-full h-auto object-contain max-h-[600px]"
+              />
+            </motion.div>
+          )}
         </motion.div>
       </section>
-    )
+    );
   },
-)
+);
 Hero.displayName = "Hero"
 
 export { Hero }
