@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header } from "@/components/landing/Header";
-import { Hero } from "@/components/landing/Hero";
+import { Hero as HeroComponent } from "@/components/landing/Hero"; // Korrekter Import für die Landing Hero Komponente
 import { TrustBar } from "@/components/landing/TrustBar";
 import { Problems } from "@/components/landing/Problems";
 import { Solution } from "@/components/landing/Solution";
@@ -33,7 +33,6 @@ const OptimizedIndex = () => {
       const result = await predictEngagement();
       setEngagementInsights(result);
       
-      // Schwelle auf 0.4 gesenkt für bessere Sichtbarkeit der Personalisierung
       if (result.score > 0.4) {
         setShowExtraContent(true);
         toast({
@@ -65,40 +64,7 @@ const OptimizedIndex = () => {
       )}
 
       <Header />
-      <Hero
-        title="Geschäftsvermögen in Privatvermögen umwandeln"
-        subtitle={
-          <>
-            Wie du es als Geschäftsführer/Gesellschafter einer GmbH schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
-            <br />
-            <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
-              <div className="flex items-center gap-2">
-                <Scale className="h-4 w-4" />
-                <span>Leicht</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Gavel className="h-4 w-4" />
-                <span>legal</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <DollarSign className="h-4 w-4" />
-                <span>steueroptimiert!</span>
-              </div>
-            </div>
-          </>
-        }
-        actions={[
-          {
-            label: "Kostenloses Erstgespräch sichern",
-            href: "#contact",
-            variant: "default"
-          }
-        ]}
-        titleClassName="text-white text-left"
-        subtitleClassName="text-gray-200 text-left"
-        actionsClassName="mt-8"
-        image="/DSFinanzfreigestelltesBild.png"
-      />
+      <HeroComponent />
       <TrustBar />
       <Problems />
       <StrategyFlow />
