@@ -1,4 +1,4 @@
-import { Award, Briefcase, Users, TrendingUp, Building, Certificate } from "lucide-react";
+import { Award, Briefcase, Users, TrendingUp, Building } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Expert = () => {
@@ -78,7 +78,7 @@ export const Expert = () => {
                     <span className="text-sm text-gray-300">Umsatzstärkste Agentur</span>
                   </div>
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
-                    <Certificate className="w-6 h-6 text-accent" />
+                    <Award className="w-6 h-6 text-accent" />
                     <span className="text-sm text-gray-300">IHK Zertifiziert</span>
                   </div>
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
