@@ -18,7 +18,25 @@ export const Problems = () => {
   return (
     <section className="relative h-[400vh]" ref={containerRef}>
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
-        <div className="container mx-auto px-4">
+        {/* Animierter Hintergrund-Verlauf */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark opacity-80" />
+          <motion.div
+            initial={{ opacity: 0.5, scale: 0.8 }}
+            animate={{ 
+              opacity: [0.5, 0.8, 0.5],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/20 rounded-full blur-3xl"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Die größten Herausforderungen für Geschäftsführer
           </h2>
@@ -39,10 +57,15 @@ export const Problems = () => {
                 <motion.div
                   key={index}
                   style={{ opacity }}
-                  className="absolute flex items-start gap-4 p-8 bg-white/10 backdrop-blur-md rounded-lg shadow-xl w-full max-w-2xl border border-accent/20"
+                  className="absolute flex items-start gap-4 p-8 rounded-lg w-full max-w-2xl
+                    bg-white/10 backdrop-blur-md
+                    border border-white/20
+                    shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]
+                    hover:bg-white/15 transition-all duration-300
+                    before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-30"
                 >
                   <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
-                  <p className="text-gray-200 text-lg">{problem}</p>
+                  <p className="text-gray-200 text-lg relative z-10">{problem}</p>
                 </motion.div>
               );
             })}
