@@ -20,12 +20,13 @@ export interface UserBehavior {
 
 export const KNOWN_SECTIONS = {
   'expert-section': 'Experten-Profil und Werdegang',
-  'problems-section': 'Problemstellungen und Herausforderungen',
-  'solution-section': 'Lösungsansätze',
+  'problems-section': 'Herausforderungen für Geschäftsführer',
+  'solution-section': 'Einzigartige Lösungsansätze',
   'process-section': 'Prozessablauf',
   'benefits-section': 'Vorteile und Mehrwert',
   'testimonials-section': 'Kundenstimmen',
-  'contact-section': 'Kontaktbereich'
+  'contact-section': 'Kontaktbereich',
+  'strategy-flow-section': 'Strategieablauf'
 } as const;
 
 export type KnownSection = keyof typeof KNOWN_SECTIONS;
