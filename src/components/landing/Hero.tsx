@@ -4,7 +4,13 @@ export const HeroComponent = () => {
   return (
     <Hero
       title="Geschäftsvermögen in Privatvermögen umwandeln"
-      subtitle="Leicht, legal und steueroptimiert!"
+      subtitle={
+        <>
+          Wie du es als Geschäftsführer/Gesellschafter einer GmbH es schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
+          <br />
+          <span className="mt-4 block">Leicht, legal und steueroptimiert!</span>
+        </>
+      }
       actions={[
         {
           label: "Kostenloses Erstgespräch sichern",
