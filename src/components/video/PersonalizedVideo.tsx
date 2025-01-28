@@ -15,17 +15,19 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
   const { toast } = useToast();
 
   useEffect(() => {
-    if (engagement?.score > 0.3 && !shouldShow) {
+    // Prüfen auf spezifisches Engagement in der Strategy-Flow-Section
+    if (engagement?.dwellTimeInStrategyFlow > 5000 && !shouldShow) {
       setShouldShow(true);
       toast({
-        title: "Personalisiertes Video",
+        title: "Personalisiertes Video verfügbar",
         description: "Basierend auf Ihrem Interesse haben wir ein erklärendes Video für Sie freigeschaltet.",
-        className: "fixed top-4 left-1/2 transform -translate-x-1/2",
+        className: "bg-primary-dark text-white border-accent",
       });
       
       console.log("Video wird angezeigt", {
         engagement,
-        shouldShow
+        shouldShow,
+        dwellTimeInStrategyFlow: engagement.dwellTimeInStrategyFlow
       });
     }
   }, [engagement, shouldShow, toast]);
@@ -34,14 +36,14 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
 
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`${className} bg-primary-dark/80 backdrop-blur-lg rounded-xl shadow-2xl border border-accent/20 p-4`}
+      className={`${className} fixed inset-x-0 mx-auto z-50 max-w-4xl px-4`}
     >
       <div className="relative">
         <div className="absolute -inset-1 bg-gradient-to-r from-accent/30 to-primary rounded-xl blur-lg" />
-        <div className="relative">
+        <div className="relative bg-primary-dark/95 backdrop-blur-lg rounded-xl shadow-2xl border border-accent/20 p-4">
           <MuxPlayer
             playbackId={playbackId}
             metadata={{
@@ -53,7 +55,7 @@ export const PersonalizedVideo = ({ playbackId, engagement, className }: Persona
             style={{
               aspectRatio: "16/9",
               width: "100%",
-              maxWidth: "720px",
+              maxWidth: "100%",
               margin: "0 auto",
               borderRadius: "0.75rem",
               overflow: "hidden",
