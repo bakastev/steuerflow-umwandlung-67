@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Marquee } from "@/components/ui/marquee"
 
 const logos = [
   "/DSFInanzLogosfurLP.png",
@@ -13,43 +13,20 @@ export const TrustBar = () => {
         <h3 className="text-center text-lg text-gray-600 mb-8">
           Bekannt aus
         </h3>
-        <div className="relative flex overflow-hidden">
-          <div className="animate-marquee flex whitespace-nowrap">
-            {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
-              <div
-                key={index}
-                className="mx-8 flex items-center justify-center"
-              >
-                <img 
-                  src={logo} 
-                  alt={`Partner Logo ${index + 1}`}
-                  className="h-12 w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
-          <div 
-            className="animate-marquee flex whitespace-nowrap"
-            style={{ 
-              position: 'absolute',
-              left: '100%',
-              top: 0
-            }}
-          >
-            {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
-              <div
-                key={`duplicate-${index}`}
-                className="mx-8 flex items-center justify-center"
-              >
-                <img 
-                  src={logo} 
-                  alt={`Partner Logo ${index + 1}`}
-                  className="h-12 w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <Marquee speed={40} className="py-4">
+          {logos.map((logo, index) => (
+            <div
+              key={index}
+              className="mx-16 flex items-center justify-center"
+            >
+              <img 
+                src={logo} 
+                alt={`Partner Logo ${index + 1}`}
+                className="h-20 w-auto object-contain"
+              />
+            </div>
+          ))}
+        </Marquee>
       </div>
     </section>
   );
