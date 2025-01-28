@@ -40,6 +40,8 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
     },
     ref,
   ) => {
+    console.log("Hero image prop:", image); // Debug-Log hinzugefügt
+
     return (
       <section
         ref={ref}
@@ -166,6 +168,10 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
                 src={image}
                 alt="Hero Image"
                 className="w-full h-auto object-contain max-h-[600px]"
+                onError={(e) => {
+                  console.error('Fehler beim Laden des Bildes:', e);
+                  console.log('Versuchter Bildpfad:', image);
+                }}
               />
             </motion.div>
           )}
