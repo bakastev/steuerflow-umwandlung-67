@@ -1,12 +1,9 @@
 import { useEffect, useRef } from "react";
 
 const logos = [
-  "Focus Money",
-  "Handelsblatt",
-  "Die Welt",
-  "Manager Magazin",
-  "Capital",
-  "Forbes",
+  "/DS FInanz  Logos für LP.png",
+  "/DS FInanz  Logos für LP (2).png",
+  "/DS FInanz  Logos für LP neu.png"
 ];
 
 export const TrustBar = () => {
@@ -21,20 +18,30 @@ export const TrustBar = () => {
             {logos.map((logo, index) => (
               <div
                 key={index}
-                className="mx-8 w-48 h-12 bg-white rounded shadow-sm flex items-center justify-center text-primary font-semibold"
+                className="mx-8 flex items-center justify-center"
               >
-                {logo}
+                <img 
+                  src={logo} 
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-12 object-contain"
+                />
               </div>
             ))}
           </div>
-          <div className="flex absolute top-0 animate-marquee whitespace-nowrap"
-               style={{ left: "100%" }}>
+          <div 
+            className="flex absolute top-0 animate-marquee whitespace-nowrap"
+            style={{ left: "100%" }}
+          >
             {logos.map((logo, index) => (
               <div
                 key={`duplicate-${index}`}
-                className="mx-8 w-48 h-12 bg-white rounded shadow-sm flex items-center justify-center text-primary font-semibold"
+                className="mx-8 flex items-center justify-center"
               >
-                {logo}
+                <img 
+                  src={logo} 
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-12 object-contain"
+                />
               </div>
             ))}
           </div>
