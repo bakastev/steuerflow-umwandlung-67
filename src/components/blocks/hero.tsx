@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
@@ -40,11 +40,17 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
     },
     ref,
   ) => {
-    console.log("Hero image prop:", image); // Debug-Log hinzugefügt
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start start", "end start"]
+    });
+
+    const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
 
     return (
       <section
-        ref={ref}
+        ref={containerRef}
         className={cn(
           "relative z-0 flex min-h-[80vh] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-primary-dark",
           className,
@@ -162,6 +168,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
+              style={{ y: imageY }}
               className="hidden lg:block w-1/2"
             >
               <img

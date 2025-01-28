@@ -9,7 +9,8 @@ export const HeroComponent = () => {
     offset: ["start start", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
 
   return (
     <div ref={ref} className="relative overflow-hidden">
@@ -35,7 +36,7 @@ export const HeroComponent = () => {
         image="/DSFinanzfreigestelltesBild.png"
       />
       <motion.div 
-        style={{ y }}
+        style={{ y, opacity }}
         className="absolute inset-0 -z-10"
       >
         <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark opacity-80" />
