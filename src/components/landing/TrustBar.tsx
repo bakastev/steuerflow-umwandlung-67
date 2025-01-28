@@ -23,7 +23,7 @@ export const TrustBar = () => {
                 <img 
                   src={logo} 
                   alt={`Partner Logo ${index + 1}`}
-                  className="h-30 w-auto object-contain"
+                  className="h-40 w-auto object-contain"
                   style={{ maxWidth: 'none' }}
                 />
               </div>
