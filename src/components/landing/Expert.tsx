@@ -19,13 +19,22 @@ export const Expert = () => {
       const expertMouseMoves = mouseMovements['expert-section'] || 0;
       const expertTextSelections = textSelections['expert-section'] || 0;
       
+      // Schwellenwert reduziert für schnelleres Anzeigen bei Interesse
       const isHighlyEngaged = 
-        expertDwellTime > 3000 && 
-        expertMouseMoves > 5 && 
+        expertDwellTime > 2000 && // von 3000 auf 2000 reduziert
+        expertMouseMoves > 3 &&   // von 5 auf 3 reduziert
         !showExtendedContent;
       
       if (isHighlyEngaged) {
         const result = await predictEngagement();
+        console.log("Expert section engagement:", {
+          dwellTime: expertDwellTime,
+          mouseMoves: expertMouseMoves,
+          textSelections: expertTextSelections,
+          score: result.score
+        });
+        
+        // Schwellenwert auf 0.2 reduziert für früheres Anzeigen
         if (result.score > 0.2) {
           setShowExtendedContent(true);
           toast({
@@ -193,6 +202,7 @@ export const Expert = () => {
       </div>
     </section>
   );
+
 };
 
 export default Expert;
