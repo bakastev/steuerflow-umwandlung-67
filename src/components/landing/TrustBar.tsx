@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 const logos = [
-  "/DS FInanz  Logos für LP.png",
-  "/DS FInanz  Logos für LP (2).png",
-  "/DS FInanz  Logos für LP neu.png"
+  "/DSFInanz LogosfurLP.png",
+  "/DSFInanz LogosfurLP (2).png",
+  "/DSFInanz LogosfurLPneu.png"
 ];
 
 export const TrustBar = () => {
@@ -23,7 +23,7 @@ export const TrustBar = () => {
                 <img 
                   src={logo} 
                   alt={`Partner Logo ${index + 1}`}
-                  className="h-12 object-contain"
+                  className="h-12 w-auto object-contain"
                 />
               </div>
             ))}
@@ -40,7 +40,7 @@ export const TrustBar = () => {
                 <img 
                   src={logo} 
                   alt={`Partner Logo ${index + 1}`}
-                  className="h-12 object-contain"
+                  className="h-12 w-auto object-contain"
                 />
               </div>
             ))}
