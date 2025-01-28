@@ -21,7 +21,7 @@ export const HeroComponent = () => {
       titleClassName="text-white"
       subtitleClassName="text-gray-200"
       actionsClassName="mt-8"
-      image="/DSFinanzfreigestelltesBild.png"
+      image="/public/DSFinanzfreigestelltesBild.png"
     />
   );
 };
