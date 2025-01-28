@@ -3,6 +3,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedStats } from "./AnimatedStats";
 import { Scale, Gavel, DollarSign } from "lucide-react";
+import { PersonalizedVideo } from "@/components/video/PersonalizedVideo";
+import { useTFTracking } from "@/hooks/useTFTracking";
+import { useVideoEngagement } from "@/hooks/useVideoEngagement";
 
 export const HeroComponent = () => {
   const ref = useRef(null);
@@ -10,6 +13,9 @@ export const HeroComponent = () => {
     target: ref,
     offset: ["start start", "end start"]
   });
+
+  const { behaviorRef } = useTFTracking();
+  const { lastPrediction } = useVideoEngagement(behaviorRef);
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
@@ -50,6 +56,13 @@ export const HeroComponent = () => {
         actionsClassName="mt-8"
         image="/DSFinanzfreigestelltesBild.png"
       />
+      
+      <PersonalizedVideo
+        playbackId="YOUR_MUX_PLAYBACK_ID" // Hier deine Mux Playback ID einfügen
+        engagement={lastPrediction.current}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4"
+      />
+      
       <AnimatedStats />
       <motion.div 
         style={{ y, opacity }}

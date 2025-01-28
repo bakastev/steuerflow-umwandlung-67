@@ -16,6 +16,12 @@ export interface UserBehavior {
   textSelections: {
     [key: string]: number;
   };
+  videoInteractions?: {
+    playCount: number;
+    pauseCount: number;
+    completionRate: number;
+    averageWatchTime: number;
+  };
 }
 
 export interface EngagementInsights {
