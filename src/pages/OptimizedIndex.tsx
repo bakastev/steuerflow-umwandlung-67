@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header } from "@/components/landing/Header";
-import { Hero } from "@/components/blocks/hero";
+import { Hero } from "@/components/landing/Hero";
 import { TrustBar } from "@/components/landing/TrustBar";
 import { Problems } from "@/components/landing/Problems";
 import { Solution } from "@/components/landing/Solution";
@@ -15,6 +15,7 @@ import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { useToast } from "@/hooks/use-toast";
 import { Scale, Gavel, DollarSign } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface EngagementInsights {
   score: number;
@@ -32,31 +33,35 @@ const OptimizedIndex = () => {
       const result = await predictEngagement();
       setEngagementInsights(result);
       
-      if (result.score > 0.7) {
+      // Schwelle auf 0.4 gesenkt für bessere Sichtbarkeit der Personalisierung
+      if (result.score > 0.4) {
         setShowExtraContent(true);
+        toast({
+          title: "Personalisierte Inhalte verfügbar",
+          description: "Basierend auf Ihrem Interesse haben wir zusätzliche Informationen für Sie freigeschaltet.",
+        });
       }
-
-      console.log('Engagement Analyse:', {
-        score: result.score,
-        insights: result.insights
-      });
     };
 
     const interval = setInterval(checkEngagement, 15000);
     return () => clearInterval(interval);
-  }, [predictEngagement]);
+  }, [predictEngagement, toast]);
 
   return (
     <div className="min-h-screen">
-      {engagementInsights && engagementInsights.score > 0.5 && (
-        <div className="fixed bottom-4 right-4 z-50 bg-accent/80 text-primary-dark p-4 rounded-lg shadow-lg backdrop-blur-md">
+      {engagementInsights && (
+        <motion.div 
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="fixed bottom-4 right-4 z-50 bg-accent/90 text-primary-dark p-4 rounded-lg shadow-lg backdrop-blur-md"
+        >
           <h3 className="font-bold mb-2">Engagement Score: {Math.round(engagementInsights.score * 100)}%</h3>
           <ul className="text-sm">
             {engagementInsights.insights.map((insight, index) => (
               <li key={index} className="mb-1">• {insight}</li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
 
       <Header />
@@ -101,32 +106,49 @@ const OptimizedIndex = () => {
       <Benefits />
       
       {showExtraContent && (
-        <div className="py-12 bg-primary-dark">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="py-12 bg-primary-dark"
+        >
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-white text-center mb-8">
               Personalisierte Empfehlungen für Sie
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white/10 p-6 rounded-lg backdrop-blur-md">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-white/10 p-6 rounded-lg backdrop-blur-md"
+              >
                 <h3 className="text-xl font-semibold text-white mb-4">
-                  Basierend auf Ihrem Interesse
+                  Exklusive Steuerstrategien
                 </h3>
                 <p className="text-gray-300">
-                  Wir haben erkannt, dass Sie sich besonders für unsere Steueroptimierungs-Strategien
-                  interessieren. Vereinbaren Sie jetzt ein persönliches Beratungsgespräch.
+                  Basierend auf Ihrem Interesse haben wir erkannt, dass Sie nach fortgeschrittenen
+                  Steueroptimierungs-Strategien suchen. Vereinbaren Sie jetzt ein persönliches 
+                  Beratungsgespräch für tiefergehende Einblicke.
                 </p>
-              </div>
-              <div className="bg-white/10 p-6 rounded-lg backdrop-blur-md">
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-white/10 p-6 rounded-lg backdrop-blur-md"
+              >
                 <h3 className="text-xl font-semibold text-white mb-4">
                   Maßgeschneiderte Lösungen
                 </h3>
                 <p className="text-gray-300">
-                  Entdecken Sie weitere Möglichkeiten, wie Sie Ihre GmbH steuerlich optimieren können.
+                  Entdecken Sie unsere speziell für GmbH-Geschäftsführer entwickelten
+                  Vermögensstrategien. Wir zeigen Ihnen, wie Sie Ihr Geschäftsvermögen optimal
+                  in Privatvermögen umwandeln können.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
 
       <Expert />
