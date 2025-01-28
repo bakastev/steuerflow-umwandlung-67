@@ -67,10 +67,11 @@ export const Problems = () => {
                 <motion.p
                   key={index}
                   style={{ opacity, scale }}
-                  className="text-2xl md:text-3xl font-semibold text-center text-white 
+                  className="text-2xl md:text-3xl font-semibold text-center text-accent 
                     max-w-3xl mx-auto leading-relaxed
-                    [text-shadow:_0_4px_12px_rgba(0,0,0,0.3)]
-                    transition-all duration-300"
+                    [text-shadow:_0_0_20px_rgba(197,165,114,0.5)]
+                    transition-all duration-300
+                    animate-fadeIn"
                 >
                   {problem}
                 </motion.p>
