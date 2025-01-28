@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Building2, ArrowRight, LineChart, Wallet, Cog, PiggyBank, ArrowUpRight } from "lucide-react";
 import { PersonalizedVideo } from "../video/PersonalizedVideo";
@@ -7,9 +8,9 @@ import { useTFTracking } from "@/hooks/useTFTracking";
 export const StrategyFlow = () => {
   const { behaviorRef } = useTFTracking();
   const { predictVideoEngagement } = useVideoEngagement(behaviorRef);
-  const [engagement, setEngagement] = React.useState(null);
+  const [engagement, setEngagement] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkEngagement = async () => {
       const result = await predictVideoEngagement();
       setEngagement(result);
