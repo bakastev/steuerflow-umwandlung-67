@@ -2,6 +2,7 @@ import { Hero } from "@/components/blocks/hero"
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedStats } from "./AnimatedStats";
+import { Scale, Gavel, DollarSign } from "lucide-react";
 
 export const HeroComponent = () => {
   const ref = useRef(null);
@@ -21,7 +22,20 @@ export const HeroComponent = () => {
           <>
             Wie du es als Geschäftsführer/Gesellschafter einer GmbH es schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
             <br />
-            <span className="mt-4 block">Leicht, legal und steueroptimiert!</span>
+            <div className="mt-4 flex items-center justify-center gap-4 text-accent">
+              <div className="flex items-center gap-2">
+                <Scale className="h-6 w-6" />
+                <span>Leicht</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Gavel className="h-6 w-6" />
+                <span>legal</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-6 w-6" />
+                <span>steueroptimiert!</span>
+              </div>
+            </div>
           </>
         }
         actions={[
