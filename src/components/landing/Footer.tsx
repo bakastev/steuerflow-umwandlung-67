@@ -2,6 +2,13 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-400 py-12">
       <div className="container mx-auto px-4">
+        <div className="flex justify-center mb-8">
+          <img 
+            src="/DS FInanz  Logos für LP (3).png" 
+            alt="DS Finanz Logo" 
+            className="h-16 w-auto"
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-white font-semibold mb-4">Kontakt</h3>
