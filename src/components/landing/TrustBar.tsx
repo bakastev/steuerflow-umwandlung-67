@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const logos = [
-  "/DSFInanz LogosfurLP.png",
+  "/DSFInanzLogosfurLP.png",
   "/DSFInanz LogosfurLP (2).png",
   "/DSFInanz LogosfurLPneu.png"
 ];
@@ -15,15 +15,15 @@ export const TrustBar = () => {
         </h3>
         <div className="relative flex overflow-x-hidden">
           <div className="flex animate-marquee whitespace-nowrap">
-            {logos.map((logo, index) => (
+            {[...logos, ...logos, ...logos].map((logo, index) => (
               <div
                 key={index}
-                className="mx-8 flex items-center justify-center"
+                className="mx-16 flex items-center justify-center"
               >
                 <img 
                   src={logo} 
                   alt={`Partner Logo ${index + 1}`}
-                  className="h-12 w-auto object-contain"
+                  className="h-16 w-auto object-contain"
                 />
               </div>
             ))}
@@ -32,15 +32,15 @@ export const TrustBar = () => {
             className="flex absolute top-0 animate-marquee whitespace-nowrap"
             style={{ left: "100%" }}
           >
-            {logos.map((logo, index) => (
+            {[...logos, ...logos, ...logos].map((logo, index) => (
               <div
                 key={`duplicate-${index}`}
-                className="mx-8 flex items-center justify-center"
+                className="mx-16 flex items-center justify-center"
               >
                 <img 
                   src={logo} 
                   alt={`Partner Logo ${index + 1}`}
-                  className="h-12 w-auto object-contain"
+                  className="h-16 w-auto object-contain"
                 />
               </div>
             ))}
