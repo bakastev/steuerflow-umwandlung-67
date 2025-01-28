@@ -10,6 +10,7 @@ import { Testimonials } from "@/components/landing/Testimonials";
 import { MultiStepForm } from "@/components/landing/MultiStepForm";
 import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
+import { StrategyFlow } from "@/components/landing/StrategyFlow";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Hero />
       <TrustBar />
       <Problems />
+      <StrategyFlow />
       <Solution />
       <Benefits />
       <Expert />
