@@ -1,45 +1,38 @@
 import { useEffect, useRef } from "react";
 
 const logos = [
-  "Logo 1", "Logo 2", "Logo 3", "Logo 4", "Logo 5", 
-  // Hier können weitere Logos hinzugefügt werden
+  "Focus Money",
+  "Handelsblatt",
+  "Die Welt",
+  "Manager Magazin",
+  "Capital",
+  "Forbes",
 ];
 
 export const TrustBar = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scrollElement = scrollRef.current;
-    if (!scrollElement) return;
-
-    const scroll = () => {
-      if (scrollElement.scrollLeft >= scrollElement.scrollWidth / 2) {
-        scrollElement.scrollLeft = 0;
-      } else {
-        scrollElement.scrollLeft += 1;
-      }
-    };
-
-    const timer = setInterval(scroll, 30);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <h3 className="text-center text-lg text-gray-600 mb-8">
           Bekannt aus
         </h3>
-        <div className="overflow-hidden">
-          <div 
-            ref={scrollRef}
-            className="flex whitespace-nowrap"
-            style={{ width: "200%" }}
-          >
-            {[...logos, ...logos].map((logo, index) => (
+        <div className="relative flex overflow-x-hidden">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {logos.map((logo, index) => (
               <div
                 key={index}
-                className="flex-none mx-8 w-32 h-12 bg-white rounded shadow-sm flex items-center justify-center"
+                className="mx-8 w-48 h-12 bg-white rounded shadow-sm flex items-center justify-center text-primary font-semibold"
+              >
+                {logo}
+              </div>
+            ))}
+          </div>
+          <div className="flex absolute top-0 animate-marquee whitespace-nowrap"
+               style={{ left: "100%" }}>
+            {logos.map((logo, index) => (
+              <div
+                key={`duplicate-${index}`}
+                className="mx-8 w-48 h-12 bg-white rounded shadow-sm flex items-center justify-center text-primary font-semibold"
               >
                 {logo}
               </div>
