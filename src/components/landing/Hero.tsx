@@ -1,3 +1,4 @@
+import { Hero } from "@/components/blocks/hero";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedStats } from "./AnimatedStats";
