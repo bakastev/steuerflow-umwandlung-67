@@ -2,7 +2,7 @@ import { Hero } from "@/components/blocks/hero";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedStats } from "./AnimatedStats";
-import { Scale, Gavel, DollarSign } from "lucide-react";
+import { Brain, ChartBar, Target } from "lucide-react";
 import { PersonalizedVideo } from "@/components/video/PersonalizedVideo";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { useVideoEngagement } from "@/hooks/useVideoEngagement";
@@ -23,30 +23,30 @@ export const HeroComponent = () => {
   return (
     <div ref={ref} className="relative overflow-hidden">
       <Hero
-        title="Geschäftsvermögen in Privatvermögen umwandeln"
+        title="Steigern Sie Ihren Online-Umsatz durch verkaufspsychologisch optimierte Webseiten"
         subtitle={
           <>
-            Wie du es als Geschäftsführer/Gesellschafter einer GmbH schaffst, dein Betriebsvermögen in Privatvermögen umzuwandeln
+            Wissenschaftlich fundierte Conversion-Optimierung für B2B Unternehmen
             <br />
             <div className="mt-4 flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-accent text-sm">
               <div className="flex items-center gap-2">
-                <Scale className="h-4 w-4" />
-                <span>Legal</span>
+                <Brain className="h-4 w-4" />
+                <span>KI-gestützt</span>
               </div>
               <div className="flex items-center gap-2">
-                <Gavel className="h-4 w-4" />
-                <span>Sicher</span>
+                <ChartBar className="h-4 w-4" />
+                <span>Datenbasiert</span>
               </div>
               <div className="flex items-center gap-2">
-                <DollarSign className="h-4 w-4" />
-                <span>Steueroptimiert!</span>
+                <Target className="h-4 w-4" />
+                <span>ROI-fokussiert</span>
               </div>
             </div>
           </>
         }
         actions={[
           {
-            label: "Kostenloses Erstgespräch sichern",
+            label: "Kostenloses Website-Audit anfordern",
             href: "#contact",
             variant: "default"
           }

@@ -18,6 +18,7 @@ import { Scale, Gavel, DollarSign, Brain } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { EngagementInsights } from "@/types/tracking";
+import { TechStack } from "@/components/landing/TechStack";
 
 const OptimizedIndex = () => {
   const { predictEngagement, behaviorRef } = useTFTracking();
@@ -50,7 +51,7 @@ const OptimizedIndex = () => {
 
   return (
     <div className="min-h-screen">
-      {/* KI-Insights Panel mit höherem z-index */}
+      {/* KI-Insights Panel */}
       <AnimatePresence>
         {engagementInsights && (
           <motion.div 
@@ -67,7 +68,7 @@ const OptimizedIndex = () => {
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Engagement Score</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Personalisierungsgrad</span>
                   <span className="font-medium">{Math.round(engagementProgress)}%</span>
                 </div>
                 <Progress value={engagementProgress} className="h-2" />
@@ -90,12 +91,6 @@ const OptimizedIndex = () => {
                   ))}
                 </ul>
               </div>
-
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                Scroll-Tiefe: {Math.round(behaviorRef.current.scrollDepth)}%
-                <br />
-                Interaktionen: {behaviorRef.current.clicks}
-              </div>
             </div>
           </motion.div>
         )}
@@ -105,70 +100,17 @@ const OptimizedIndex = () => {
       <Hero />
       <TrustBar />
       <Problems />
+      <TechStack />
       <StrategyFlow />
       <Solution />
       <Benefits />
-      
-      <AnimatePresence>
-        {showExtraContent && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="py-12 bg-gradient-to-b from-primary-dark to-primary"
-          >
-            <div className="container mx-auto px-4">
-              <motion.h2 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-3xl font-bold text-white text-center mb-8"
-              >
-                Personalisierte Empfehlungen für Sie
-              </motion.h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-white/10 p-6 rounded-lg backdrop-blur-md"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Exklusive Steuerstrategien
-                  </h3>
-                  <p className="text-gray-300">
-                    Basierend auf Ihrem Interesse haben wir erkannt, dass Sie nach fortgeschrittenen
-                    Steueroptimierungs-Strategien suchen. Vereinbaren Sie jetzt ein persönliches 
-                    Beratungsgespräch für tiefergehende Einblicke.
-                  </p>
-                </motion.div>
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="bg-white/10 p-6 rounded-lg backdrop-blur-md"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Maßgeschneiderte Lösungen
-                  </h3>
-                  <p className="text-gray-300">
-                    Entdecken Sie unsere speziell für GmbH-Geschäftsführer entwickelten
-                    Vermögensstrategien. Wir zeigen Ihnen, wie Sie Ihr Geschäftsvermögen optimal
-                    in Privatvermögen umwandeln können.
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <Expert />
       <Process />
       <Testimonials />
       <section className="py-20 bg-white" id="contact">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Jetzt kostenloses Erstgespräch sichern
+            Jetzt kostenloses Website-Audit sichern
           </h2>
           <MultiStepForm />
         </div>

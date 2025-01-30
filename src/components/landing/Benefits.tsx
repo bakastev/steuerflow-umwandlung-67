@@ -1,4 +1,4 @@
-import { Euro, TrendingUp, Calculator, ArrowRight } from "lucide-react";
+import { Brain, ChartBarIcon, Rocket, Target } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
@@ -6,32 +6,32 @@ import { useToast } from "@/hooks/use-toast";
 
 const initialBenefits = [
   {
-    title: "Steuerfreie ETF-Investitionen",
-    description: "Nutzen Sie den monatlichen Freibetrag von 644€ für steuerfreie ETF-Anlagen aus Ihrer GmbH.",
-    icon: Euro,
+    title: "Selbstlernende Webseite",
+    description: "Ihre Webseite lernt von jedem Besucher und wird kontinuierlich verkaufsstärker.",
+    icon: Brain,
   },
   {
-    title: "Flexible Investitionsmöglichkeiten",
-    description: "Bei GmbHs älter als 3 Jahre: Investieren Sie bis zu 10.000€ monatlich steuerfrei.",
-    icon: TrendingUp,
+    title: "Datenbasierte Optimierung",
+    description: "Kontinuierliche Verbesserung durch wissenschaftlich fundierte Erkenntnisse.",
+    icon: ChartBarIcon,
   },
   {
-    title: "100% Steuervorteile",
-    description: "Alle Investitionen sind als Betriebsausgaben zu 100% steuerlich absetzbar.",
-    icon: Calculator,
+    title: "Maximale Performance",
+    description: "Blitzschnelle Ladezeiten und optimale User Experience für höhere Conversions.",
+    icon: Rocket,
   },
 ];
 
 const extendedBenefits = [
   {
-    title: "Optimierte Vermögensstruktur",
-    description: "Strategische Verteilung zwischen Privat- und Geschäftsvermögen für maximale Steuervorteile.",
-    icon: ArrowRight,
+    title: "ROI-Fokussiert",
+    description: "Messbare Ergebnisse und konkrete Conversion-Steigerungen für Ihr Unternehmen.",
+    icon: Target,
   },
   {
-    title: "Nachhaltige Altersvorsorge",
-    description: "Aufbau einer steueroptimalen Altersvorsorge durch clevere Kombination verschiedener Anlageformen.",
-    icon: ArrowRight,
+    title: "Conversion-Psychologie",
+    description: "Wissenschaftlich fundierte Verkaufspsychologie für maximale Überzeugungskraft.",
+    icon: Brain,
   }
 ];
 
