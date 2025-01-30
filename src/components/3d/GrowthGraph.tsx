@@ -18,7 +18,7 @@ export const GrowthGraph = () => {
     const ambientLight = new THREE.AmbientLight(0xC5A572, 0.5);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xC5A572, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
 
@@ -26,58 +26,60 @@ export const GrowthGraph = () => {
     pointLight.position.set(0, 5, 0);
     scene.add(pointLight);
 
-    // Create multiple growth curves
-    const createCurve = (offset: number, height: number) => {
-      const curvePoints = [];
-      for (let i = 0; i <= 50; i++) {
-        const t = i / 50;
-        curvePoints.push(new THREE.Vector3(
-          (t * 4 - 2) + offset,
-          Math.pow(t, 2) * height - 2,
-          0
-        ));
-      }
-      return new THREE.CatmullRomCurve3(curvePoints);
-    };
+    // Create rocket body
+    const rocketGroup = new THREE.Group();
 
-    const curves = [
-      createCurve(0, 6),
-      createCurve(0.5, 5),
-      createCurve(-0.5, 7)
-    ];
-
-    const meshObjects: THREE.Mesh[] = [];
-    const sphereGroups: THREE.Group[] = [];
-
-    curves.forEach((curve, index) => {
-      // Create tube geometry for smoother curves
-      const tubeGeometry = new THREE.TubeGeometry(curve, 100, 0.02, 8, false);
-      const tubeMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xC5A572,
-        shininess: 100,
-        transparent: true,
-        opacity: 0.8
-      });
-      const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
-      scene.add(tubeMesh);
-      meshObjects.push(tubeMesh);
-
-      // Add animated spheres along the curve
-      const sphereGroup = new THREE.Group();
-      const points = curve.getPoints(10);
-      points.forEach((point) => {
-        const sphereGeometry = new THREE.SphereGeometry(0.05, 32, 32);
-        const sphereMaterial = new THREE.MeshPhongMaterial({ 
-          color: 0xC5A572,
-          shininess: 100
-        });
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.position.copy(point);
-        sphereGroup.add(sphere);
-      });
-      scene.add(sphereGroup);
-      sphereGroups.push(sphereGroup);
+    // Main body
+    const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 2, 32);
+    const bodyMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0xC5A572,
+      shininess: 100,
     });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    rocketGroup.add(body);
+
+    // Nose cone
+    const noseGeometry = new THREE.ConeGeometry(0.5, 1, 32);
+    const noseMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0xC5A572,
+      shininess: 100,
+    });
+    const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+    nose.position.y = 1.5;
+    rocketGroup.add(nose);
+
+    // Fins
+    const finGeometry = new THREE.BoxGeometry(0.1, 0.8, 0.8);
+    const finMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0xA17F47,
+      shininess: 100,
+    });
+
+    // Add 3 fins
+    for (let i = 0; i < 3; i++) {
+      const fin = new THREE.Mesh(finGeometry, finMaterial);
+      fin.position.y = -0.8;
+      fin.position.x = Math.cos((i * 2 * Math.PI) / 3) * 0.5;
+      fin.position.z = Math.sin((i * 2 * Math.PI) / 3) * 0.5;
+      fin.rotation.y = (i * 2 * Math.PI) / 3;
+      rocketGroup.add(fin);
+    }
+
+    // Rocket flames
+    const flameGeometry = new THREE.ConeGeometry(0.3, 1, 32);
+    const flameMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0xff3d00,
+      transparent: true,
+      opacity: 0.8,
+      emissive: 0xff3d00,
+      emissiveIntensity: 0.5,
+    });
+    const flame = new THREE.Mesh(flameGeometry, flameMaterial);
+    flame.position.y = -1.5;
+    flame.rotation.x = Math.PI;
+    rocketGroup.add(flame);
+
+    scene.add(rocketGroup);
 
     // Position camera
     camera.position.z = 8;
@@ -100,15 +102,8 @@ export const GrowthGraph = () => {
         y: e.clientY - previousMousePosition.y
       };
 
-      meshObjects.forEach(mesh => {
-        mesh.rotation.y += deltaMove.x * 0.005;
-        mesh.rotation.x += deltaMove.y * 0.005;
-      });
-
-      sphereGroups.forEach(group => {
-        group.rotation.y += deltaMove.x * 0.005;
-        group.rotation.x += deltaMove.y * 0.005;
-      });
+      rocketGroup.rotation.y += deltaMove.x * 0.005;
+      rocketGroup.rotation.x += deltaMove.y * 0.005;
 
       previousMousePosition = { x: e.clientX, y: e.clientY };
     };
@@ -129,16 +124,14 @@ export const GrowthGraph = () => {
 
       // Smooth floating animation when not dragging
       if (!isDragging) {
-        meshObjects.forEach((mesh, index) => {
-          mesh.rotation.y = Math.sin(frame + index * 0.5) * 0.1;
-          mesh.position.y = Math.sin(frame * 0.5 + index * 0.3) * 0.1;
-        });
-
-        sphereGroups.forEach((group, index) => {
-          group.rotation.y = Math.sin(frame + index * 0.5) * 0.1;
-          group.position.y = Math.sin(frame * 0.5 + index * 0.3) * 0.1;
-        });
+        rocketGroup.rotation.y = Math.sin(frame) * 0.1;
+        rocketGroup.position.y = Math.sin(frame * 0.5) * 0.2;
       }
+
+      // Animate flame
+      flame.scale.x = 0.8 + Math.sin(frame * 4) * 0.2;
+      flame.scale.z = 0.8 + Math.sin(frame * 4) * 0.2;
+      flameMaterial.opacity = 0.6 + Math.sin(frame * 4) * 0.2;
 
       // Animate point light
       pointLight.position.x = Math.sin(frame) * 3;
