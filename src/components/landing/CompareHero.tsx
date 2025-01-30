@@ -1,48 +1,134 @@
-import React from "react";
-import { Compare } from "@/components/ui/compare";
+"use client"
+
+import * as React from "react"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Star, Users, Clock, ArrowRight } from "lucide-react"
 
 export const CompareHero = () => {
+  const [sliderPosition, setSliderPosition] = useState(50)
+  
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = Math.max(0, Math.min(event.clientX - rect.left, rect.width))
+    const percentage = (x / rect.width) * 100
+    setSliderPosition(percentage)
+  }
+
   return (
-    <section className="py-20 bg-white">
+    <section className="relative py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          Verkaufspsychologie im Vergleich
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
+          Vergleichen Sie selbst den Unterschied
         </h2>
-        <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-          Sehen Sie den direkten Unterschied zwischen einer standard Webseite und einer verkaufspsychologisch optimierten Version für eine Anwaltskanzlei
-        </p>
         
-        <div className="flex flex-col items-center justify-center">
-          <Compare
-            firstImage="/hero-optimized.jpg"
-            secondImage="/hero-standard.jpg"
-            className="h-[300px] w-full md:h-[600px] md:w-[800px] rounded-xl shadow-2xl"
-            slideMode="hover"
-            showHandlebar={true}
-          />
-          
-          <div className="mt-8 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="p-6 bg-gray-50 rounded-xl">
-              <h3 className="text-xl font-semibold mb-4">Standard Version</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Generische Stockfotos</li>
-                <li>• Allgemeine Aussagen</li>
-                <li>• Keine klare Zielgruppenansprache</li>
-                <li>• Schwache Call-to-Actions</li>
-              </ul>
+        <div 
+          className="relative h-[600px] w-full cursor-col-resize"
+          onMouseMove={handleMouseMove}
+        >
+          {/* Standard Hero */}
+          <div className="absolute inset-0 bg-white">
+            <div className="container h-full mx-auto px-4 flex items-center">
+              <div className="max-w-2xl">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                  Ihre Anwaltskanzlei für alle Rechtsfragen
+                </h1>
+                <p className="text-lg text-gray-600 mb-8">
+                  Kompetente rechtliche Beratung für Privatpersonen und Unternehmen
+                </p>
+                <Button variant="default">
+                  Kontakt
+                </Button>
+              </div>
             </div>
-            <div className="p-6 bg-blue-50 rounded-xl">
-              <h3 className="text-xl font-semibold mb-4">Optimierte Version</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Authentische Bilder der Kanzlei</li>
-                <li>• Konkrete Leistungsversprechen</li>
-                <li>• Direkte Ansprache der Zielgruppe</li>
-                <li>• Psychologisch optimierte CTAs</li>
-              </ul>
+          </div>
+
+          {/* Optimierter Hero */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-br from-primary via-primary-dark to-primary-dark"
+            style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+          >
+            <div className="container h-full mx-auto px-4">
+              <div className="flex h-full items-center justify-between">
+                <div className="max-w-2xl">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="flex items-center gap-1">
+                      <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                    </div>
+                    <span className="text-white/80">4.9/5 bei Google (127 Bewertungen)</span>
+                  </div>
+                  
+                  <h1 className="text-5xl font-bold text-white mb-4">
+                    Ihr Experte für Arbeitsrecht in München
+                  </h1>
+                  
+                  <div className="flex gap-6 mb-8">
+                    <div className="flex items-center gap-2">
+                      <Users className="w-5 h-5 text-accent" />
+                      <span className="text-white/80">2.500+ zufriedene Mandanten</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-accent" />
+                      <span className="text-white/80">Erstberatung in 24h</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-xl text-white/90 mb-8">
+                    Sichern Sie sich jetzt Ihr Recht am Arbeitsplatz mit unserer Expertise
+                  </p>
+                  
+                  <Button 
+                    size="lg"
+                    className="bg-accent text-primary-dark hover:bg-accent/90 group"
+                  >
+                    Kostenlose Erstberatung sichern
+                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                  
+                  <div className="mt-8 flex items-center gap-4">
+                    <img src="/DSFInanzLogosfuerLP3.png" alt="Trust Badge 1" className="h-12 opacity-80" />
+                    <img src="/DSFInanzLogosfuerLP4.png" alt="Trust Badge 2" className="h-12 opacity-80" />
+                  </div>
+                </div>
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="hidden lg:block w-1/3"
+                >
+                  <img 
+                    src="/Steve_neu_4.jpg" 
+                    alt="Rechtsanwalt" 
+                    className="rounded-lg shadow-2xl"
+                  />
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Slider Handle */}
+          <div 
+            className="absolute top-0 bottom-0 w-1 bg-white cursor-col-resize"
+            style={{ left: `${sliderPosition}%` }}
+          >
+            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+              <div className="w-1 h-4 bg-gray-400 rounded-full" />
             </div>
           </div>
         </div>
+        
+        <div className="mt-8 text-center">
+          <p className="text-white/80">
+            Bewegen Sie den Slider, um den Unterschied zwischen Standard und optimiertem Design zu sehen
+          </p>
+        </div>
       </div>
     </section>
-  );
-};
+  )
+}
