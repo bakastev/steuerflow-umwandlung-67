@@ -12,7 +12,7 @@ import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
 import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { motion, AnimatePresence } from "framer-motion";
 import { Brain } from "lucide-react";
@@ -23,26 +23,74 @@ const Index = () => {
   const { predictEngagement, behaviorRef } = useTFTracking();
   const [engagementInsights, setEngagementInsights] = useState<EngagementInsights | null>(null);
   const [engagementProgress, setEngagementProgress] = useState(0);
+  const lastUpdateRef = useRef<number>(0);
+  const progressHistory = useRef<number[]>([]);
 
   useEffect(() => {
+    const initializeTracking = () => {
+      // Initialisiere Tracking für alle bekannten Sektionen
+      const sections = [
+        'expert-section',
+        'problems-section',
+        'solution-section',
+        'process-section',
+        'benefits-section',
+        'testimonials-section',
+        'contact-section',
+        'strategy-flow-section',
+        'faqs-section'
+      ];
+
+      sections.forEach(sectionId => {
+        if (!behaviorRef.current.dwellTimes[sectionId]) {
+          behaviorRef.current.dwellTimes[sectionId] = 0;
+        }
+        if (!behaviorRef.current.mouseMovements[sectionId]) {
+          behaviorRef.current.mouseMovements[sectionId] = 0;
+        }
+        if (!behaviorRef.current.textSelections[sectionId]) {
+          behaviorRef.current.textSelections[sectionId] = 0;
+        }
+      });
+    };
+
     const checkEngagement = async () => {
+      const now = Date.now();
+      // Mindestens 1 Sekunde zwischen Updates
+      if (now - lastUpdateRef.current < 1000) {
+        return;
+      }
+
       console.log("Checking engagement on Index page...");
       const result = await predictEngagement();
       console.log("Engagement result:", result);
+
+      // Glätten des Engagement-Scores durch Mittelwertbildung
+      progressHistory.current.push(result.score * 100);
+      if (progressHistory.current.length > 5) {
+        progressHistory.current.shift();
+      }
+      
+      const smoothedProgress = progressHistory.current.reduce((a, b) => a + b, 0) / progressHistory.current.length;
+      
       setEngagementInsights(result);
-      setEngagementProgress(result.score * 100);
+      setEngagementProgress(smoothedProgress);
+      lastUpdateRef.current = now;
     };
 
-    // Initial check
+    // Initialisiere Tracking
+    initializeTracking();
+
+    // Erste Überprüfung
     checkEngagement();
 
-    // Set up interval for continuous checking
+    // Regelmäßige Überprüfung
     const interval = setInterval(checkEngagement, 2000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [predictEngagement]);
+  }, [predictEngagement, behaviorRef]);
 
   return (
     <div className="min-h-screen">
