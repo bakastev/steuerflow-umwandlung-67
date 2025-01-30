@@ -10,7 +10,6 @@ import { Testimonials } from "@/components/landing/Testimonials";
 import { MultiStepForm } from "@/components/landing/MultiStepForm";
 import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
-import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { TechStack } from "@/components/landing/TechStack";
 
 const Index = () => {
@@ -20,8 +19,8 @@ const Index = () => {
       <Hero />
       <TrustBar />
       <Problems />
-      <TechStack />
       <Benefits />
+      <TechStack />
       <Solution />
       <Expert />
       <Process />

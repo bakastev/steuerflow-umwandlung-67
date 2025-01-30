@@ -1,26 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Building2, ArrowRight, LineChart, Wallet, Cog, PiggyBank, ArrowUpRight } from "lucide-react";
-import { PersonalizedVideo } from "../video/PersonalizedVideo";
-import { useVideoEngagement } from "@/hooks/useVideoEngagement";
-import { useTFTracking } from "@/hooks/useTFTracking";
 
 export const StrategyFlow = () => {
-  const { behaviorRef } = useTFTracking();
-  const { predictVideoEngagement } = useVideoEngagement(behaviorRef);
-  const [engagement, setEngagement] = useState(null);
-
-  useEffect(() => {
-    const checkEngagement = async () => {
-      const result = await predictVideoEngagement();
-      console.log("Strategy Flow Engagement Check:", result);
-      setEngagement(result);
-    };
-
-    const interval = setInterval(checkEngagement, 1000);
-    return () => clearInterval(interval);
-  }, [predictVideoEngagement]);
-
 const flowItems = [
   {
     icon: Building2,
@@ -55,14 +37,6 @@ const flowItems = [
   return (
     <section id="strategy-flow-section" className="py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
-        {engagement && (
-          <PersonalizedVideo
-            playbackId="GZQlEubrnobCOtuod1LmW3dIgCws02yfjl20288aULwFs"
-            engagement={engagement}
-            className="mb-16"
-          />
-        )}
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
