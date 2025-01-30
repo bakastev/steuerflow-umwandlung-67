@@ -4,16 +4,18 @@ import * as React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Star, Users, Clock, ArrowRight } from "lucide-react"
+import { Star, Users, Clock, ArrowRight, ArrowLeft, ArrowLeftRight } from "lucide-react"
 
 export const CompareHero = () => {
   const [sliderPosition, setSliderPosition] = useState(50)
+  const [hasInteracted, setHasInteracted] = useState(false)
   
   const handleMouseMove = (event: React.MouseEvent) => {
     const rect = event.currentTarget.getBoundingClientRect()
     const x = Math.max(0, Math.min(event.clientX - rect.left, rect.width))
     const percentage = (x / rect.width) * 100
     setSliderPosition(percentage)
+    if (!hasInteracted) setHasInteracted(true)
   }
 
   return (
@@ -28,16 +30,17 @@ export const CompareHero = () => {
           onMouseMove={handleMouseMove}
         >
           {/* Standard Hero */}
-          <div className="absolute inset-0 bg-white">
+          <div className="absolute inset-0 bg-gray-50">
             <div className="container h-full mx-auto px-4 flex items-center">
-              <div className="max-w-2xl">
-                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+              <div className="max-w-2xl mx-auto text-center">
+                <h1 className="text-4xl font-bold text-gray-800 mb-6">
                   Ihre Anwaltskanzlei für alle Rechtsfragen
                 </h1>
-                <p className="text-lg text-gray-600 mb-8">
-                  Kompetente rechtliche Beratung für Privatpersonen und Unternehmen
+                <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
+                  Kompetente rechtliche Beratung für Privatpersonen und Unternehmen. 
+                  Wir unterstützen Sie bei allen rechtlichen Anliegen.
                 </p>
-                <Button variant="default">
+                <Button variant="default" className="bg-primary text-white">
                   Kontakt
                 </Button>
               </div>
@@ -112,14 +115,20 @@ export const CompareHero = () => {
             </div>
           </div>
 
-          {/* Slider Handle */}
+          {/* Slider Handle mit Hinweis */}
           <div 
-            className="absolute top-0 bottom-0 w-1 bg-white cursor-col-resize"
+            className="absolute top-0 bottom-0 w-1 bg-white cursor-col-resize group"
             style={{ left: `${sliderPosition}%` }}
           >
             <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
               <div className="w-1 h-4 bg-gray-400 rounded-full" />
             </div>
+            {!hasInteracted && (
+              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-primary-dark px-4 py-2 rounded-lg shadow-lg -mt-16 flex items-center gap-2">
+                <ArrowLeftRight className="w-4 h-4" />
+                Bewegen Sie mich zum Vergleichen
+              </div>
+            )}
           </div>
         </div>
         
