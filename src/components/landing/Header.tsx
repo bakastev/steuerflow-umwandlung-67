@@ -15,8 +15,8 @@ export const Header = () => {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <img 
-              src="/DSFInanzLogosfuerLP3.png" 
-              alt="DS Finanz Logo" 
+              src="/baka_logo.png" 
+              alt="BAKA Logo" 
               className="h-12 w-auto"
             />
           </div>

@@ -64,8 +64,8 @@ export const Expert = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                src="/DSFinanzfreigestelltesBild2.png"
-                alt="Ricardo Di Sabatino"
+                src="/Steve_neu_4.jpg"
+                alt="Steve Baka"
                 className="rounded-2xl shadow-xl w-full max-w-md mx-auto"
               />
             </motion.div>
@@ -78,7 +78,7 @@ export const Expert = () => {
                 className="text-left"
               >
                 <h2 className="text-3xl font-bold text-white mb-6">
-                  Riccardo Di Sabatino
+                  Steve Baka
                 </h2>
                 <h3 className="text-xl text-accent mb-6">
                   Experte für Conversion-Optimierung & Verkaufspsychologie
