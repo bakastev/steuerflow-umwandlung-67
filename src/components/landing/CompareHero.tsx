@@ -4,7 +4,8 @@ import * as React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Star, Users, Clock, ArrowRight, ArrowLeft, ArrowLeftRight } from "lucide-react"
+import { Star, Users, Clock, ArrowRight, ArrowLeftRight } from "lucide-react"
+import { Shield, Award, CheckCircle } from "lucide-react"
 
 export const CompareHero = () => {
   const [sliderPosition, setSliderPosition] = useState(50)
@@ -92,6 +93,21 @@ export const CompareHero = () => {
                     Kostenlose Erstberatung sichern
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
+
+                  <div className="mt-8 flex items-center gap-8">
+                    <div className="flex flex-col items-center gap-2">
+                      <Shield className="w-12 h-12 text-accent" />
+                      <span className="text-white/80 text-sm">Geprüfte Qualität</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <Award className="w-12 h-12 text-accent" />
+                      <span className="text-white/80 text-sm">Top Bewertungen</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <CheckCircle className="w-12 h-12 text-accent" />
+                      <span className="text-white/80 text-sm">Zertifiziert</span>
+                    </div>
+                  </div>
                 </div>
                 
                 <motion.div
@@ -101,9 +117,9 @@ export const CompareHero = () => {
                   className="hidden lg:block w-1/3"
                 >
                   <img 
-                    src="/hero-optimized.jpg" 
-                    alt="Anwaltsteam in Beratung" 
-                    className="rounded-lg shadow-2xl"
+                    src="/hero-business.jpg" 
+                    alt="Professioneller Rechtsberater" 
+                    className="rounded-lg shadow-2xl object-cover h-[400px] w-full"
                   />
                 </motion.div>
               </div>
