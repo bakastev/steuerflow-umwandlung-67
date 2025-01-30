@@ -21,9 +21,8 @@ const Index = () => {
       <TrustBar />
       <Problems />
       <TechStack />
-      <StrategyFlow />
-      <Solution />
       <Benefits />
+      <Solution />
       <Expert />
       <Process />
       <Testimonials />

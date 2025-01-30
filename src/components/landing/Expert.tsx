@@ -1,4 +1,4 @@
-import { Award, Briefcase, Users, TrendingUp, Building } from "lucide-react";
+import { TrendingUp, Building, Award } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
@@ -19,10 +19,9 @@ export const Expert = () => {
       const expertMouseMoves = mouseMovements['expert-section'] || 0;
       const expertTextSelections = textSelections['expert-section'] || 0;
       
-      // Schwellenwert reduziert für schnelleres Anzeigen bei Interesse
       const isHighlyEngaged = 
-        expertDwellTime > 2000 && // von 3000 auf 2000 reduziert
-        expertMouseMoves > 3 &&   // von 5 auf 3 reduziert
+        expertDwellTime > 2000 && 
+        expertMouseMoves > 3 &&   
         !showExtendedContent;
       
       if (isHighlyEngaged) {
@@ -34,12 +33,11 @@ export const Expert = () => {
           score: result.score
         });
         
-        // Schwellenwert auf 0.2 reduziert für früheres Anzeigen
         if (result.score > 0.2) {
           setShowExtendedContent(true);
           toast({
             title: "Inhalt personalisiert",
-            description: "Wir zeigen Ihnen weitere Details zu Riccardo's Expertise, da Sie sich besonders für seinen Werdegang interessieren.",
+            description: "Wir zeigen Ihnen weitere Details zu Steve's Expertise, da Sie sich besonders für seinen Werdegang interessieren.",
           });
         }
       }
@@ -108,68 +106,6 @@ export const Expert = () => {
                   >
                     Seine Expertise in der Optimierung von B2B Websites wurde 2023 mit dem Digital Innovation Award ausgezeichnet, und er ist ein gefragter Sprecher auf internationalen Marketing-Konferenzen.
                   </motion.p>
-
-                  <AnimatePresence>
-                    {showExtendedContent && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="space-y-6 pt-4"
-                      >
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2 }}
-                        >
-                          Durch seine innovative Herangehensweise an die betriebliche Altersvorsorge hat Riccardo Di Sabatino neue Maßstäbe in der Branche gesetzt. Seine Strategien zur Steueroptimierung haben bereits hunderten von Unternehmern geholfen, ihre finanziellen Ziele zu erreichen.
-                        </motion.p>
-                        
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.3 }}
-                          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                        >
-                          <div className="bg-primary-light/30 p-4 rounded-lg">
-                            <h4 className="text-accent font-semibold mb-2">Expertise-Bereiche</h4>
-                            <ul className="space-y-2">
-                              <li className="flex items-center gap-2">
-                                <Award className="w-4 h-4 text-accent" />
-                                <span>Betriebliche Altersvorsorge</span>
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <Award className="w-4 h-4 text-accent" />
-                                <span>Steueroptimierung</span>
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <Award className="w-4 h-4 text-accent" />
-                                <span>Unternehmensberatung</span>
-                              </li>
-                            </ul>
-                          </div>
-                          
-                          <div className="bg-primary-light/30 p-4 rounded-lg">
-                            <h4 className="text-accent font-semibold mb-2">Auszeichnungen</h4>
-                            <ul className="space-y-2">
-                              <li className="flex items-center gap-2">
-                                <TrendingUp className="w-4 h-4 text-accent" />
-                                <span>Top-Performer 2023</span>
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <Building className="w-4 h-4 text-accent" />
-                                <span>Innovator des Jahres</span>
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <Users className="w-4 h-4 text-accent" />
-                                <span>Beste Kundenbetreuung</span>
-                              </li>
-                            </ul>
-                          </div>
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 <motion.div 
