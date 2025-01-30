@@ -35,11 +35,7 @@ const extendedBenefits = [
   }
 ];
 
-interface BenefitsProps {
-  id?: string;
-}
-
-export const Benefits = ({ id }: BenefitsProps) => {
+export const Benefits = () => {
   const [showExtendedContent, setShowExtendedContent] = useState(false);
   const { behaviorRef, predictEngagement } = useTFTracking();
   const { toast } = useToast();
@@ -77,7 +73,7 @@ export const Benefits = ({ id }: BenefitsProps) => {
   }, [showExtendedContent, behaviorRef, toast]);
 
   return (
-    <section id={id} className="relative py-20 bg-primary-dark overflow-hidden">
+    <section id="benefits-section" className="relative py-20 bg-primary-dark overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark" />
       </div>

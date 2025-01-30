@@ -43,7 +43,7 @@ const flowItems = [
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-center mb-16 text-white"
         >
-          Unsere KI-gestützte Optimierungsstrategie
+          Ihre Geschäftsführer-Strategie
         </motion.h2>
         
         <div className="relative max-w-5xl mx-auto">

@@ -20,13 +20,9 @@ const solutions = [
   },
 ];
 
-interface SolutionProps {
-  id?: string;
-}
-
-export const Solution = ({ id }: SolutionProps) => {
+export const Solution = () => {
   return (
-    <section id={id} className="relative py-20 bg-primary-dark overflow-hidden">
+    <section id="solution-section" className="relative py-20 bg-primary-dark overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark animate-pulse duration-[4000ms]" />
       </div>
