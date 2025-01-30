@@ -23,7 +23,7 @@ export const CompareHero = () => {
     <section className="relative py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
-          Vergleichen Sie selbst den Unterschied
+          Verkaufspsychologisch optimierte Webseiten für mehr Wirkung und Conversion
         </h2>
         
         <div 
