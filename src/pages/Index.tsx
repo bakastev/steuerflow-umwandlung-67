@@ -13,8 +13,22 @@ import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
 import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
+import { useTFTracking } from "@/hooks/useTFTracking";
+import { useEffect } from "react";
 
 const Index = () => {
+  const { behaviorRef, predictEngagement } = useTFTracking();
+
+  useEffect(() => {
+    const initializeTracking = async () => {
+      console.log("Initializing TF tracking on index page");
+      const result = await predictEngagement();
+      console.log("Initial engagement prediction:", result);
+    };
+
+    initializeTracking();
+  }, [predictEngagement]);
+
   return (
     <div className="min-h-screen">
       <Header />
