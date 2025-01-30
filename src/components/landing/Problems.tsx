@@ -4,7 +4,7 @@ import { useRef } from "react";
 const problems = [
   "Ihre Website konvertiert nicht so gut wie sie könnte - Sie verlieren täglich potenzielle Kunden.",
   "A/B Tests und Conversion-Optimierung kosten zu viel Zeit und Ressourcen.",
-  "Ihre Website basiert auf Annahmen statt auf wissenschaftlichen Erkenntnissen.",
+  "Ihre Website basiert auf Annahmen statt auf wissenschaftlichen Erkenntnissen und Echtzeitdaten.",
 ];
 
 export const Problems = () => {
