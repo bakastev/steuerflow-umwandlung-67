@@ -14,20 +14,49 @@ import { Footer } from "@/components/landing/Footer";
 import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { useTFTracking } from "@/hooks/useTFTracking";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { KNOWN_SECTIONS } from "@/types/tracking";
 
 const Index = () => {
   const { behaviorRef, predictEngagement } = useTFTracking();
+  const trackingInitialized = useRef(false);
 
   useEffect(() => {
     const initializeTracking = async () => {
+      if (trackingInitialized.current) return;
+      trackingInitialized.current = true;
+
       console.log("Initializing TF tracking on index page");
-      const result = await predictEngagement();
-      console.log("Initial engagement prediction:", result);
+      
+      // Initialisiere die Tracking-Referenzen für alle bekannten Sektionen
+      Object.keys(KNOWN_SECTIONS).forEach(sectionId => {
+        behaviorRef.current.elementInteractions[sectionId] = 0;
+        behaviorRef.current.mouseMovements[sectionId] = 0;
+        behaviorRef.current.dwellTimes[sectionId] = 0;
+        behaviorRef.current.textSelections[sectionId] = 0;
+      });
+
+      // Starte das kontinuierliche Tracking
+      const trackEngagement = async () => {
+        const result = await predictEngagement();
+        console.log("Current engagement metrics:", {
+          score: result.score,
+          interactions: behaviorRef.current.elementInteractions,
+          mouseMovements: behaviorRef.current.mouseMovements,
+          dwellTimes: behaviorRef.current.dwellTimes,
+          textSelections: behaviorRef.current.textSelections,
+          scrollDepth: behaviorRef.current.scrollDepth,
+          clicks: behaviorRef.current.clicks
+        });
+      };
+
+      // Aktualisiere das Tracking alle 2 Sekunden
+      const interval = setInterval(trackEngagement, 2000);
+      return () => clearInterval(interval);
     };
 
     initializeTracking();
-  }, [predictEngagement]);
+  }, [behaviorRef, predictEngagement]);
 
   return (
     <div className="min-h-screen">
