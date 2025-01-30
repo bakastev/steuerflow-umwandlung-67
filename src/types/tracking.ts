@@ -30,11 +30,11 @@ export interface EngagementInsights {
 }
 
 export const KNOWN_SECTIONS = {
-  'expert-section': 'Experten-Profil und Werdegang',
   'problems-section': 'Herausforderungen für Geschäftsführer',
+  'benefits-section': 'Vorteile und Mehrwert',
   'solution-section': 'Einzigartige Lösungsansätze',
   'process-section': 'Prozessablauf',
-  'benefits-section': 'Vorteile und Mehrwert',
+  'expert-section': 'Experten-Profil und Werdegang',
   'testimonials-section': 'Kundenstimmen',
   'contact-section': 'Kontaktbereich',
   'strategy-flow-section': 'Strategieablauf',

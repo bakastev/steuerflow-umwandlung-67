@@ -18,33 +18,35 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <Hero />
-      <TrustBar />
-      <Problems />
-      <Benefits />
-      <AIPowerDemo />
-      <section className="py-12 bg-primary-dark">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
-            Ihre Geschäftsführer-Strategie
-          </h2>
-          <StrategyFlow />
-        </div>
-      </section>
-      <TechStack />
-      <Solution />
-      <Expert />
-      <Process />
-      <Testimonials />
-      <section className="py-20 bg-white" id="contact">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Jetzt kostenloses Website-Audit sichern
-          </h2>
-          <MultiStepForm />
-        </div>
-      </section>
-      <FAQs />
+      <main>
+        <Hero />
+        <TrustBar />
+        <Problems id="problems-section" />
+        <Benefits id="benefits-section" />
+        <AIPowerDemo />
+        <section className="py-12 bg-primary-dark">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
+              Ihre Geschäftsführer-Strategie
+            </h2>
+            <StrategyFlow />
+          </div>
+        </section>
+        <TechStack />
+        <Solution id="solution-section" />
+        <Expert id="expert-section" />
+        <Process id="process-section" />
+        <Testimonials id="testimonials-section" />
+        <section className="py-20 bg-white" id="contact-section">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+              Jetzt kostenloses Website-Audit sichern
+            </h2>
+            <MultiStepForm />
+          </div>
+        </section>
+        <FAQs id="faqs-section" />
+      </main>
       <Footer />
     </div>
   );
