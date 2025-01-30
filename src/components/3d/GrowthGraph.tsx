@@ -46,7 +46,7 @@ export const GrowthGraph = () => {
       createCurve(-0.5, 7)
     ];
 
-    const curveObjects: THREE.Line[] = [];
+    const meshObjects: THREE.Mesh[] = [];
     const sphereGroups: THREE.Group[] = [];
 
     curves.forEach((curve, index) => {
@@ -60,7 +60,7 @@ export const GrowthGraph = () => {
       });
       const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
       scene.add(tubeMesh);
-      curveObjects.push(tubeMesh);
+      meshObjects.push(tubeMesh);
 
       // Add animated spheres along the curve
       const sphereGroup = new THREE.Group();
@@ -100,9 +100,9 @@ export const GrowthGraph = () => {
         y: e.clientY - previousMousePosition.y
       };
 
-      curveObjects.forEach(curve => {
-        curve.rotation.y += deltaMove.x * 0.005;
-        curve.rotation.x += deltaMove.y * 0.005;
+      meshObjects.forEach(mesh => {
+        mesh.rotation.y += deltaMove.x * 0.005;
+        mesh.rotation.x += deltaMove.y * 0.005;
       });
 
       sphereGroups.forEach(group => {
@@ -129,9 +129,9 @@ export const GrowthGraph = () => {
 
       // Smooth floating animation when not dragging
       if (!isDragging) {
-        curveObjects.forEach((curve, index) => {
-          curve.rotation.y = Math.sin(frame + index * 0.5) * 0.1;
-          curve.position.y = Math.sin(frame * 0.5 + index * 0.3) * 0.1;
+        meshObjects.forEach((mesh, index) => {
+          mesh.rotation.y = Math.sin(frame + index * 0.5) * 0.1;
+          mesh.position.y = Math.sin(frame * 0.5 + index * 0.3) * 0.1;
         });
 
         sphereGroups.forEach((group, index) => {
