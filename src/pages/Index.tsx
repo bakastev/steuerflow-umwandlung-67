@@ -11,6 +11,7 @@ import { MultiStepForm } from "@/components/landing/MultiStepForm";
 import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
+import { TechStack } from "@/components/landing/TechStack";
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
       <Hero />
       <TrustBar />
       <Problems />
+      <TechStack />
       <StrategyFlow />
       <Solution />
       <Benefits />
@@ -28,7 +30,7 @@ const Index = () => {
       <section className="py-20 bg-white" id="contact">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Jetzt kostenloses Erstgespräch sichern
+            Jetzt kostenloses Website-Audit sichern
           </h2>
           <MultiStepForm />
         </div>
