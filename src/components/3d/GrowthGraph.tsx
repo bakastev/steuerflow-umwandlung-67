@@ -134,11 +134,13 @@ export const GrowthGraph = () => {
       isDragging = false;
     };
 
-    // Scroll-based animation
+    // Scroll-based animation with smooth interpolation
+    let currentY = 0;
     let targetY = 0;
+    
     const handleScroll = () => {
       const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      targetY = scrollPercent * 4; // Adjust multiplier to control rise height
+      targetY = scrollPercent * 6; // Increased range of movement
     };
 
     mountRef.current.addEventListener('mousedown', handleMouseDown);
@@ -157,8 +159,9 @@ export const GrowthGraph = () => {
         rocketGroup.rotation.y = Math.sin(frame) * 0.1;
       }
 
-      // Smooth scroll-based position update
-      rocketGroup.position.y = targetY + Math.sin(frame * 0.5) * 0.2;
+      // Smooth scroll-based position update with lerp
+      currentY += (targetY - currentY) * 0.05;
+      rocketGroup.position.y = currentY + Math.sin(frame * 0.5) * 0.2;
 
       // Animate flame and glow
       flame.scale.x = 0.8 + Math.sin(frame * 4) * 0.2;
