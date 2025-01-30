@@ -1,5 +1,6 @@
 import { Hero } from "@/components/blocks/hero";
 import { Brain, ChartBar, Target } from "lucide-react";
+import { GrowthGraph } from "@/components/3d/GrowthGraph";
 
 export const HeroComponent = () => {
   return (
@@ -35,7 +36,7 @@ export const HeroComponent = () => {
       titleClassName="text-white text-left"
       subtitleClassName="text-gray-200 text-left"
       actionsClassName="mt-8"
-      image="/DSFinanzfreigestelltesBild.png"
+      customContent={<GrowthGraph />}
     />
   );
 };

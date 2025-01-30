@@ -5,7 +5,6 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
 
 interface HeroProps {
   className?: string
@@ -21,7 +20,7 @@ interface HeroProps {
   titleClassName?: string
   subtitleClassName?: string
   actionsClassName?: string
-  image?: string
+  customContent?: React.ReactNode
 }
 
 const Hero = React.forwardRef<HTMLElement, HeroProps>(
@@ -36,7 +35,7 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
       titleClassName,
       subtitleClassName,
       actionsClassName,
-      image,
+      customContent,
       ...props
     },
     ref,
@@ -46,8 +45,6 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
       target: containerRef,
       offset: ["start start", "end start"]
     });
-
-    const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
 
     const scrollToSection = (id: string) => {
       const element = document.getElementById(id);
@@ -180,23 +177,14 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               </div>
             )}
           </div>
-          {image && (
+          {customContent && (
             <motion.div
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              style={{ y: imageY }}
               className="w-full lg:w-1/2"
             >
-              <img
-                src={image}
-                alt="Hero Image"
-                className="w-full h-auto object-contain max-h-[600px]"
-                onError={(e) => {
-                  console.error('Fehler beim Laden des Bildes:', e);
-                  console.log('Versuchter Bildpfad:', image);
-                }}
-              />
+              {customContent}
             </motion.div>
           )}
         </motion.div>
