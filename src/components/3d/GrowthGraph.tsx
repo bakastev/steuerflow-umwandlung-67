@@ -12,6 +12,8 @@ export const GrowthGraph = () => {
     const camera = new THREE.PerspectiveCamera(75, mountRef.current.clientWidth / mountRef.current.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     mountRef.current.appendChild(renderer.domElement);
 
     // Enhanced lighting
@@ -20,39 +22,46 @@ export const GrowthGraph = () => {
     
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
+    directionalLight.castShadow = true;
     scene.add(directionalLight);
 
-    const pointLight = new THREE.PointLight(0xC5A572, 1);
+    const pointLight = new THREE.PointLight(0xC5A572, 2);
     pointLight.position.set(0, 5, 0);
+    pointLight.castShadow = true;
     scene.add(pointLight);
 
     // Create rocket body
     const rocketGroup = new THREE.Group();
 
-    // Main body
+    // Main body with metallic material
     const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 2, 32);
-    const bodyMaterial = new THREE.MeshPhongMaterial({ 
+    const bodyMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xC5A572,
-      shininess: 100,
+      metalness: 0.8,
+      roughness: 0.2,
     });
     const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    body.castShadow = true;
     rocketGroup.add(body);
 
-    // Nose cone
+    // Nose cone with metallic material
     const noseGeometry = new THREE.ConeGeometry(0.5, 1, 32);
-    const noseMaterial = new THREE.MeshPhongMaterial({ 
+    const noseMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xC5A572,
-      shininess: 100,
+      metalness: 0.8,
+      roughness: 0.2,
     });
     const nose = new THREE.Mesh(noseGeometry, noseMaterial);
     nose.position.y = 1.5;
+    nose.castShadow = true;
     rocketGroup.add(nose);
 
-    // Fins
+    // Fins with metallic material
     const finGeometry = new THREE.BoxGeometry(0.1, 0.8, 0.8);
-    const finMaterial = new THREE.MeshPhongMaterial({ 
+    const finMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xA17F47,
-      shininess: 100,
+      metalness: 0.9,
+      roughness: 0.1,
     });
 
     // Add 3 fins
@@ -62,22 +71,35 @@ export const GrowthGraph = () => {
       fin.position.x = Math.cos((i * 2 * Math.PI) / 3) * 0.5;
       fin.position.z = Math.sin((i * 2 * Math.PI) / 3) * 0.5;
       fin.rotation.y = (i * 2 * Math.PI) / 3;
+      fin.castShadow = true;
       rocketGroup.add(fin);
     }
 
-    // Rocket flames
+    // Enhanced rocket flames with glow effect
     const flameGeometry = new THREE.ConeGeometry(0.3, 1, 32);
-    const flameMaterial = new THREE.MeshPhongMaterial({ 
+    const flameMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xff3d00,
       transparent: true,
       opacity: 0.8,
       emissive: 0xff3d00,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 2,
     });
     const flame = new THREE.Mesh(flameGeometry, flameMaterial);
     flame.position.y = -1.5;
     flame.rotation.x = Math.PI;
     rocketGroup.add(flame);
+
+    // Add glow effect to flames
+    const glowGeometry = new THREE.ConeGeometry(0.4, 1.2, 32);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xff5722,
+      transparent: true,
+      opacity: 0.4,
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    glow.position.y = -1.5;
+    glow.rotation.x = Math.PI;
+    rocketGroup.add(glow);
 
     scene.add(rocketGroup);
 
@@ -112,9 +134,17 @@ export const GrowthGraph = () => {
       isDragging = false;
     };
 
+    // Scroll-based animation
+    let targetY = 0;
+    const handleScroll = () => {
+      const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      targetY = scrollPercent * 4; // Adjust multiplier to control rise height
+    };
+
     mountRef.current.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('scroll', handleScroll);
 
     // Animation
     let frame = 0;
@@ -125,17 +155,24 @@ export const GrowthGraph = () => {
       // Smooth floating animation when not dragging
       if (!isDragging) {
         rocketGroup.rotation.y = Math.sin(frame) * 0.1;
-        rocketGroup.position.y = Math.sin(frame * 0.5) * 0.2;
       }
 
-      // Animate flame
+      // Smooth scroll-based position update
+      rocketGroup.position.y = targetY + Math.sin(frame * 0.5) * 0.2;
+
+      // Animate flame and glow
       flame.scale.x = 0.8 + Math.sin(frame * 4) * 0.2;
       flame.scale.z = 0.8 + Math.sin(frame * 4) * 0.2;
       flameMaterial.opacity = 0.6 + Math.sin(frame * 4) * 0.2;
+      
+      glow.scale.x = flame.scale.x * 1.2;
+      glow.scale.z = flame.scale.z * 1.2;
+      glowMaterial.opacity = 0.3 + Math.sin(frame * 4) * 0.1;
 
       // Animate point light
       pointLight.position.x = Math.sin(frame) * 3;
       pointLight.position.z = Math.cos(frame) * 3;
+      pointLight.intensity = 1.5 + Math.sin(frame * 4) * 0.5;
       
       renderer.render(scene, camera);
     };
@@ -154,6 +191,7 @@ export const GrowthGraph = () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('scroll', handleScroll);
       mountRef.current?.removeEventListener('mousedown', handleMouseDown);
       mountRef.current?.removeChild(renderer.domElement);
     };
