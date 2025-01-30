@@ -139,14 +139,16 @@ export const GrowthGraph = () => {
     let targetY = 0;
     
     const handleScroll = () => {
+      if (!mountRef.current) return;
       const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      targetY = scrollPercent * 6; // Increased range of movement
+      targetY = scrollPercent * 8; // Increased movement range
     };
 
-    mountRef.current.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    // Add event listeners
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
 
     // Animation
     let frame = 0;
@@ -160,7 +162,7 @@ export const GrowthGraph = () => {
       }
 
       // Smooth scroll-based position update with lerp
-      currentY += (targetY - currentY) * 0.05;
+      currentY += (targetY - currentY) * 0.1; // Increased interpolation speed
       rocketGroup.position.y = currentY + Math.sin(frame * 0.5) * 0.2;
 
       // Animate flame and glow
@@ -190,12 +192,13 @@ export const GrowthGraph = () => {
     };
     window.addEventListener('resize', handleResize);
 
+    // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('scroll', handleScroll);
-      mountRef.current?.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousedown', handleMouseDown);
       mountRef.current?.removeChild(renderer.domElement);
     };
   }, []);
