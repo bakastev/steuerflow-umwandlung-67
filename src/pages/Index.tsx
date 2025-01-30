@@ -13,6 +13,7 @@ import { Footer } from "@/components/landing/Footer";
 import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { AIExperience } from "@/components/landing/AIExperience";
+import { CompareHero } from "@/components/landing/CompareHero";
 import { useEffect, useState, useRef } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { EngagementInsights } from "@/types/tracking";
@@ -109,6 +110,7 @@ const Index = () => {
           interactionDepth={calculateInteractionDepth()}
         />
       )}
+      <CompareHero />
       <section className="py-12 bg-primary-dark">
         <div className="container mx-auto px-4">
           <StrategyFlow />
