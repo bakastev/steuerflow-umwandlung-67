@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 
 const Experience3D = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +17,8 @@ const Experience3D = () => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
+    rendererRef.current = renderer;
+    
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x111827);
     sceneRef.current.appendChild(renderer.domElement);
@@ -79,8 +82,10 @@ const Experience3D = () => {
 
     // Animation loop
     let currentSection = 0;
+    let animationFrameId: number;
+    
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
 
       // Smooth camera movement
       const targetPosition = sections[currentSection].position;
@@ -106,6 +111,7 @@ const Experience3D = () => {
 
     // Handle resize
     const handleResize = () => {
+      if (!renderer) return;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -116,7 +122,12 @@ const Experience3D = () => {
     return () => {
       window.removeEventListener('wheel', handleScroll);
       window.removeEventListener('resize', handleResize);
-      sceneRef.current?.removeChild(renderer.domElement);
+      cancelAnimationFrame(animationFrameId);
+      
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+        sceneRef.current?.removeChild(rendererRef.current.domElement);
+      }
     };
   }, []);
 
