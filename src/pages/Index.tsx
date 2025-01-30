@@ -21,7 +21,14 @@ const Index = () => {
       <TrustBar />
       <Problems />
       <Benefits />
-      <StrategyFlow />
+      <section className="py-12 bg-primary-dark">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
+            Unsere Strategie für Ihren Erfolg
+          </h2>
+          <StrategyFlow />
+        </div>
+      </section>
       <TechStack />
       <Solution />
       <Expert />
