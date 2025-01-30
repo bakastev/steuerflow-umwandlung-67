@@ -31,45 +31,105 @@ const Experience3D = () => {
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // Create sections as 3D objects
+    // Create sections with their 3D representations
     const sections = [
-      { title: "Vorteile", position: new THREE.Vector3(0, 0, 0) },
-      { title: "Prozess", position: new THREE.Vector3(10, 0, 0) },
-      { title: "Über uns", position: new THREE.Vector3(20, 0, 0) },
-      { title: "Kontakt", position: new THREE.Vector3(30, 0, 0) }
+      { 
+        title: "Vorteile", 
+        position: new THREE.Vector3(0, 0, 0),
+        objects: [
+          {
+            geometry: new THREE.IcosahedronGeometry(1, 0),
+            material: new THREE.MeshPhongMaterial({ color: 0xC5A572 }),
+            position: new THREE.Vector3(0, 2, 0)
+          }
+        ]
+      },
+      { 
+        title: "Expertise", 
+        position: new THREE.Vector3(15, 0, 0),
+        objects: [
+          {
+            geometry: new THREE.TorusKnotGeometry(0.8, 0.3, 100, 16),
+            material: new THREE.MeshPhongMaterial({ color: 0xC5A572 }),
+            position: new THREE.Vector3(15, 2, 0)
+          }
+        ]
+      },
+      { 
+        title: "Prozess", 
+        position: new THREE.Vector3(30, 0, 0),
+        objects: [
+          {
+            geometry: new THREE.OctahedronGeometry(1),
+            material: new THREE.MeshPhongMaterial({ color: 0xC5A572 }),
+            position: new THREE.Vector3(30, 2, 0)
+          }
+        ]
+      },
+      { 
+        title: "Testimonials", 
+        position: new THREE.Vector3(45, 0, 0),
+        objects: [
+          {
+            geometry: new THREE.DodecahedronGeometry(1),
+            material: new THREE.MeshPhongMaterial({ color: 0xC5A572 }),
+            position: new THREE.Vector3(45, 2, 0)
+          }
+        ]
+      },
+      { 
+        title: "Kontakt", 
+        position: new THREE.Vector3(60, 0, 0),
+        objects: [
+          {
+            geometry: new THREE.TetrahedronGeometry(1),
+            material: new THREE.MeshPhongMaterial({ color: 0xC5A572 }),
+            position: new THREE.Vector3(60, 2, 0)
+          }
+        ]
+      }
     ];
 
+    // Create platforms and objects for each section
     sections.forEach((section) => {
-      // Create platform for each section
-      const platformGeometry = new THREE.BoxGeometry(8, 0.5, 8);
+      // Platform
+      const platformGeometry = new THREE.BoxGeometry(10, 0.5, 10);
       const platformMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xC5A572,
+        color: 0x1f2937,
         shininess: 100
       });
       const platform = new THREE.Mesh(platformGeometry, platformMaterial);
       platform.position.copy(section.position);
       scene.add(platform);
 
-      // Create text as a simple plane with texture
+      // Add section objects
+      section.objects.forEach(obj => {
+        const mesh = new THREE.Mesh(obj.geometry, obj.material);
+        mesh.position.copy(obj.position);
+        scene.add(mesh);
+      });
+
+      // Create text as a canvas texture
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       if (context) {
-        canvas.width = 256;
-        canvas.height = 64;
-        context.fillStyle = '#ffffff';
-        context.font = 'bold 32px Arial';
-        context.fillText(section.title, 10, 40);
+        canvas.width = 512;
+        canvas.height = 128;
+        context.fillStyle = '#C5A572';
+        context.font = 'bold 48px Arial';
+        context.textAlign = 'center';
+        context.fillText(section.title, canvas.width/2, canvas.height/2);
         
         const texture = new THREE.CanvasTexture(canvas);
         const textMaterial = new THREE.MeshBasicMaterial({
           map: texture,
           transparent: true,
         });
-        const textGeometry = new THREE.PlaneGeometry(4, 1);
+        const textGeometry = new THREE.PlaneGeometry(5, 1.25);
         const textMesh = new THREE.Mesh(textGeometry, textMaterial);
         textMesh.position.set(
-          section.position.x - 2,
-          section.position.y + 2,
+          section.position.x,
+          section.position.y + 4,
           section.position.z
         );
         scene.add(textMesh);
@@ -77,7 +137,7 @@ const Experience3D = () => {
     });
 
     // Initial camera position
-    camera.position.set(0, 5, 10);
+    camera.position.set(0, 5, 15);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // Animation loop
@@ -87,13 +147,26 @@ const Experience3D = () => {
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
+      // Rotate all section objects
+      sections.forEach((section) => {
+        const sectionObjects = scene.children.filter(
+          child => child instanceof THREE.Mesh && 
+          child.position.x === section.objects[0].position.x &&
+          child.position.y === section.objects[0].position.y
+        );
+        sectionObjects.forEach(obj => {
+          obj.rotation.x += 0.01;
+          obj.rotation.y += 0.01;
+        });
+      });
+
       // Smooth camera movement
       const targetPosition = sections[currentSection].position;
       camera.position.lerp(
-        new THREE.Vector3(targetPosition.x, camera.position.y, targetPosition.z + 10),
+        new THREE.Vector3(targetPosition.x, camera.position.y, camera.position.z),
         0.05
       );
-      camera.lookAt(targetPosition);
+      camera.lookAt(new THREE.Vector3(targetPosition.x, 0, 0));
 
       renderer.render(scene, camera);
     };
@@ -147,7 +220,7 @@ const Experience3D = () => {
         className="absolute inset-0"
       />
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 text-white text-sm z-50">
-        Scrolle um durch die Erfahrung zu navigieren
+        Scrolle um durch die 3D-Welt zu navigieren
       </div>
     </div>
   );
