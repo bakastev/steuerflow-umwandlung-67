@@ -1,61 +1,54 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { motion } from "framer-motion";
 
-const faqs = [
-  {
-    question: "Wie funktioniert die KI-gestützte Optimierung?",
-    answer: "Unsere KI analysiert das Verhalten Ihrer Website-Besucher in Echtzeit und identifiziert Muster, die zu höheren oder niedrigeren Conversion-Raten führen. Diese Erkenntnisse werden automatisch genutzt, um die Website kontinuierlich zu optimieren.",
-  },
-  {
-    question: "Wie lange dauert es, bis ich erste Ergebnisse sehe?",
-    answer: "Die ersten Optimierungen können bereits nach wenigen Tagen implementiert werden. Signifikante Verbesserungen der Conversion-Rate sind typischerweise nach 4-6 Wochen messbar.",
-  },
-  {
-    question: "Ist die Implementierung kompliziert?",
-    answer: "Nein, wir kümmern uns um die gesamte technische Implementierung. Sie müssen lediglich einen kleinen Code-Snippet auf Ihrer Website einbinden, den Rest erledigen wir.",
-  },
-];
+interface FAQsProps {
+  id?: string;
+}
 
-export const FAQs = () => {
+export const FAQs = ({ id }: FAQsProps) => {
   return (
-    <section className="py-20 bg-primary-dark" id="faqs">
+    <section id={id}>
       <div className="container mx-auto px-4">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
-        >
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-dark">
           Häufig gestellte Fragen
-        </motion.h2>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto"
-        >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`item-${index}`}
-                className="border border-accent/20 rounded-lg bg-white/10 backdrop-blur-md px-4"
-              >
-                <AccordionTrigger className="text-left text-white hover:text-accent">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-300">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="p-6 rounded-lg backdrop-blur-md bg-white/10 border border-white/20"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-white">Frage 1</h3>
+            <p className="text-gray-300">Antwort auf Frage 1.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="p-6 rounded-lg backdrop-blur-md bg-white/10 border border-white/20"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-white">Frage 2</h3>
+            <p className="text-gray-300">Antwort auf Frage 2.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="p-6 rounded-lg backdrop-blur-md bg-white/10 border border-white/20"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-white">Frage 3</h3>
+            <p className="text-gray-300">Antwort auf Frage 3.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="p-6 rounded-lg backdrop-blur-md bg-white/10 border border-white/20"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-white">Frage 4</h3>
+            <p className="text-gray-300">Antwort auf Frage 4.</p>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

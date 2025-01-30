@@ -7,7 +7,11 @@ const problems = [
   "Ihre Website basiert auf Annahmen statt auf wissenschaftlichen Erkenntnissen und Echtzeitdaten.",
 ];
 
-export const Problems = () => {
+interface ProblemsProps {
+  id?: string;
+}
+
+export const Problems = ({ id }: ProblemsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -15,7 +19,7 @@ export const Problems = () => {
   });
 
   return (
-    <section id="problems-section" className="relative h-[400vh]" ref={containerRef}>
+    <section id={id} className="relative h-[400vh]" ref={containerRef}>
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark opacity-80" />
