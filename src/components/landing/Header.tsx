@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Menu, Box } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 export const Header = () => {
-  const navigate = useNavigate();
-  
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -35,14 +32,6 @@ export const Header = () => {
               onClick={() => scrollToSection('contact')}
             >
               Erstgespräch buchen
-            </Button>
-            <Button
-              variant="outline"
-              className="flex items-center gap-2"
-              onClick={() => navigate('/3d-experience')}
-            >
-              <Box className="h-4 w-4" />
-              3D Experience
             </Button>
           </nav>
           
