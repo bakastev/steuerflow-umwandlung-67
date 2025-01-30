@@ -150,7 +150,7 @@ export const AIExperience = ({
               label="KI-Prognose"
               value={engagementScore > 0.7 ? "Sehr Hoch" : engagementScore > 0.4 ? "Hoch" : "Moderat"}
               color="text-purple-400"
-              -gestützte Vorhersage der Gesamtqualität des Nutzer-Engagements. Kombiniert alle Metriken mittels TensorFlow zur Verhaltensvorhersage."
+              tooltip="KI-gestützte Vorhersage der Gesamtqualität des Nutzer-Engagements. Kombiniert alle Metriken mittels TensorFlow zur Verhaltensvorhersage."
             />
           </div>
         </motion.div>
