@@ -92,11 +92,6 @@ export const CompareHero = () => {
                     Kostenlose Erstberatung sichern
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
-                  
-                  <div className="mt-8 flex items-center gap-4">
-                    <img src="/DSFInanzLogosfuerLP3.png" alt="Trust Badge 1" className="h-12 opacity-80" />
-                    <img src="/DSFInanzLogosfuerLP4.png" alt="Trust Badge 2" className="h-12 opacity-80" />
-                  </div>
                 </div>
                 
                 <motion.div
@@ -106,8 +101,8 @@ export const CompareHero = () => {
                   className="hidden lg:block w-1/3"
                 >
                   <img 
-                    src="/Steve_neu_4.jpg" 
-                    alt="Rechtsanwalt" 
+                    src="/hero-optimized.jpg" 
+                    alt="Anwaltsteam in Beratung" 
                     className="rounded-lg shadow-2xl"
                   />
                 </motion.div>
