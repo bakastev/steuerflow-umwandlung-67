@@ -11,6 +11,9 @@ import { useToast } from '@/components/ui/use-toast';
 const Experience3D = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneObjRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const objectsRef = useRef<THREE.Mesh[]>([]);
   const [currentSection, setCurrentSection] = useState(0);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -20,7 +23,9 @@ const Experience3D = () => {
 
     // Scene Setup
     const scene = new THREE.Scene();
+    sceneObjRef.current = scene;
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    cameraRef.current = camera;
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     rendererRef.current = renderer;
     
@@ -47,6 +52,7 @@ const Experience3D = () => {
       const platform = new THREE.Mesh(platformGeometry, platformMaterial);
       platform.position.copy(section.position);
       scene.add(platform);
+      objectsRef.current.push(platform);
 
       // Section specific 3D object
       let sectionObject;
@@ -74,6 +80,7 @@ const Experience3D = () => {
       const mesh = new THREE.Mesh(sectionObject, objectMaterial);
       mesh.position.set(section.position.x, section.position.y + 2, section.position.z);
       scene.add(mesh);
+      objectsRef.current.push(mesh);
 
       // Add text
       const canvas = document.createElement('canvas');
@@ -101,6 +108,7 @@ const Experience3D = () => {
           section.position.z
         );
         scene.add(textMesh);
+        objectsRef.current.push(textMesh);
       }
     });
 
@@ -110,25 +118,29 @@ const Experience3D = () => {
 
     // Animation loop
     const animate = () => {
+      if (!sceneObjRef.current || !cameraRef.current || !rendererRef.current) return;
+
       const animationId = requestAnimationFrame(animate);
 
       // Rotate all objects
-      scene.children.forEach(child => {
-        if (child instanceof THREE.Mesh && !(child.geometry instanceof THREE.BoxGeometry) && !(child.geometry instanceof THREE.PlaneGeometry)) {
-          child.rotation.x += 0.01;
-          child.rotation.y += 0.01;
+      objectsRef.current.forEach(object => {
+        if (object && !(object.geometry instanceof THREE.BoxGeometry) && !(object.geometry instanceof THREE.PlaneGeometry)) {
+          object.rotation.x += 0.01;
+          object.rotation.y += 0.01;
         }
       });
 
       // Smooth camera movement
       const targetPosition = sections[currentSection].position;
-      camera.position.lerp(
-        new THREE.Vector3(targetPosition.x, camera.position.y, camera.position.z),
-        0.05
-      );
-      camera.lookAt(new THREE.Vector3(targetPosition.x, 0, 0));
+      if (cameraRef.current && targetPosition) {
+        cameraRef.current.position.lerp(
+          new THREE.Vector3(targetPosition.x, cameraRef.current.position.y, cameraRef.current.position.z),
+          0.05
+        );
+        cameraRef.current.lookAt(new THREE.Vector3(targetPosition.x, 0, 0));
+      }
 
-      renderer.render(scene, camera);
+      rendererRef.current.render(sceneObjRef.current, cameraRef.current);
 
       return () => {
         cancelAnimationFrame(animationId);
@@ -156,10 +168,11 @@ const Experience3D = () => {
 
     // Handle resize
     const handleResize = () => {
-      if (!renderer) return;
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (!rendererRef.current || !cameraRef.current) return;
+      
+      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener('resize', handleResize);
 
@@ -168,22 +181,30 @@ const Experience3D = () => {
       window.removeEventListener('wheel', handleScroll);
       window.removeEventListener('resize', handleResize);
       
-      if (rendererRef.current) {
+      if (rendererRef.current && sceneRef.current) {
+        sceneRef.current.removeChild(rendererRef.current.domElement);
         rendererRef.current.dispose();
-        sceneRef.current?.removeChild(rendererRef.current.domElement);
       }
 
       // Dispose of all geometries and materials
-      scene.traverse((object) => {
-        if (object instanceof THREE.Mesh) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach(material => material.dispose());
-          } else {
-            object.material.dispose();
+      if (sceneObjRef.current) {
+        sceneObjRef.current.traverse((object) => {
+          if (object instanceof THREE.Mesh) {
+            object.geometry.dispose();
+            if (Array.isArray(object.material)) {
+              object.material.forEach(material => material.dispose());
+            } else {
+              object.material.dispose();
+            }
           }
-        }
-      });
+        });
+      }
+
+      // Clear refs
+      objectsRef.current = [];
+      sceneObjRef.current = null;
+      cameraRef.current = null;
+      rendererRef.current = null;
     };
   }, [currentSection, toast]);
 
