@@ -4,6 +4,7 @@ import { TrustBar } from "@/components/landing/TrustBar";
 import { Problems } from "@/components/landing/Problems";
 import { Solution } from "@/components/landing/Solution";
 import { Benefits } from "@/components/landing/Benefits";
+import { AIPowerDemo } from "@/components/landing/AIPowerDemo";
 import { Process } from "@/components/landing/Process";
 import { Expert } from "@/components/landing/Expert";
 import { Testimonials } from "@/components/landing/Testimonials";
@@ -21,6 +22,7 @@ const Index = () => {
       <TrustBar />
       <Problems />
       <Benefits />
+      <AIPowerDemo />
       <section className="py-12 bg-primary-dark">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
