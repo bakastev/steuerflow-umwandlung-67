@@ -12,11 +12,9 @@ import { FAQs } from "@/components/landing/FAQs";
 import { Footer } from "@/components/landing/Footer";
 import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
+import { AIExperience } from "@/components/landing/AIExperience";
 import { useEffect, useState, useRef } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
-import { motion, AnimatePresence } from "framer-motion";
-import { Brain } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import { EngagementInsights } from "@/types/tracking";
 
 const Index = () => {
@@ -28,7 +26,6 @@ const Index = () => {
 
   useEffect(() => {
     const initializeTracking = () => {
-      // Initialisiere Tracking für alle bekannten Sektionen
       const sections = [
         'expert-section',
         'problems-section',
@@ -56,7 +53,6 @@ const Index = () => {
 
     const checkEngagement = async () => {
       const now = Date.now();
-      // Mindestens 1 Sekunde zwischen Updates
       if (now - lastUpdateRef.current < 1000) {
         return;
       }
@@ -65,7 +61,6 @@ const Index = () => {
       const result = await predictEngagement();
       console.log("Engagement result:", result);
 
-      // Glätten des Engagement-Scores durch Mittelwertbildung
       progressHistory.current.push(result.score * 100);
       if (progressHistory.current.length > 5) {
         progressHistory.current.shift();
@@ -78,13 +73,8 @@ const Index = () => {
       lastUpdateRef.current = now;
     };
 
-    // Initialisiere Tracking
     initializeTracking();
-
-    // Erste Überprüfung
     checkEngagement();
-
-    // Regelmäßige Überprüfung
     const interval = setInterval(checkEngagement, 2000);
 
     return () => {
@@ -92,58 +82,33 @@ const Index = () => {
     };
   }, [predictEngagement, behaviorRef]);
 
+  // Calculate total interaction depth based on mouse movements and dwell times
+  const calculateInteractionDepth = () => {
+    const totalPossibleInteractions = Object.keys(behaviorRef.current.dwellTimes).length * 100; // Assuming 100 is max per section
+    const actualInteractions = Object.values(behaviorRef.current.mouseMovements).reduce((a, b) => a + b, 0);
+    return Math.min(actualInteractions / totalPossibleInteractions, 1);
+  };
+
+  // Calculate total dwell time across all sections
+  const calculateTotalDwellTime = () => {
+    return Object.values(behaviorRef.current.dwellTimes).reduce((a, b) => a + b, 0);
+  };
+
   return (
     <div className="min-h-screen">
-      {/* KI-Insights Panel */}
-      <AnimatePresence>
-        {engagementInsights && (
-          <motion.div 
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className="fixed bottom-4 right-4 z-[90] bg-white/95 dark:bg-primary/95 p-6 rounded-lg shadow-lg backdrop-blur-md max-w-sm"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Brain className="h-5 w-5 text-accent" />
-              <h3 className="font-bold text-lg">KI-Personalisierung</h3>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Personalisierungsgrad</span>
-                  <span className="font-medium">{Math.round(engagementProgress)}%</span>
-                </div>
-                <Progress value={engagementProgress} className="h-2" />
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-medium text-sm">Erkannte Interessen:</h4>
-                <ul className="text-sm space-y-1">
-                  {engagementInsights.insights.map((insight, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-2"
-                    >
-                      <div className="h-1.5 w-1.5 rounded-full bg-accent" />
-                      {insight}
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <Header />
       <Hero />
       <TrustBar />
       <Problems />
       <Benefits />
+      {engagementInsights && (
+        <AIExperience 
+          engagementScore={engagementProgress / 100}
+          insights={engagementInsights.insights}
+          dwellTime={calculateTotalDwellTime()}
+          interactionDepth={calculateInteractionDepth()}
+        />
+      )}
       <section className="py-12 bg-primary-dark">
         <div className="container mx-auto px-4">
           <StrategyFlow />
