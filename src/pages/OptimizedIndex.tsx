@@ -34,7 +34,6 @@ const OptimizedIndex = () => {
       setEngagementInsights(result);
       setEngagementProgress(result.score * 100);
       
-      // Erhöhter Schwellenwert für personalisierte Inhalte
       if (result.score > 0.7 && !showExtraContent) {
         setShowExtraContent(true);
         toast({
