@@ -17,11 +17,11 @@ const Experience3D = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x111827); // Primary dark color
+    renderer.setClearColor(0x111827);
     sceneRef.current.appendChild(renderer.domElement);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xC5A572, 0.5); // Accent color
+    const ambientLight = new THREE.AmbientLight(0xC5A572, 0.5);
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -41,26 +41,36 @@ const Experience3D = () => {
       const platformGeometry = new THREE.BoxGeometry(8, 0.5, 8);
       const platformMaterial = new THREE.MeshPhongMaterial({ 
         color: 0xC5A572,
-        metalness: 0.8,
-        roughness: 0.2
+        shininess: 100
       });
       const platform = new THREE.Mesh(platformGeometry, platformMaterial);
       platform.position.copy(section.position);
       scene.add(platform);
 
-      // Add floating text (as 3D object for now - could be replaced with HTML overlay)
-      const textGeometry = new THREE.TextGeometry(section.title, {
-        size: 1,
-        height: 0.2,
-      });
-      const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-      textMesh.position.set(
-        section.position.x - 2,
-        section.position.y + 2,
-        section.position.z
-      );
-      scene.add(textMesh);
+      // Create text as a simple plane with texture
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (context) {
+        canvas.width = 256;
+        canvas.height = 64;
+        context.fillStyle = '#ffffff';
+        context.font = 'bold 32px Arial';
+        context.fillText(section.title, 10, 40);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const textMaterial = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+        });
+        const textGeometry = new THREE.PlaneGeometry(4, 1);
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        textMesh.position.set(
+          section.position.x - 2,
+          section.position.y + 2,
+          section.position.z
+        );
+        scene.add(textMesh);
+      }
     });
 
     // Initial camera position

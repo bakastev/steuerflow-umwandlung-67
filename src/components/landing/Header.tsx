@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Menu, Cube3d } from "lucide-react";
+import { Menu, Cube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
@@ -41,7 +41,7 @@ export const Header = () => {
               className="flex items-center gap-2"
               onClick={() => navigate('/3d-experience')}
             >
-              <Cube3d className="h-4 w-4" />
+              <Cube className="h-4 w-4" />
               3D Experience
             </Button>
           </nav>
