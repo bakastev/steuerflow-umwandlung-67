@@ -2,22 +2,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Clock, MousePointer, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface MetricProps {
   icon: React.ElementType;
   label: string;
   value: string | number;
   color: string;
+  tooltip: string;
 }
 
-const Metric = ({ icon: Icon, label, value, color }: MetricProps) => (
-  <div className="flex items-center gap-2">
-    <Icon className={`h-5 w-5 ${color}`} />
-    <div>
-      <p className="text-sm text-gray-200">{label}</p>
-      <p className="font-semibold text-white">{value}</p>
-    </div>
-  </div>
+const Metric = ({ icon: Icon, label, value, color, tooltip }: MetricProps) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        <div className="flex items-center gap-2">
+          <Icon className={`h-5 w-5 ${color}`} />
+          <div>
+            <p className="text-sm text-gray-200">{label}</p>
+            <p className="font-semibold text-white">{value}</p>
+          </div>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-xs">
+        <p>{tooltip}</p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
 );
 
 const InsightCard = ({ insight }: { insight: string }) => (
@@ -113,24 +129,28 @@ export const AIExperience = ({
               label="Verweildauer"
               value={`${Math.round(dwellTime / 1000)}s`}
               color="text-blue-400"
+              tooltip="Misst die Gesamtzeit aktiver Interaktion mit der Seite. Berechnet durch Tracking von Mausbewegungen, Scrollen und Klicks, wobei inaktive Zeiten herausgefiltert werden."
             />
             <Metric 
               icon={MousePointer}
               label="Interaktionstiefe"
               value={`${Math.round(interactionDepth * 100)}%`}
               color="text-green-400"
+              tooltip="Zeigt, wie intensiv Sie mit den interaktiven Elementen interagieren. Beinhaltet Mausbewegungen, Klicks, Textmarkierungen und Scroll-Tiefe im Verhältnis zum Gesamtinhalt."
             />
             <Metric 
               icon={TrendingUp}
               label="Engagement-Trend"
               value={engagementScore > 0.5 ? "Steigend" : "Stabil"}
               color="text-yellow-400"
+              tooltip="Zeigt die Entwicklung des Engagements über Zeit. Wird durch Vergleich aktueller Engagement-Metriken mit vorherigen Messungen berechnet."
             />
             <Metric 
               icon={Brain}
               label="KI-Prognose"
               value={engagementScore > 0.7 ? "Sehr Hoch" : engagementScore > 0.4 ? "Hoch" : "Moderat"}
               color="text-purple-400"
+              -gestützte Vorhersage der Gesamtqualität des Nutzer-Engagements. Kombiniert alle Metriken mittels TensorFlow zur Verhaltensvorhersage."
             />
           </div>
         </motion.div>
