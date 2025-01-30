@@ -117,7 +117,7 @@ export const CompareHero = () => {
                   className="hidden lg:block w-1/3"
                 >
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a"
                     alt="Professioneller Rechtsberater" 
                     className="rounded-lg shadow-2xl object-cover h-[400px] w-full"
                   />
