@@ -24,14 +24,7 @@ const Index = () => {
         <Problems id="problems-section" />
         <Benefits id="benefits-section" />
         <AIPowerDemo />
-        <section className="py-12 bg-primary-dark">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
-              Ihre Geschäftsführer-Strategie
-            </h2>
-            <StrategyFlow />
-          </div>
-        </section>
+        <StrategyFlow />
         <TechStack />
         <Solution id="solution-section" />
         <Expert id="expert-section" />

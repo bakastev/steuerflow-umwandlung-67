@@ -37,15 +37,6 @@ const flowItems = [
   return (
     <section id="strategy-flow-section" className="py-20 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16 text-white"
-        >
-          Ihre Geschäftsführer-Strategie
-        </motion.h2>
-        
         <div className="relative max-w-5xl mx-auto">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-accent/20 hidden md:block" />
           
