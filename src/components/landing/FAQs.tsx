@@ -8,16 +8,16 @@ import { motion } from "framer-motion";
 
 const faqs = [
   {
-    question: "Wie funktioniert die steuerfreie ETF-Investition?",
-    answer: "Du kannst monatlich bis zu 644€ steuerfrei aus deiner GmbH in ETFs investieren. Bei GmbHs, die älter als 3 Jahre sind, ist sogar eine Investition von bis zu 10.000€ monatlich möglich.",
+    question: "Wie funktioniert die KI-gestützte Optimierung?",
+    answer: "Unsere KI analysiert das Verhalten Ihrer Website-Besucher in Echtzeit und identifiziert Muster, die zu höheren oder niedrigeren Conversion-Raten führen. Diese Erkenntnisse werden automatisch genutzt, um die Website kontinuierlich zu optimieren.",
   },
   {
-    question: "Ist die Methode wirklich legal?",
-    answer: "Ja, absolut. Wir nutzen ausschließlich vom Gesetzgeber vorgesehene Möglichkeiten und arbeiten eng mit deinem Steuerberater zusammen.",
+    question: "Wie lange dauert es, bis ich erste Ergebnisse sehe?",
+    answer: "Die ersten Optimierungen können bereits nach wenigen Tagen implementiert werden. Signifikante Verbesserungen der Conversion-Rate sind typischerweise nach 4-6 Wochen messbar.",
   },
   {
-    question: "Wie lange dauert die Implementierung?",
-    answer: "Die Entscheidungsfindung dauert in der Regel nur eine Stunde. Die Implementierung erfolgt dann schnell und unkompliziert mit einem Telefonat und einer E-Mail an deinen Steuerberater.",
+    question: "Ist die Implementierung kompliziert?",
+    answer: "Nein, wir kümmern uns um die gesamte technische Implementierung. Sie müssen lediglich einen kleinen Code-Snippet auf Ihrer Website einbinden, den Rest erledigen wir.",
   },
 ];
 

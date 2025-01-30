@@ -21,36 +21,36 @@ export const StrategyFlow = () => {
     return () => clearInterval(interval);
   }, [predictVideoEngagement]);
 
-  const flowItems = [
-    {
-      icon: Building2,
-      label: "GmbH",
-      description: "Gewinne generieren",
-      subLabel: "Betriebsausgaben zu 100% absetzbar",
-      color: "text-blue-500",
-    },
-    {
-      icon: LineChart,
-      label: "ETFs",
-      description: "644€ steuerfrei investierbar",
-      subLabel: "legale Methode",
-      color: "text-green-500",
-    },
-    {
-      icon: Cog,
-      label: "GF Strategie #1",
-      description: "Optimierte Auszahlungsstrategie",
-      subLabel: "steuerfrei",
-      color: "text-accent",
-      isHighlighted: true,
-    },
-    {
-      icon: PiggyBank,
-      label: "Privatvermögen",
-      description: "Steueroptimierter Vermögensaufbau",
-      color: "text-accent",
-    },
-  ];
+const flowItems = [
+  {
+    icon: Building2,
+    label: "Website-Analyse",
+    description: "KI-gestützte Analyse",
+    subLabel: "Conversion-Tracking",
+    color: "text-blue-500",
+  },
+  {
+    icon: LineChart,
+    label: "Optimierung",
+    description: "Verkaufspsychologie & KI",
+    subLabel: "wissenschaftlich fundiert",
+    color: "text-green-500",
+  },
+  {
+    icon: Cog,
+    label: "Personalisierung",
+    description: "Individuelle Anpassung",
+    subLabel: "automatisiert",
+    color: "text-accent",
+    isHighlighted: true,
+  },
+  {
+    icon: PiggyBank,
+    label: "Mehr Umsatz",
+    description: "Höhere Conversion-Rate",
+    color: "text-accent",
+  },
+];
 
   return (
     <section id="strategy-flow-section" className="py-20 bg-primary-dark overflow-hidden">

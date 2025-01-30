@@ -6,13 +6,13 @@ import { useToast } from "@/hooks/use-toast";
 
 const initialBenefits = [
   {
-    title: "Selbstlernende Webseite",
-    description: "Ihre Webseite lernt von jedem Besucher und wird kontinuierlich verkaufsstärker.",
+    title: "KI-gestützte Optimierung",
+    description: "Ihre Website lernt von jedem Besucher und optimiert sich kontinuierlich selbst.",
     icon: Brain,
   },
   {
-    title: "Datenbasierte Optimierung",
-    description: "Kontinuierliche Verbesserung durch wissenschaftlich fundierte Erkenntnisse.",
+    title: "Datenbasierte Entscheidungen",
+    description: "Wissenschaftlich fundierte Conversion-Optimierung statt Bauchgefühl.",
     icon: ChartBarIcon,
   },
   {
@@ -29,7 +29,7 @@ const extendedBenefits = [
     icon: Target,
   },
   {
-    title: "Conversion-Psychologie",
+    title: "Verkaufspsychologie",
     description: "Wissenschaftlich fundierte Verkaufspsychologie für maximale Überzeugungskraft.",
     icon: Brain,
   }

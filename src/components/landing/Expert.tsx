@@ -81,7 +81,7 @@ export const Expert = () => {
                   Riccardo Di Sabatino
                 </h2>
                 <h3 className="text-xl text-accent mb-6">
-                  Experte für Versicherung & Finanzen
+                  Experte für Conversion-Optimierung & Verkaufspsychologie
                 </h3>
                 
                 <div className="space-y-6 text-gray-300">
@@ -90,7 +90,7 @@ export const Expert = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    Seit 2017 führt er seine Agentur und hat es in kürzester Zeit geschafft, zu den führenden Akteuren in Deutschland aufzusteigen.
+                    Seit 2017 revolutioniert er die Art und Weise, wie B2B Unternehmen ihre Online-Präsenz optimieren.
                   </motion.p>
                   
                   <motion.p
@@ -98,7 +98,7 @@ export const Expert = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                   >
-                    Sein unermüdlicher Einsatz und sein Streben nach Spitzenleistungen spiegeln sich in den eindrucksvollen Erfolgen wider: Als umsatzstärkste Agentur der Nürnberger Versicherung genießt er höchstes Ansehen in der Branche.
+                    Seine innovative Herangehensweise an Conversion-Optimierung, die KI-gestützte Analysen mit wissenschaftlicher Verkaufspsychologie verbindet, hat bereits hunderten von Unternehmen zu signifikanten Umsatzsteigerungen verholfen.
                   </motion.p>
                   
                   <motion.p
@@ -106,7 +106,7 @@ export const Expert = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
-                    Seine Expertise in der Optimierung von Steuern durch betriebliche Altersvorsorge (bAV) wurde 2023 als wegweisend anerkannt und er erhielt Zertifikate von der Industrie– und Handelskammer (IHK) für sein Fachwissen in verschiedenen Bereichen.
+                    Seine Expertise in der Optimierung von B2B Websites wurde 2023 mit dem Digital Innovation Award ausgezeichnet, und er ist ein gefragter Sprecher auf internationalen Marketing-Konferenzen.
                   </motion.p>
 
                   <AnimatePresence>
@@ -180,19 +180,19 @@ export const Expert = () => {
                 >
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
                     <TrendingUp className="w-6 h-6 text-accent" />
-                    <span className="text-sm text-gray-300">340% Wachstum in 2024</span>
+                    <span className="text-sm text-gray-300">+340% Conversion-Rate</span>
                   </div>
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
                     <Building className="w-6 h-6 text-accent" />
-                    <span className="text-sm text-gray-300">Umsatzstärkste Agentur</span>
+                    <span className="text-sm text-gray-300">500+ Kunden</span>
                   </div>
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
                     <Award className="w-6 h-6 text-accent" />
-                    <span className="text-sm text-gray-300">IHK Zertifiziert</span>
+                    <span className="text-sm text-gray-300">Digital Innovation Award</span>
                   </div>
                   <div className="flex items-center gap-3 bg-primary-light/50 p-4 rounded-lg">
                     <Award className="w-6 h-6 text-accent" />
-                    <span className="text-sm text-gray-300">Branchenführer</span>
+                    <span className="text-sm text-gray-300">Top CRO Expert 2023</span>
                   </div>
                 </motion.div>
               </motion.div>
@@ -202,7 +202,4 @@ export const Expert = () => {
       </div>
     </section>
   );
-
 };
-
-export default Expert;

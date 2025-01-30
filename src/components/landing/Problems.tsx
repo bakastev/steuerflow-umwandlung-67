@@ -2,9 +2,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const problems = [
-  "Ihre Gewinne bleiben in der GmbH gefangen und Sie zahlen unnötig hohe Steuern.",
-  "Ihr Steuerberater ist nur ein 'Steuerbegleiter' - ohne proaktive Strategieberatung.",
-  "Steuern sind Chefsache, aber Sie haben keine Zeit sich damit zu beschäftigen.",
+  "Ihre Website konvertiert nicht so gut wie sie könnte - Sie verlieren täglich potenzielle Kunden.",
+  "A/B Tests und Conversion-Optimierung kosten zu viel Zeit und Ressourcen.",
+  "Ihre Website basiert auf Annahmen statt auf wissenschaftlichen Erkenntnissen.",
 ];
 
 export const Problems = () => {
@@ -17,7 +17,6 @@ export const Problems = () => {
   return (
     <section id="problems-section" className="relative h-[400vh]" ref={containerRef}>
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
-        {/* Animierter Hintergrund-Verlauf */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark opacity-80" />
           <motion.div
@@ -37,7 +36,7 @@ export const Problems = () => {
 
         <div className="container relative z-10 mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
-            Die größten Herausforderungen für Geschäftsführer
+            Die größten Herausforderungen für B2B Websites
           </h2>
           <div className="relative flex flex-col items-center gap-8 max-w-4xl mx-auto">
             {problems.map((problem, index) => {

@@ -3,18 +3,18 @@ import { motion } from "framer-motion";
 
 const steps = [
   {
-    title: "Erstgespräch buchen",
-    description: "In nur einer Stunde klären wir Ihre individuelle Situation und zeigen Ihnen Ihre Einsparpotentiale.",
+    title: "Website-Audit",
+    description: "Wir analysieren Ihre Website mit KI-gestützten Tools und identifizieren Conversion-Barrieren.",
     icon: Clock,
   },
   {
     title: "Strategie entwickeln",
-    description: "Wir entwickeln gemeinsam Ihre maßgeschneiderte Geschäftsführerstrategie - einfach und effizient.",
+    description: "Basierend auf den Erkenntnissen entwickeln wir eine maßgeschneiderte Optimierungsstrategie.",
     icon: CheckCircle,
   },
   {
-    title: "Schnelle Umsetzung",
-    description: "Ein Telefonat und eine E-Mail mit Ihrem Steuerberater genügen meist schon für die Implementierung.",
+    title: "Implementierung & Testing",
+    description: "Wir setzen die Optimierungen um und messen kontinuierlich die Ergebnisse.",
     icon: PhoneCall,
   },
 ];

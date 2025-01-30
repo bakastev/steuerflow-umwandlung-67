@@ -3,20 +3,20 @@ import { motion } from "framer-motion";
 
 const solutions = [
   {
-    title: "Standardisierte Prozesse",
-    description: "Erprobte und optimierte Schritte, die Zeit und Aufwand minimieren.",
+    title: "KI-gestützte Analyse",
+    description: "Automatische Erkennung von Conversion-Barrieren durch künstliche Intelligenz.",
   },
   {
-    title: "Steuerberater-Kommunikation",
-    description: "Wir setzen die Strategie mit deinem Steuerberater um, damit du dich auf dein Business konzentrieren kannst.",
+    title: "Personalisierte Optimierung",
+    description: "Individuelle Anpassung der Website basierend auf dem Besucherverhalten.",
   },
   {
-    title: "Klarheit und Transparenz",
-    description: "Kein Fachchinesisch – wir erklären dir die Strategie Schritt für Schritt.",
+    title: "Wissenschaftliche Methodik",
+    description: "Verkaufspsychologische Prinzipien, die nachweislich zu mehr Conversions führen.",
   },
   {
-    title: "Langfristige Steueroptimierung",
-    description: "Reduziere die größte Kostenposition deines Unternehmens nachhaltig.",
+    title: "Messbare Ergebnisse",
+    description: "Transparente Erfolgsmessung durch detailliertes Conversion-Tracking.",
   },
 ];
 
