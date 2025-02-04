@@ -7,49 +7,37 @@ const steps = [
     icon: MousePointerClick,
     title: "Website-Besuch",
     description: "Interessent besucht deine Website",
-    highlight: "KI-gestützte Personalisierung",
-    row: 0,
-    direction: "right"
+    highlight: "KI-gestützte Personalisierung"
   },
   {
     icon: UserPlus,
     title: "Lead-Generierung",
     description: "Conversion durch optimierte Formulare",
-    highlight: "Automatische Datenerfassung",
-    row: 0,
-    direction: "right"
+    highlight: "Automatische Datenerfassung"
   },
   {
     icon: Filter,
     title: "Lead-Qualifizierung",
     description: "Automatische Lead-Segmentierung",
-    highlight: "KI-basiertes Scoring",
-    row: 1,
-    direction: "left"
+    highlight: "KI-basiertes Scoring"
   },
   {
     icon: MessageSquare,
     title: "Personalisierte Kommunikation",
     description: "Automatisierte Follow-ups",
-    highlight: "Individuelle Ansprache",
-    row: 1,
-    direction: "left"
+    highlight: "Individuelle Ansprache"
   },
   {
     icon: Database,
     title: "CRM-Integration",
     description: "Nahtlose Systemintegration",
-    highlight: "Zentrale Datenverwaltung",
-    row: 2,
-    direction: "right"
+    highlight: "Zentrale Datenverwaltung"
   },
   {
     icon: CheckCircle,
     title: "Abschluss",
     description: "Erfolgreicher Verkaufsabschluss",
-    highlight: "Messbare Ergebnisse",
-    row: 2,
-    direction: "right"
+    highlight: "Messbare Ergebnisse"
   }
 ];
 
@@ -57,7 +45,7 @@ export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start end", "end start"]
   });
 
   return (
@@ -84,64 +72,59 @@ export const LeadPipeline = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Automatisierte Lead-Pipeline
           </h2>
-          <div className="relative flex flex-col gap-32 max-w-6xl mx-auto">
-            {[0, 1, 2].map((row) => (
-              <div key={row} className="relative w-full flex items-center justify-between gap-8">
-                {steps
-                  .filter((step) => step.row === row)
-                  .map((step, index) => {
-                    const stepIndex = steps.findIndex((s) => s.title === step.title);
-                    const progress = useTransform(
-                      scrollYProgress,
-                      [stepIndex * 0.15, (stepIndex + 1) * 0.15],
-                      [0, 1]
-                    );
+          
+          <div className="relative max-w-4xl mx-auto">
+            {/* Timeline Line */}
+            <motion.div 
+              className="absolute left-0 top-[60px] w-full h-1 bg-accent/30"
+              style={{
+                scaleX: scrollYProgress
+              }}
+            />
 
-                    const x = useTransform(
-                      progress,
-                      [0, 1],
-                      step.direction === "right" 
-                        ? [-100, 0]
-                        : [100, 0]
-                    );
+            {/* Timeline Steps */}
+            <div className="relative">
+              {steps.map((step, index) => {
+                const progress = useTransform(
+                  scrollYProgress,
+                  [index * 0.15, (index + 1) * 0.15],
+                  [0, 1]
+                );
 
-                    return (
-                      <motion.div
-                        key={step.title}
-                        style={{ x, opacity: progress }}
-                        className={`relative w-[calc(50%-1rem)] ${
-                          step.direction === "right" ? "ml-auto" : "mr-auto"
-                        } bg-white/10 backdrop-blur-lg rounded-lg p-6 border border-accent/20`}
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 rounded-full bg-accent/20">
-                            <step.icon className="w-6 h-6 text-accent" />
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-semibold text-accent mb-2">{step.title}</h3>
-                            <p className="text-white/90 mb-2">{step.description}</p>
-                            <p className="text-accent/80 text-sm">{step.highlight}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                {row < 2 && (
+                return (
                   <motion.div
+                    key={step.title}
+                    className={`absolute left-0 w-64 ${
+                      index % 2 === 0 ? "-top-24" : "top-12"
+                    }`}
                     style={{
-                      opacity: useTransform(
-                        scrollYProgress,
-                        [(row * 2 + 1) * 0.15, (row * 2 + 2) * 0.15],
-                        [0, 1]
-                      )
+                      left: `${(index / (steps.length - 1)) * 100}%`,
+                      opacity: progress,
+                      y: useTransform(progress, [0, 1], [20, 0])
                     }}
-                    className={`absolute ${
-                      row === 0 ? "bottom-0 right-0" : "bottom-0 left-0"
-                    } w-0.5 h-16 bg-accent/50`}
-                  />
-                )}
-              </div>
-            ))}
+                  >
+                    {/* Milestone Point */}
+                    <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full shadow-lg shadow-accent/50">
+                      <div className="absolute inset-0 animate-ping bg-accent/50 rounded-full" />
+                    </div>
+
+                    {/* Content Card */}
+                    <div className="relative mt-8 bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-accent/20">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-accent/20">
+                          <step.icon className="w-5 h-5 text-accent" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-accent mb-1">{step.title}</h3>
+                          <p className="text-sm text-white/90 mb-1">{step.description}</p>
+                          <p className="text-xs text-accent/80">{step.highlight}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
