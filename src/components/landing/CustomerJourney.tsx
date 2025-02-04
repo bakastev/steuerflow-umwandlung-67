@@ -34,25 +34,30 @@ export const CustomerJourney = () => {
       description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
-      icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
-    },
-    {
       icon: LineChart,
       title: "Gezielte Conversion",
       description: "Gezielte Conversion & personalisierte Angebote",
     },
+    {
+      icon: Star,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
+    },
   ];
 
-  // Für Mobile die letzten drei Elemente in umgekehrter Reihenfolge anzeigen
+  // Für Mobile: erste 3 Elemente normal, dann 4. und 5. tauschen, letztes bleibt
   const orderedSteps = isMobile 
-    ? [...journeySteps.slice(0, 3), ...journeySteps.slice(3).reverse()]
+    ? [
+        ...journeySteps.slice(0, 3),
+        journeySteps[4], // LineChart (ursprünglich 5.)
+        journeySteps[3], // HandshakeIcon (ursprünglich 4.)
+        journeySteps[5]  // Star (bleibt am Ende)
+      ]
     : journeySteps;
 
   return (
     <div ref={containerRef} className="min-h-[300vh]">
-      <section className="sticky top-[15%] h-screen flex items-start bg-primary-dark">
+      <section className="sticky top-[5%] h-screen flex items-start bg-primary-dark">
         <div className="container mx-auto px-4 pt-16">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Ihre Customer Journey
