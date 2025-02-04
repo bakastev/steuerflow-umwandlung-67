@@ -14,6 +14,7 @@ import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { AIExperience } from "@/components/landing/AIExperience";
 import { CompareHero } from "@/components/landing/CompareHero";
+import { CustomerJourney } from "@/components/landing/CustomerJourney";
 import { useEffect, useState, useRef } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { EngagementInsights } from "@/types/tracking";
@@ -120,6 +121,9 @@ const Index = () => {
       )}
       <div className="py-24 md:py-32">
         <CompareHero />
+      </div>
+      <div className="py-24 md:py-32">
+        <CustomerJourney />
       </div>
       <div className="py-24 md:py-32">
         <StrategyFlow />
