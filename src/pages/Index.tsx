@@ -14,7 +14,6 @@ import { TechStack } from "@/components/landing/TechStack";
 import { StrategyFlow } from "@/components/landing/StrategyFlow";
 import { AIExperience } from "@/components/landing/AIExperience";
 import { CompareHero } from "@/components/landing/CompareHero";
-import { LeadPipeline } from "@/components/landing/LeadPipeline";
 import { useEffect, useState, useRef } from "react";
 import { useTFTracking } from "@/hooks/useTFTracking";
 import { EngagementInsights } from "@/types/tracking";
@@ -108,9 +107,6 @@ const Index = () => {
       </div>
       <div className="py-24 md:py-32">
         <Benefits />
-      </div>
-      <div className="py-24 md:py-32">
-        <LeadPipeline />
       </div>
       {engagementInsights && (
         <div className="py-24 md:py-32">

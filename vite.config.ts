@@ -7,10 +7,11 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    cors: true, // Vereinfachte CORS-Konfiguration, die alle Origins erlaubt
-    hmr: {
-      host: 'localhost',
-      protocol: 'ws'
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true
     },
   },
   plugins: [
