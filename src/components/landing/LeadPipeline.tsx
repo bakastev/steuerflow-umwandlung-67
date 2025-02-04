@@ -44,7 +44,7 @@ interface StepCardProps {
   description: string;
   highlight: string;
   className: string;
-  progress: any; // Temporär 'any' um TypeScript-Fehler zu beheben
+  progress: any;
   dotPosition: { x: number; y: number };
 }
 
@@ -56,8 +56,8 @@ const StepCard = ({
   progress,
   dotPosition
 }: StepCardProps) => {
-  const opacity = useTransform(progress, [0, 0.3, 1], [0, 0, 1]);
-  const scale = useTransform(progress, [0, 0.3, 1], [0.8, 0.8, 1]);
+  const opacity = useTransform(progress, [0, 0.3, 1], [0, 1, 1]);
+  const scale = useTransform(progress, [0, 0.3, 1], [0.8, 1, 1]);
   
   return (
     <>
@@ -65,7 +65,7 @@ const StepCard = ({
         className={`absolute ${className}`}
         style={{ 
           opacity,
-          scale
+          scale,
         }}
       >
         <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
@@ -97,17 +97,16 @@ export const LeadPipeline = () => {
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start end", "end start"]
   });
 
-  // Angepasste Desktop-Positionen basierend auf der Timeline
   const desktopPositions = [
-    "left-[50px] top-[20px]",      // Startpunkt
-    "left-[400px] top-[20px]",     // Erste horizontale Linie
-    "right-[50px] top-[20px]",     // Ende erste horizontale Linie
-    "left-[50px] top-[220px]",     // Zweite horizontale Linie Start
-    "left-[400px] top-[420px]",    // Dritte horizontale Linie
-    "right-[50px] top-[420px]"     // Endpunkt
+    "left-[50px] top-[20px]",
+    "left-[400px] top-[20px]",
+    "right-[50px] top-[20px]",
+    "left-[50px] top-[220px]",
+    "left-[400px] top-[420px]",
+    "right-[50px] top-[420px]"
   ];
 
   const mobilePositions = [
@@ -119,14 +118,13 @@ export const LeadPipeline = () => {
     "left-[180px] top-[800px]"
   ];
 
-  // Definiere die Punkte auf der Timeline, wo die Cards erscheinen sollen
   const desktopDotPositions = [
-    { x: 100, y: 100 },   // Start
-    { x: 400, y: 100 },   // Mitte erste Linie
-    { x: 700, y: 100 },   // Ende erste Linie
-    { x: 200, y: 300 },   // Start zweite Linie
-    { x: 400, y: 500 },   // Mitte dritte Linie
-    { x: 700, y: 500 }    // Endpunkt
+    { x: 100, y: 100 },
+    { x: 400, y: 100 },
+    { x: 700, y: 100 },
+    { x: 200, y: 300 },
+    { x: 400, y: 500 },
+    { x: 700, y: 500 }
   ];
 
   const mobileDotPositions = [
@@ -139,14 +137,10 @@ export const LeadPipeline = () => {
   ];
 
   const cardProgresses = steps.map((_, index) => {
-    const segmentSize = 1 / (steps.length - 1);
-    const startProgress = index * segmentSize;
-    const endProgress = startProgress + segmentSize;
-    
     return useTransform(
       scrollYProgress,
-      [Math.max(0, startProgress - 0.1), startProgress, endProgress],
-      [0, 1, 1]
+      [index / steps.length, (index + 0.5) / steps.length],
+      [0, 1]
     );
   });
 
