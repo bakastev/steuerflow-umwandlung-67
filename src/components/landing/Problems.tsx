@@ -9,8 +9,6 @@ const problems = [
 
 export const Problems = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -42,25 +40,22 @@ export const Problems = () => {
           </h2>
           <div className="relative flex flex-col items-center gap-8 max-w-4xl mx-auto">
             {problems.map((problem, index) => {
-              const progress = useTransform(
+              const opacity = useTransform(
                 scrollYProgress,
-                [index * 0.25, (index + 1) * 0.25],
-                [0, 1]
+                [
+                  index * 0.3,
+                  index * 0.3 + 0.1,
+                  index * 0.3 + 0.2,
+                  index * 0.3 + 0.3
+                ],
+                [0, 1, 1, 0]
               );
-
-              const opacity = useTransform(progress, [0, 0.5, 1], [0, 1, 0]);
-              const scale = useTransform(progress, [0, 0.5, 1], [0.8, 1, 0.8]);
 
               return (
                 <motion.p
                   key={index}
-                  ref={el => textRefs.current[index] = el}
-                  style={{ 
-                    opacity,
-                    scale,
-                    position: 'absolute'
-                  }}
-                  className="text-2xl text-center text-accent drop-shadow-[0_0_10px_rgba(197,165,114,0.5)]"
+                  style={{ opacity }}
+                  className="absolute text-2xl text-center text-accent drop-shadow-[0_0_10px_rgba(197,165,114,0.5)]"
                 >
                   {problem}
                 </motion.p>
