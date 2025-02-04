@@ -36,19 +36,28 @@ const steps = [
   }
 ];
 
-// SVG-Pfad für Desktop - größer und mit mehr Platz für Cards
-const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
+// SVG-Pfad für Desktop - angepasst für bessere Verteilung
+const desktopPath = "M100,100 C150,100 150,200 200,200 H400 C450,200 450,300 500,300 H700 C750,300 750,400 700,400 H200";
 
-// SVG-Pfad für Mobile - vertikal mit genug Platz für Cards
-const mobilePath = "M150,50 L150,800";
+// SVG-Pfad für Mobile - vertikal mit gleichmäßigen Abständen
+const mobilePath = "M150,50 C150,150 150,250 150,800";
 
-const StepCard = ({ title, description, highlight, className }: { 
+const StepCard = ({ title, description, highlight, className, progress }: { 
   title: string;
   description: string;
   highlight: string;
   className: string;
+  progress: number;
 }) => (
-  <div className={`absolute ${className}`}>
+  <motion.div 
+    className={`absolute ${className}`}
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ 
+      opacity: progress >= 1 ? 1 : 0,
+      scale: progress >= 1 ? 1 : 0.8,
+      transition: { duration: 0.5 }
+    }}
+  >
     <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
       <CardHeader>
         <CardTitle className="text-lg text-white">{title}</CardTitle>
@@ -58,7 +67,7 @@ const StepCard = ({ title, description, highlight, className }: {
         <p className="text-sm text-accent">{highlight}</p>
       </CardContent>
     </Card>
-  </div>
+  </motion.div>
 );
 
 export const LeadPipeline = () => {
@@ -70,24 +79,24 @@ export const LeadPipeline = () => {
     offset: ["start start", "end end"]
   });
 
-  // Desktop Positionen für die Cards
+  // Desktop Positionen für die Cards - besser verteilt
   const desktopPositions = [
-    "left-[50px] top-[20px]",
-    "left-[350px] top-[20px]",
-    "right-[50px] top-[20px]",
+    "left-[50px] top-[50px]",
+    "left-[400px] top-[150px]",
     "right-[50px] top-[250px]",
-    "left-[350px] top-[480px]",
-    "right-[50px] top-[480px]"
+    "left-[50px] top-[350px]",
+    "left-[400px] top-[450px]",
+    "right-[50px] top-[550px]"
   ];
 
-  // Mobile Positionen für die Cards
+  // Mobile Positionen für die Cards - gleichmäßig verteilt
   const mobilePositions = [
-    "left-[180px] top-[50px]",
-    "left-[180px] top-[180px]",
-    "left-[180px] top-[310px]",
-    "left-[180px] top-[440px]",
-    "left-[180px] top-[570px]",
-    "left-[180px] top-[700px]"
+    "left-[180px] top-[100px]",
+    "left-[180px] top-[250px]",
+    "left-[180px] top-[400px]",
+    "left-[180px] top-[550px]",
+    "left-[180px] top-[700px]",
+    "left-[180px] top-[850px]"
   ];
 
   return (
@@ -110,7 +119,7 @@ export const LeadPipeline = () => {
             {/* SVG Timeline */}
             <svg
               className="absolute top-0 left-0 w-full h-full"
-              viewBox={isMobile ? "0 0 300 850" : "0 0 800 600"}
+              viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -136,20 +145,19 @@ export const LeadPipeline = () => {
             </svg>
 
             {/* Cards */}
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-              >
+            {steps.map((step, index) => {
+              const stepProgress = 6; // Anzahl der Steps
+              const stepThreshold = (index + 1) / stepProgress;
+              
+              return (
                 <StepCard
+                  key={step.title}
                   {...step}
                   className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                  progress={scrollYProgress.get() / stepThreshold}
                 />
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
