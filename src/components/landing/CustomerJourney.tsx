@@ -32,8 +32,8 @@ export const CustomerJourney = () => {
     },
     {
       icon: LineChart,
-      title: "Gezielte ConversionLead-Qualifizierung",
-      description: "Gezielte Conversion & personalisierte AngeboteAutomatische Bewertung & Verhaltens-Scoring",
+      title: "Gezielte Conversion",
+      description: "Gezielte Conversion & personalisierte Angebote",
     },
     {
       icon: Star,
