@@ -64,7 +64,7 @@ const StepCard = ({
   
   return (
     <motion.div 
-      className={`absolute ${className} z-20`} // Konstanter z-20 für alle Cards
+      className={`absolute ${className}`} // z-index wird jetzt durch die Position bestimmt
       style={{ 
         opacity,
         scale,
@@ -108,21 +108,21 @@ export const LeadPipeline = () => {
   });
 
   const desktopPositions = [
-    "left-[50px] top-[20px]",
-    "left-[400px] top-[20px]",
-    "right-[50px] top-[20px]",
-    "left-[50px] top-[220px]",
-    "left-[400px] top-[420px]",
-    "right-[50px] top-[420px]"
+    "left-[50px] top-[20px] z-20",
+    "left-[400px] top-[20px] z-20",
+    "right-[50px] top-[20px] z-20",
+    "left-[50px] top-[220px] z-20",
+    "left-[400px] top-[420px] z-10", // Letzte zwei Cards mit z-10
+    "right-[50px] top-[420px] z-10"  // Letzte zwei Cards mit z-10
   ];
 
   const mobilePositions = [
-    "left-[180px] top-[50px]",
-    "left-[180px] top-[200px]",
-    "left-[180px] top-[350px]",
-    "left-[180px] top-[500px]",
-    "left-[180px] top-[650px]",
-    "left-[180px] top-[800px]"
+    "left-[180px] top-[50px] z-20",
+    "left-[180px] top-[200px] z-20",
+    "left-[180px] top-[350px] z-20",
+    "left-[180px] top-[500px] z-20",
+    "left-[180px] top-[650px] z-10", // Letzte zwei Cards mit z-10
+    "left-[180px] top-[800px] z-10"  // Letzte zwei Cards mit z-10
   ];
 
   const desktopDotPositions = [
@@ -171,9 +171,19 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
-            {/* SVG mit Timeline zuerst rendern (z-10) */}
+            {/* Cards vor der Timeline rendern */}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
+
+            {/* SVG mit Timeline */}
             <svg
-              className="absolute top-0 left-0 w-full h-full z-10"
+              className="absolute top-0 left-0 w-full h-full z-15"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
@@ -203,16 +213,6 @@ export const LeadPipeline = () => {
                 />
               ))}
             </svg>
-
-            {/* Cards danach rendern (z-20) */}
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.title}
-                {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
-              />
-            ))}
           </div>
         </div>
       </div>
