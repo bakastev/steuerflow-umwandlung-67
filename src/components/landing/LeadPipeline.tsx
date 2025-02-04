@@ -45,12 +45,12 @@ const steps = [
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
-interface StepTextProps {
+interface StepContentProps {
   title: string;
   description: string;
   highlight: string;
   icon: any;
-  className: string;
+  dotPosition: { x: number; y: number };
   progress: any;
 }
 
@@ -60,23 +60,26 @@ interface StepDotProps {
   icon: any;
 }
 
-const StepText = ({ 
+const StepContent = ({ 
   title, 
   description, 
   highlight,
   icon: Icon,
-  className, 
+  dotPosition,
   progress
-}: StepTextProps) => {
+}: StepContentProps) => {
   const opacity = useTransform(progress, [0, 0.1, 0.3], [0, 0, 1]);
   const scale = useTransform(progress, [0, 0.1, 0.3], [0.8, 0.8, 1]);
   
   return (
     <motion.div 
-      className={`absolute ${className} z-20 -translate-x-1/2 flex flex-col items-center text-center`}
+      className="absolute z-20 flex flex-col items-center text-center"
       style={{ 
         opacity,
         scale,
+        left: `${dotPosition.x}px`,
+        top: `${dotPosition.y - 100}px`,
+        transform: 'translateX(-50%)'
       }}
     >
       <Icon className="w-6 h-6 text-accent mb-2" />
@@ -113,24 +116,6 @@ export const LeadPipeline = () => {
     target: containerRef,
     offset: ["start center", "end start"]
   });
-
-  const desktopPositions = [
-    `left-[${100}px] top-[-80px]`,     // Website-Besuch
-    `left-[${400}px] top-[-80px]`,     // Lead-Generierung
-    `left-[${700}px] top-[-80px]`,     // Lead-Qualifizierung
-    `left-[${200}px] top-[120px]`,     // Personalisierte Kommunikation
-    `left-[${400}px] top-[320px]`,     // CRM-Integration
-    `left-[${700}px] top-[320px]`      // Abschluss
-  ];
-
-  const mobilePositions = [
-    "left-[150px] top-[-60px]",
-    "left-[150px] top-[90px]",
-    "left-[150px] top-[240px]",
-    "left-[150px] top-[390px]",
-    "left-[150px] top-[540px]",
-    "left-[150px] top-[690px]"
-  ];
 
   const desktopDotPositions = [
     { x: 100, y: 100 },
@@ -179,10 +164,10 @@ export const LeadPipeline = () => {
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
             {steps.map((step, index) => (
-              <StepText
+              <StepContent
                 key={step.title}
                 {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                dotPosition={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
                 progress={stepProgresses[index]}
               />
             ))}
