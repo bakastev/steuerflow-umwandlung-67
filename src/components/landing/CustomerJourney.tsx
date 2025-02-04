@@ -55,57 +55,47 @@ export const CustomerJourney = () => {
         </motion.h2>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* SVG Timeline mit verbesserter Sichtbarkeit */}
-          <svg
-            className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10 hidden md:block"
-            viewBox="0 0 1200 600"
-            preserveAspectRatio="none"
-          >
-            {/* Hintergrund-Glow für bessere Sichtbarkeit */}
-            <motion.path
-              d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
-              stroke="url(#glow)"
-              strokeWidth="16"
-              fill="none"
-              initial={{ pathLength: 0, opacity: 0.3 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              viewport={{ once: true }}
-              className="stroke-accent/20"
-            />
-            
-            {/* Hauptpfad der Timeline */}
-            <motion.path
-              d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
-              stroke="url(#gradient)"
-              strokeWidth="6"
-              fill="none"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              viewport={{ once: true }}
-              className="stroke-accent"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            
-            {/* Gradient-Definitionen mit erhöhter Opazität */}
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#C5A572" stopOpacity="1" />
-                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.4" />
-              </linearGradient>
-              <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.2" />
-                <stop offset="50%" stopColor="#C5A572" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.2" />
-              </linearGradient>
-            </defs>
-          </svg>
+          {/* Desktop Timeline (versteckt auf Mobile) */}
+          <div className="hidden md:block absolute top-0 left-0 w-full h-full">
+            <svg className="w-full h-full" viewBox="0 0 1000 300" preserveAspectRatio="none">
+              {/* Hintergrund-Glow */}
+              <motion.path
+                d="M0 100 C250 100, 250 200, 500 200 C750 200, 750 100, 1000 100"
+                stroke="rgba(197, 165, 114, 0.2)"
+                strokeWidth="20"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                viewport={{ once: true }}
+              />
+              
+              {/* Hauptlinie */}
+              <motion.path
+                d="M0 100 C250 100, 250 200, 500 200 C750 200, 750 100, 1000 100"
+                stroke="url(#timeline-gradient)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                viewport={{ once: true }}
+              />
 
-          {/* Cards Grid */}
-          <div className="grid md:grid-cols-2 gap-8 relative">
+              {/* Gradient Definition */}
+              <defs>
+                <linearGradient id="timeline-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#C5A572" stopOpacity="1" />
+                  <stop offset="50%" stopColor="#DEC4A1" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#C5A572" stopOpacity="1" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          {/* Journey Steps Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
             {journeySteps.map((step, index) => (
               <motion.div
                 key={index}
@@ -117,12 +107,8 @@ export const CustomerJourney = () => {
                   ease: "easeOut",
                 }}
                 viewport={{ once: true }}
-                className={`
-                  bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
-                  hover:bg-white/10 transition-colors duration-300
-                  ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}
-                  relative z-10
-                `}
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
+                          hover:bg-white/10 transition-colors duration-300"
               >
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-lg bg-accent/10">
