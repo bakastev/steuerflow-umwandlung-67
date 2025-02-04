@@ -36,7 +36,6 @@ const steps = [
   }
 ];
 
-// Original SVG-Pfad wiederhergestellt
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
@@ -51,7 +50,7 @@ const StepCard = ({
   description: string;
   highlight: string;
   className: string;
-  progress: number;
+  progress: MotionValue<number>;
 }) => {
   const opacity = useTransform(progress, [0, 0.3, 1], [0, 0, 1]);
   const scale = useTransform(progress, [0, 0.3, 1], [0.8, 0.8, 1]);
@@ -86,7 +85,6 @@ export const LeadPipeline = () => {
     offset: ["start start", "end end"]
   });
 
-  // Desktop Positionen - gleichmäßig entlang des Pfades verteilt
   const desktopPositions = [
     "left-[50px] top-[50px]",
     "left-[300px] top-[50px]",
@@ -96,7 +94,6 @@ export const LeadPipeline = () => {
     "right-[50px] top-[450px]"
   ];
 
-  // Mobile Positionen - vertikal gleichmäßig verteilt
   const mobilePositions = [
     "left-[180px] top-[50px]",
     "left-[180px] top-[200px]",
@@ -106,11 +103,11 @@ export const LeadPipeline = () => {
     "left-[180px] top-[800px]"
   ];
 
-  // Erstelle individuelle Progress-Werte für jede Card
   const cardProgresses = steps.map((_, index) => {
-    const start = index / steps.length;
-    const end = (index + 1) / steps.length;
-    return useTransform(scrollYProgress, [start, end], [0, 1]);
+    return useTransform(scrollYProgress, 
+      [index / steps.length, (index + 1) / steps.length], 
+      [0, 1]
+    );
   });
 
   return (
@@ -130,14 +127,12 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
-            {/* SVG Timeline */}
             <svg
               className="absolute top-0 left-0 w-full h-full"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
-              {/* Hintergrund-Pfad */}
               <path
                 d={isMobile ? mobilePath : desktopPath}
                 stroke="rgba(197, 165, 114, 0.2)"
@@ -145,7 +140,6 @@ export const LeadPipeline = () => {
                 strokeLinecap="round"
                 fill="none"
               />
-              {/* Animierter Pfad */}
               <motion.path
                 d={isMobile ? mobilePath : desktopPath}
                 stroke="#C5A572"
@@ -158,7 +152,6 @@ export const LeadPipeline = () => {
               />
             </svg>
 
-            {/* Cards */}
             {steps.map((step, index) => (
               <StepCard
                 key={step.title}
