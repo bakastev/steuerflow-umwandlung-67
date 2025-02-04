@@ -9,15 +9,15 @@ import { motion } from "framer-motion";
 const faqs = [
   {
     question: "Wie funktioniert die KI-gestützte Optimierung?",
-    answer: "Unsere KI analysiert das Verhalten Ihrer Website-Besucher in Echtzeit und identifiziert Muster, die zu höheren oder niedrigeren Conversion-Raten führen. Diese Erkenntnisse werden automatisch genutzt, um die Website kontinuierlich zu optimieren.",
+    answer: "Unsere KI analysiert das Verhalten deiner Website-Besucher in Echtzeit und identifiziert Muster, die zu höheren oder niedrigeren Conversion-Raten führen. Diese Erkenntnisse werden automatisch genutzt, um deine Website kontinuierlich zu optimieren.",
   },
   {
     question: "Wie lange dauert es, bis ich erste Ergebnisse sehe?",
-    answer: "Die ersten Optimierungen können bereits nach wenigen Tagen implementiert werden. Signifikante Verbesserungen der Conversion-Rate sind typischerweise nach 4-6 Wochen messbar.",
+    answer: "Die ersten Optimierungen können bereits nach wenigen Tagen implementiert werden. Signifikante Verbesserungen deiner Conversion-Rate sind typischerweise nach 4-6 Wochen messbar.",
   },
   {
     question: "Ist die Implementierung kompliziert?",
-    answer: "Nein, wir kümmern uns um die gesamte technische Implementierung. Sie müssen lediglich einen kleinen Code-Snippet auf Ihrer Website einbinden, den Rest erledigen wir.",
+    answer: "Nein, wir kümmern uns um die gesamte technische Implementierung. Du musst lediglich einen kleinen Code-Snippet auf deiner Website einbinden, den Rest erledigen wir.",
   },
 ];
 

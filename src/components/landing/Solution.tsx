@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 const solutions = [
   {
     title: "KI-gestützte Analyse",
-    description: "Automatische Erkennung von Conversion-Barrieren durch künstliche Intelligenz.",
+    description: "Automatische Erkennung von Conversion-Barrieren durch künstliche Intelligenz auf deiner Website.",
   },
   {
     title: "Personalisierte Optimierung",
-    description: "Individuelle Anpassung der Website basierend auf dem Besucherverhalten.",
+    description: "Individuelle Anpassung deiner Website basierend auf dem Besucherverhalten.",
   },
   {
     title: "Wissenschaftliche Methodik",
-    description: "Verkaufspsychologische Prinzipien, die nachweislich zu mehr Conversions führen.",
+    description: "Verkaufspsychologische Prinzipien, die nachweislich zu mehr Conversions auf deiner Website führen.",
   },
   {
     title: "Messbare Ergebnisse",
-    description: "Transparente Erfolgsmessung durch detailliertes Conversion-Tracking.",
+    description: "Transparente Erfolgsmessung durch detailliertes Conversion-Tracking deiner Website.",
   },
 ];
 
