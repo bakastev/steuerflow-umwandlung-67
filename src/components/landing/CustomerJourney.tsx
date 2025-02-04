@@ -43,7 +43,7 @@ export const CustomerJourney = () => {
   ];
 
   return (
-    <div ref={containerRef} className="min-h-[200vh]">
+    <div ref={containerRef} className="min-h-[400vh]">
       <section className="sticky top-0 h-screen flex items-center bg-primary-dark">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
@@ -76,7 +76,7 @@ export const CustomerJourney = () => {
               {journeySteps.slice(0, 3).map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
-                  [index * 0.2, index * 0.2 + 0.1],
+                  [index * 0.15, index * 0.15 + 0.1],
                   [0, 1]
                 );
 
@@ -106,10 +106,10 @@ export const CustomerJourney = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-              {[journeySteps[3], journeySteps[5], journeySteps[4]].map((step, index) => {
+              {journeySteps.slice(3).map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
-                  [(index + 3) * 0.2, (index + 3) * 0.2 + 0.1],
+                  [0.45 + index * 0.15, 0.45 + index * 0.15 + 0.1],
                   [0, 1]
                 );
 
