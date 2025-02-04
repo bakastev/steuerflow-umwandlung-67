@@ -31,14 +31,14 @@ export const CustomerJourney = () => {
       description: "Automatische Bewertung & Verhaltens-Scoring",
     },
     {
-      icon: LineChart,
-      title: "Conversion",
-      description: "Gezielte Conversion & personalisierte Angebote",
-    },
-    {
       icon: HandshakeIcon,
       title: "Abschluss",
       description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
+    },
+    {
+      icon: LineChart,
+      title: "Conversion",
+      description: "Gezielte Conversion & personalisierte Angebote",
     },
   ];
 
