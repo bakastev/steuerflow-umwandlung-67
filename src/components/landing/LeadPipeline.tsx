@@ -59,9 +59,9 @@ export const LeadPipeline = () => {
 
   return (
     <section 
-      id="lead-pipeline-section" 
-      className="relative h-[300vh] md:h-[200vh]" 
       ref={containerRef}
+      className="relative h-[300vh] md:h-[200vh]"
+      id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
         <div className="absolute inset-0 z-0">
@@ -117,7 +117,7 @@ export const LeadPipeline = () => {
             </svg>
 
             {/* Timeline Steps */}
-            <div className={`relative ${isMobile ? 'pt-16 space-y-32' : 'pt-16'}`}>
+            <div className={`relative pt-16`}>
               {steps.map((step, index) => {
                 const progress = useTransform(
                   scrollYProgress,
