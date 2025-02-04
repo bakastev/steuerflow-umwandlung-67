@@ -55,49 +55,51 @@ export const CustomerJourney = () => {
         </motion.h2>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* SVG Timeline with improved visibility and animation */}
+          {/* SVG Timeline mit verbesserter Sichtbarkeit */}
           <svg
             className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10 hidden md:block"
             viewBox="0 0 1200 600"
             preserveAspectRatio="none"
           >
-            {/* Background glow effect */}
+            {/* Hintergrund-Glow für bessere Sichtbarkeit */}
             <motion.path
               d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
               stroke="url(#glow)"
-              strokeWidth="8"
+              strokeWidth="16"
               fill="none"
               initial={{ pathLength: 0, opacity: 0.3 }}
               whileInView={{ pathLength: 1, opacity: 1 }}
               transition={{ duration: 2, ease: "easeInOut" }}
               viewport={{ once: true }}
-              className="stroke-accent/10"
+              className="stroke-accent/20"
             />
             
-            {/* Main timeline path */}
+            {/* Hauptpfad der Timeline */}
             <motion.path
               d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
               stroke="url(#gradient)"
-              strokeWidth="4"
+              strokeWidth="6"
               fill="none"
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
               transition={{ duration: 2, ease: "easeInOut" }}
               viewport={{ once: true }}
               className="stroke-accent"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             
-            {/* Gradient definitions */}
+            {/* Gradient-Definitionen mit erhöhter Opazität */}
             <defs>
               <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.2" />
+                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.4" />
                 <stop offset="50%" stopColor="#C5A572" stopOpacity="1" />
-                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.4" />
               </linearGradient>
               <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.1" />
-                <stop offset="50%" stopColor="#C5A572" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.1" />
+                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="#C5A572" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.2" />
               </linearGradient>
             </defs>
           </svg>
