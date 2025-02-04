@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const steps = [
   {
@@ -73,19 +74,23 @@ const StepContent = ({
   
   return (
     <motion.div 
-      className="absolute z-20 flex flex-col items-center text-center"
+      className="absolute z-20"
       style={{ 
         opacity,
         scale,
         left: `${dotPosition.x}px`,
-        top: `${dotPosition.y - 100}px`,
+        top: `${dotPosition.y - 120}px`,
         transform: 'translateX(-50%)'
       }}
     >
-      <Icon className="w-6 h-6 text-accent mb-2" />
-      <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
-      <p className="text-sm text-gray-300 mb-1 max-w-[200px]">{description}</p>
-      <span className="text-sm text-accent">{highlight}</span>
+      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20">
+        <CardContent className="p-4 flex flex-col items-center text-center">
+          <Icon className="w-6 h-6 text-accent mb-2" />
+          <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
+          <p className="text-sm text-gray-300 mb-1">{description}</p>
+          <span className="text-sm text-accent">{highlight}</span>
+        </CardContent>
+      </Card>
     </motion.div>
   );
 };
