@@ -76,9 +76,13 @@ export const CustomerJourney = () => {
             >
               {/* Hintergrund-Glow */}
               <motion.path
-                d="M100 100 H400 C500 100, 500 100, 600 100 H900 
-                   M900 100 C1000 100, 1000 300, 1100 300
-                   M1100 300 H800 C700 300, 700 300, 600 300 H100"
+                d="M100 100 H400                    // Von 1 nach rechts zu 2
+                   M400 100 H700                    // Von 2 nach rechts zu 3
+                   M700 100 H1000                   // Von 3 nach rechts
+                   M1000 100 L1000 300             // Gerade nach unten zu 4
+                   M1000 300 H700                   // Von 4 nach links zu 5
+                   M700 300 H400                    // Von 5 nach links zu 6
+                   M400 300 H100"                   // Von 6 nach links
                 stroke="rgba(197, 165, 114, 0.2)"
                 strokeWidth="20"
                 strokeLinecap="round"
@@ -87,9 +91,13 @@ export const CustomerJourney = () => {
               
               {/* Hauptlinie mit Animation */}
               <motion.path
-                d="M100 100 H400 C500 100, 500 100, 600 100 H900 
-                   M900 100 C1000 100, 1000 300, 1100 300
-                   M1100 300 H800 C700 300, 700 300, 600 300 H100"
+                d="M100 100 H400                    // Von 1 nach rechts zu 2
+                   M400 100 H700                    // Von 2 nach rechts zu 3
+                   M700 100 H1000                   // Von 3 nach rechts
+                   M1000 100 L1000 300             // Gerade nach unten zu 4
+                   M1000 300 H700                   // Von 4 nach links zu 5
+                   M700 300 H400                    // Von 5 nach links zu 6
+                   M400 300 H100"                   // Von 6 nach links
                 stroke="url(#timeline-gradient)"
                 strokeWidth="4"
                 strokeLinecap="round"
