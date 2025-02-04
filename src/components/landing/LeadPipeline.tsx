@@ -1,6 +1,7 @@
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const steps = [
   {
@@ -41,6 +42,25 @@ const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700
 // SVG-Pfad für Mobile - vertikal mit genug Platz für Cards
 const mobilePath = "M150,50 L150,800";
 
+const StepCard = ({ title, description, highlight, className }: { 
+  title: string;
+  description: string;
+  highlight: string;
+  className: string;
+}) => (
+  <div className={`absolute ${className}`}>
+    <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
+      <CardHeader>
+        <CardTitle className="text-lg text-white">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-gray-300 mb-2">{description}</p>
+        <p className="text-sm text-accent">{highlight}</p>
+      </CardContent>
+    </Card>
+  </div>
+);
+
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
@@ -49,6 +69,26 @@ export const LeadPipeline = () => {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  // Desktop Positionen für die Cards
+  const desktopPositions = [
+    "left-[50px] top-[20px]",
+    "left-[350px] top-[20px]",
+    "right-[50px] top-[20px]",
+    "right-[50px] top-[250px]",
+    "left-[350px] top-[480px]",
+    "right-[50px] top-[480px]"
+  ];
+
+  // Mobile Positionen für die Cards
+  const mobilePositions = [
+    "left-[180px] top-[50px]",
+    "left-[180px] top-[180px]",
+    "left-[180px] top-[310px]",
+    "left-[180px] top-[440px]",
+    "left-[180px] top-[570px]",
+    "left-[180px] top-[700px]"
+  ];
 
   return (
     <section 
@@ -95,7 +135,21 @@ export const LeadPipeline = () => {
               />
             </svg>
 
-            {/* Hier werden wir die Cards hinzufügen */}
+            {/* Cards */}
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <StepCard
+                  {...step}
+                  className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
