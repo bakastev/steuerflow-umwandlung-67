@@ -45,7 +45,11 @@ interface StepCardProps {
   highlight: string;
   className: string;
   progress: any;
-  dotPosition: { x: number; y: number };
+}
+
+interface StepDotProps {
+  progress: any;
+  position: { x: number; y: number };
 }
 
 const StepCard = ({ 
@@ -53,42 +57,44 @@ const StepCard = ({
   description, 
   highlight, 
   className, 
-  progress,
-  dotPosition
+  progress
 }: StepCardProps) => {
-  const opacity = useTransform(progress, [0, 0.2, 0.3], [0, 0.5, 1]);
-  const scale = useTransform(progress, [0, 0.2, 0.3], [0.8, 0.9, 1]);
+  const opacity = useTransform(progress, [0, 0.3, 0.5], [0, 0.5, 1]);
+  const scale = useTransform(progress, [0, 0.3, 0.5], [0.8, 0.9, 1]);
   
   return (
-    <>
-      <motion.div 
-        className={`absolute ${className}`}
-        style={{ 
-          opacity,
-          scale,
-        }}
-      >
-        <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
-          <CardHeader>
-            <CardTitle className="text-lg text-white">{title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-300 mb-2">{description}</p>
-            <p className="text-sm text-accent">{highlight}</p>
-          </CardContent>
-        </Card>
-      </motion.div>
-      <motion.circle
-        cx={dotPosition.x}
-        cy={dotPosition.y}
-        r="6"
-        fill="#C5A572"
-        style={{
-          scale: useTransform(progress, [0, 0.2], [0, 1]),
-          opacity: useTransform(progress, [0, 0.2], [0, 1])
-        }}
-      />
-    </>
+    <motion.div 
+      className={`absolute ${className}`}
+      style={{ 
+        opacity,
+        scale,
+      }}
+    >
+      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
+        <CardHeader>
+          <CardTitle className="text-lg text-white">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-gray-300 mb-2">{description}</p>
+          <p className="text-sm text-accent">{highlight}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
+
+const StepDot = ({ progress, position }: StepDotProps) => {
+  return (
+    <motion.circle
+      cx={position.x}
+      cy={position.y}
+      r="6"
+      fill="#C5A572"
+      style={{
+        scale: useTransform(progress, [0, 0.2], [0, 1]),
+        opacity: useTransform(progress, [0, 0.2], [0, 1])
+      }}
+    />
   );
 };
 
@@ -139,11 +145,11 @@ export const LeadPipeline = () => {
 
   const cardProgresses = steps.map((_, index) => {
     const start = index / steps.length;
-    const end = (index + 1) / steps.length;
+    const end = Math.min(start + 0.5, 1);
     
     return useTransform(
       scrollYProgress,
-      [start, Math.min(start + 0.1, 1)],
+      [start, end],
       [0, 1]
     );
   });
@@ -165,6 +171,17 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
+            {/* Render Cards outside of SVG */}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
+
+            {/* SVG with path and dots */}
             <svg
               className="absolute top-0 left-0 w-full h-full"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
@@ -188,13 +205,11 @@ export const LeadPipeline = () => {
                   pathLength: scrollYProgress
                 }}
               />
-              {steps.map((step, index) => (
-                <StepCard
-                  key={step.title}
-                  {...step}
-                  className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+              {steps.map((_, index) => (
+                <StepDot
+                  key={index}
                   progress={cardProgresses[index]}
-                  dotPosition={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
+                  position={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
                 />
               ))}
             </svg>
