@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -25,8 +24,7 @@ const steps = [
   },
   {
     title: "Personalisierte Kommunikation",
-    description: "Automatisierte Follow-ups",
-    highlight: "Individuelle Ansprache",
+    description: "Automatisierte Followduelle Ansprache",
     icon: MessageSquare
   },
   {
@@ -45,7 +43,6 @@ const steps = [
 
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -69,7 +66,7 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 gap-8 gap-y-24">
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 const delay = index * 0.1;
@@ -81,6 +78,7 @@ export const LeadPipeline = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay }}
+                    className="relative"
                   >
                     <Card className="bg-white/5 backdrop-blur-sm border-accent/20 h-full">
                       <CardContent className="p-6 flex flex-col items-center text-center h-full">
@@ -97,13 +95,31 @@ export const LeadPipeline = () => {
               })}
             </div>
 
-            <motion.div 
-              className="absolute left-0 bottom-0 h-0.5 bg-accent"
-              style={{
-                width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]),
-                opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
+            <svg 
+              className="absolute top-0 left-0 w-full h-full pointer-events-none"
+              style={{ 
+                transform: 'translateZ(0)',
+                zIndex: -1
               }}
-            />
+            >
+              <motion.path
+                d={`M 300,50 
+                   L 900,50 
+                   L 900,290 
+                   L 300,290 
+                   L 300,530 
+                   L 900,530`}
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                className="text-accent"
+                style={{
+                  pathLength: scrollYProgress,
+                  opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
+                }}
+                initial={{ pathLength: 0 }}
+              />
+            </svg>
           </div>
         </div>
       </div>
