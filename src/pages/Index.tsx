@@ -107,6 +107,9 @@ const Index = () => {
         <Problems />
       </div>
       <div className="py-24 md:py-32">
+        <CustomerJourney />
+      </div>
+      <div className="py-24 md:py-32">
         <Benefits />
       </div>
       {engagementInsights && (
@@ -121,9 +124,6 @@ const Index = () => {
       )}
       <div className="py-24 md:py-32">
         <CompareHero />
-      </div>
-      <div className="py-24 md:py-32">
-        <CustomerJourney />
       </div>
       <div className="py-24 md:py-32">
         <StrategyFlow />
