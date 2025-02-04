@@ -7,7 +7,7 @@ export const CustomerJourney = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start end", "end end"]
   });
   
   const isMobile = useIsMobile();
@@ -34,21 +34,26 @@ export const CustomerJourney = () => {
       description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
-      icon: LineChart,
-      title: "Gezielte Conversion",
-      description: "Gezielte Conversion & personalisierte Angebote",
-    },
-    {
       icon: Star,
       title: "Lead-Qualifizierung",
       description: "Automatische Bewertung & Verhaltens-Scoring",
     },
+    {
+      icon: LineChart,
+      title: "Gezielte Conversion",
+      description: "Gezielte Conversion & personalisierte Angebote",
+    },
   ];
+
+  // Für Mobile die letzten drei Elemente in umgekehrter Reihenfolge anzeigen
+  const orderedSteps = isMobile 
+    ? [...journeySteps.slice(0, 3), ...journeySteps.slice(3).reverse()]
+    : journeySteps;
 
   return (
     <div ref={containerRef} className="min-h-[300vh]">
-      <section className="sticky top-0 h-screen flex items-center bg-primary-dark">
-        <div className="container mx-auto px-4">
+      <section className="sticky top-[15%] h-screen flex items-start bg-primary-dark">
+        <div className="container mx-auto px-4 pt-16">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Ihre Customer Journey
           </h2>
@@ -69,7 +74,7 @@ export const CustomerJourney = () => {
                     : "M100 100 H600 H1100 V300 H600 H100" // Horizontale Linie für Desktop
                   }
                   stroke="#C5A572"
-                  strokeWidth="4"
+                  strokeWidth="2"
                   strokeDasharray="8 8"
                   style={{
                     pathLength: scrollYProgress
@@ -79,7 +84,7 @@ export const CustomerJourney = () => {
             </div>
 
             <div className={`grid ${isMobile ? 'grid-cols-1 gap-12' : 'grid-cols-1 md:grid-cols-3 gap-8'}`}>
-              {journeySteps.map((step, index) => {
+              {orderedSteps.map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
                   [index * (isMobile ? 0.1 : 0.15), index * (isMobile ? 0.1 : 0.15) + (isMobile ? 0.08 : 0.1)],
