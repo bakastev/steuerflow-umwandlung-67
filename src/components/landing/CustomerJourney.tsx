@@ -27,17 +27,17 @@ export const CustomerJourney = () => {
     },
     {
       icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
-    },
-    {
-      icon: HandshakeIcon,
       title: "Abschluss",
       description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
+      icon: HandshakeIcon,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
+    },
+    {
       icon: LineChart,
-      title: "Conversion",
+      title: "Gezielte Conversion",
       description: "Gezielte Conversion & personalisierte Angebote",
     },
   ];
