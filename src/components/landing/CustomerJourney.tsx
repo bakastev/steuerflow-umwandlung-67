@@ -20,9 +20,9 @@ export const CustomerJourney = () => {
       description: "Maßgeschneiderte Inhalte & dynamische Anpassung",
     },
     {
-      icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
+      icon: HandshakeIcon,
+      title: "Abschluss",
+      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
       icon: LineChart,
@@ -30,9 +30,9 @@ export const CustomerJourney = () => {
       description: "Gezielte Conversion & personalisierte Angebote",
     },
     {
-      icon: HandshakeIcon,
-      title: "Abschluss",
-      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
+      icon: Star,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
     },
   ];
 
@@ -43,7 +43,7 @@ export const CustomerJourney = () => {
           Ihre Customer Journey
         </h2>
 
-        <div className="max-w-6xl mx-auto relative">
+        <div className="sticky top-24 max-w-6xl mx-auto relative min-h-[800px]">
           {/* Timeline Path */}
           <div className="absolute inset-0 pointer-events-none">
             <svg
@@ -72,8 +72,8 @@ export const CustomerJourney = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.5, delay: index * 0.3 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                           hover:bg-white/10 transition-colors duration-300"
               >
@@ -95,13 +95,13 @@ export const CustomerJourney = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-            {journeySteps.slice(3).map((step, index) => (
+            {[journeySteps[3], journeySteps[5], journeySteps[4]].map((step, index) => (
               <motion.div
                 key={index + 3}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (index + 3) * 0.2 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.5, delay: (index + 3) * 0.3 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                           hover:bg-white/10 transition-colors duration-300"
               >
