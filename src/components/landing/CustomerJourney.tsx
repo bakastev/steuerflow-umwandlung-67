@@ -43,8 +43,8 @@ export const CustomerJourney = () => {
   ];
 
   return (
-    <div ref={containerRef} className="min-h-[100vh] sticky top-0">
-      <section className="h-screen flex items-center bg-primary-dark">
+    <div ref={containerRef} className="min-h-[300vh]">
+      <section className="sticky top-0 h-screen flex items-center bg-primary-dark">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Ihre Customer Journey
