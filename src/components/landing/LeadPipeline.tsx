@@ -64,7 +64,7 @@ const StepCard = ({
   
   return (
     <motion.div 
-      className={`absolute ${className} z-20`}
+      className={`absolute ${className} z-20`} // Konstanter z-20 für alle Cards
       style={{ 
         opacity,
         scale,
@@ -157,7 +157,7 @@ export const LeadPipeline = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative h-[500vh]" // Erhöhte Höhe für mehr Scroll-Raum
+      className="relative h-[500vh]"
       id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
@@ -171,17 +171,7 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
-            {/* Render Cards outside of SVG */}
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.title}
-                {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
-              />
-            ))}
-
-            {/* SVG with path and dots */}
+            {/* SVG mit Timeline zuerst rendern (z-10) */}
             <svg
               className="absolute top-0 left-0 w-full h-full z-10"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
@@ -213,6 +203,16 @@ export const LeadPipeline = () => {
                 />
               ))}
             </svg>
+
+            {/* Cards danach rendern (z-20) */}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
           </div>
         </div>
       </div>
