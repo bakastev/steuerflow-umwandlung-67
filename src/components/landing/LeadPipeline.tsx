@@ -44,15 +44,20 @@ const steps = [
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [path, setPath] = useState<string>("");
+  const [path, setPath] = useState<string>("M 0,0 L 0,0");
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
   });
 
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const pathLength = scrollYProgress;
+
   useEffect(() => {
     const calculatePath = () => {
+      if (!containerRef.current) return;
+
       const iconPositions = iconRefs.current.map(ref => {
         if (!ref) return null;
         const rect = ref.getBoundingClientRect();
@@ -79,9 +84,13 @@ export const LeadPipeline = () => {
       }
     };
 
+    // Initial calculation
     calculatePath();
+    
+    // Recalculate on resize
     window.addEventListener('resize', calculatePath);
     
+    // Cleanup
     return () => {
       window.removeEventListener('resize', calculatePath);
     };
@@ -143,20 +152,18 @@ export const LeadPipeline = () => {
                 zIndex: -1
               }}
             >
-              {path && (
-                <motion.path
-                  d={path}
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  className="text-accent"
-                  style={{
-                    pathLength: scrollYProgress,
-                    opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
-                  }}
-                  initial={{ pathLength: 0 }}
-                />
-              )}
+              <motion.path
+                d={path}
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                className="text-accent"
+                style={{
+                  pathLength,
+                  opacity
+                }}
+                initial={{ pathLength: 0 }}
+              />
             </svg>
           </div>
         </div>
