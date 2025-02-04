@@ -2,9 +2,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const problems = [
-  "Ihre Website konvertiert nicht so gut wie sie könnte - Sie verlieren täglich potenzielle Kunden.",
+  "Deine Website konvertiert nicht so gut wie sie könnte - Du verlierst täglich potenzielle Kunden.",
   "A/B Tests und Conversion-Optimierung kosten zu viel Zeit und Ressourcen.",
-  "Ihre Website basiert auf Annahmen statt auf wissenschaftlichen Erkenntnissen und Echtzeitdaten.",
+  "Deine Lead-Bearbeitung kostet zu viel Zeit und wichtige Interessenten gehen verloren",
 ];
 
 export const Problems = () => {
