@@ -59,12 +59,12 @@ const StepCard = ({
   className, 
   progress
 }: StepCardProps) => {
-  const opacity = useTransform(progress, [0, 0.3, 0.5], [0, 0.5, 1]);
-  const scale = useTransform(progress, [0, 0.3, 0.5], [0.8, 0.9, 1]);
+  const opacity = useTransform(progress, [0, 0.1, 0.3], [0, 0, 1]);
+  const scale = useTransform(progress, [0, 0.1, 0.3], [0.8, 0.8, 1]);
   
   return (
     <motion.div 
-      className={`absolute ${className} z-20`}
+      className={`absolute ${className} z-20 -translate-x-1/2`}
       style={{ 
         opacity,
         scale,
@@ -84,6 +84,9 @@ const StepCard = ({
 };
 
 const StepDot = ({ progress, position }: StepDotProps) => {
+  const scale = useTransform(progress, [0, 0.1], [0, 1]);
+  const opacity = useTransform(progress, [0, 0.1], [0, 1]);
+
   return (
     <motion.circle
       cx={position.x}
@@ -91,8 +94,8 @@ const StepDot = ({ progress, position }: StepDotProps) => {
       r="6"
       fill="#C5A572"
       style={{
-        scale: useTransform(progress, [0, 0.2], [0, 1]),
-        opacity: useTransform(progress, [0, 0.2], [0, 1])
+        scale,
+        opacity
       }}
     />
   );
@@ -108,21 +111,21 @@ export const LeadPipeline = () => {
   });
 
   const desktopPositions = [
-    "left-[50px] top-[20px]",      // Website-Besuch
-    "left-[400px] top-[20px]",     // Lead-Generierung
-    "right-[50px] top-[20px]",     // Lead-Qualifizierung
-    "left-[50px] top-[220px]",     // Personalisierte Kommunikation
-    "left-[400px] top-[420px]",    // CRM-Integration
-    "right-[50px] top-[420px]"     // Abschluss
+    `left-[${100}px] top-[20px]`,      // Website-Besuch
+    `left-[${400}px] top-[20px]`,     // Lead-Generierung
+    `left-[${700}px] top-[20px]`,     // Lead-Qualifizierung
+    `left-[${200}px] top-[220px]`,    // Personalisierte Kommunikation
+    `left-[${400}px] top-[420px]`,    // CRM-Integration
+    `left-[${700}px] top-[420px]`     // Abschluss
   ];
 
   const mobilePositions = [
-    "left-[180px] top-[50px]",
-    "left-[180px] top-[200px]",
-    "left-[180px] top-[350px]",
-    "left-[180px] top-[500px]",
-    "left-[180px] top-[650px]",
-    "left-[180px] top-[800px]"
+    "left-[150px] top-[50px]",
+    "left-[150px] top-[200px]",
+    "left-[150px] top-[350px]",
+    "left-[150px] top-[500px]",
+    "left-[150px] top-[650px]",
+    "left-[150px] top-[800px]"
   ];
 
   const desktopDotPositions = [
@@ -144,8 +147,8 @@ export const LeadPipeline = () => {
   ];
 
   const cardProgresses = steps.map((_, index) => {
-    const start = (index / steps.length) * 0.8;
-    const end = Math.min(start + 0.3, 0.8);
+    const start = index / steps.length;
+    const end = Math.min((index + 1) / steps.length, 1);
     
     return useTransform(
       scrollYProgress,
@@ -200,7 +203,7 @@ export const LeadPipeline = () => {
                 strokeLinecap="round"
                 fill="none"
                 style={{
-                  pathLength: useTransform(scrollYProgress, [0, 0.8], [0, 1])
+                  pathLength: scrollYProgress
                 }}
               />
               {steps.map((_, index) => (
