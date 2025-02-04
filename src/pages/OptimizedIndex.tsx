@@ -56,8 +56,8 @@ const OptimizedIndex = () => {
       <Hero />
       <TrustBar />
       <Problems />
-      <CustomerJourney />
       <Solution />
+      <CustomerJourney />
       <Benefits />
       <TechStack />
       <StrategyFlow />
