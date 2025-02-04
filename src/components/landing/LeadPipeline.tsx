@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -43,19 +43,49 @@ const steps = [
 
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [path, setPath] = useState<string>("");
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
   });
 
-  // SVG-Pfad, der exakt durch die Icon-Zentren läuft
-  const svgPath = `M 200,78 
-                   L 1000,78 
-                   L 1000,318 
-                   L 200,318 
-                   L 200,558 
-                   L 1000,558`;
+  useEffect(() => {
+    const calculatePath = () => {
+      const iconPositions = iconRefs.current.map(ref => {
+        if (!ref) return null;
+        const rect = ref.getBoundingClientRect();
+        const container = containerRef.current?.getBoundingClientRect();
+        if (!container) return null;
+        
+        return {
+          x: rect.left - container.left + rect.width / 2,
+          y: rect.top - container.top + rect.height / 2
+        };
+      }).filter((pos): pos is { x: number; y: number } => pos !== null);
+
+      if (iconPositions.length === 6) {
+        const pathCommands = [
+          `M ${iconPositions[0].x},${iconPositions[0].y}`,
+          `L ${iconPositions[1].x},${iconPositions[1].y}`,
+          `L ${iconPositions[3].x},${iconPositions[3].y}`,
+          `L ${iconPositions[2].x},${iconPositions[2].y}`,
+          `L ${iconPositions[4].x},${iconPositions[4].y}`,
+          `L ${iconPositions[5].x},${iconPositions[5].y}`
+        ];
+        
+        setPath(pathCommands.join(" "));
+      }
+    };
+
+    calculatePath();
+    window.addEventListener('resize', calculatePath);
+    
+    return () => {
+      window.removeEventListener('resize', calculatePath);
+    };
+  }, []);
 
   return (
     <section 
@@ -90,7 +120,10 @@ export const LeadPipeline = () => {
                   >
                     <Card className="bg-white/5 backdrop-blur-sm border-accent/20 h-full">
                       <CardContent className="p-6 flex flex-col items-center text-center h-full">
-                        <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4">
+                        <div 
+                          ref={el => iconRefs.current[index] = el}
+                          className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4"
+                        >
                           <Icon className="w-6 h-6 text-accent" />
                         </div>
                         <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
@@ -110,18 +143,20 @@ export const LeadPipeline = () => {
                 zIndex: -1
               }}
             >
-              <motion.path
-                d={svgPath}
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                className="text-accent"
-                style={{
-                  pathLength: scrollYProgress,
-                  opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
-                }}
-                initial={{ pathLength: 0 }}
-              />
+              {path && (
+                <motion.path
+                  d={path}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  className="text-accent"
+                  style={{
+                    pathLength: scrollYProgress,
+                    opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
+                  }}
+                  initial={{ pathLength: 0 }}
+                />
+              )}
             </svg>
           </div>
         </div>
