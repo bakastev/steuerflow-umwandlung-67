@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Eye, Bot, Target, Star, LineChart, HandshakeIcon } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const CustomerJourney = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,6 +9,8 @@ export const CustomerJourney = () => {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+  
+  const isMobile = useIsMobile();
 
   const journeySteps = [
     {
@@ -51,17 +54,20 @@ export const CustomerJourney = () => {
           </h2>
 
           <div className="max-w-6xl mx-auto relative">
-            {/* Timeline Path */}
+            {/* Timeline Path - Vertikal für Mobile, Horizontal für Desktop */}
             <div className="absolute inset-0 pointer-events-none">
               <svg
                 className="w-full h-full"
-                viewBox="0 0 1200 400"
+                viewBox={isMobile ? "0 0 100 600" : "0 0 1200 400"}
                 preserveAspectRatio="none"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <motion.path
-                  d="M100 100 H600 H1100 V300 H600 H100"
+                  d={isMobile 
+                    ? "M50 0 V600" // Vertikale Linie für Mobile
+                    : "M100 100 H600 H1100 V300 H600 H100" // Horizontale Linie für Desktop
+                  }
                   stroke="#C5A572"
                   strokeWidth="4"
                   strokeDasharray="8 8"
@@ -72,50 +78,17 @@ export const CustomerJourney = () => {
               </svg>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {journeySteps.slice(0, 3).map((step, index) => {
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-12' : 'grid-cols-1 md:grid-cols-3 gap-8'}`}>
+              {journeySteps.map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
-                  [index * 0.15, index * 0.15 + 0.1],
+                  [index * (isMobile ? 0.1 : 0.15), index * (isMobile ? 0.1 : 0.15) + (isMobile ? 0.08 : 0.1)],
                   [0, 1]
                 );
 
                 return (
                   <motion.div
                     key={index}
-                    style={{ opacity: cardProgress }}
-                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
-                              hover:bg-white/10 transition-colors duration-300"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 rounded-lg bg-accent/10">
-                        <step.icon className="w-6 h-6 text-accent" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white mb-2">
-                          {step.title}
-                        </h3>
-                        <p className="text-gray-400">
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-              {[journeySteps[3], journeySteps[4], journeySteps[5]].map((step, index) => {
-                const cardProgress = useTransform(
-                  scrollYProgress,
-                  [0.45 + (2 - index) * 0.15, 0.45 + (2 - index) * 0.15 + 0.1],
-                  [0, 1]
-                );
-
-                return (
-                  <motion.div
-                    key={index + 3}
                     style={{ opacity: cardProgress }}
                     className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                               hover:bg-white/10 transition-colors duration-300"
