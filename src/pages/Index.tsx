@@ -99,37 +99,57 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <Hero />
-      <TrustBar />
-      <Problems />
-      <Benefits />
+      <div className="py-8 md:py-12">
+        <TrustBar />
+      </div>
+      <div className="py-24 md:py-28">
+        <Problems />
+      </div>
+      <div className="py-24 md:py-28">
+        <Benefits />
+      </div>
       {engagementInsights && (
-        <AIExperience 
-          engagementScore={engagementProgress / 100}
-          insights={engagementInsights.insights}
-          dwellTime={calculateTotalDwellTime()}
-          interactionDepth={calculateInteractionDepth()}
-        />
-      )}
-      <CompareHero />
-      <section className="py-12 bg-primary-dark">
-        <div className="container mx-auto px-4">
-          <StrategyFlow />
+        <div className="py-24 md:py-28">
+          <AIExperience 
+            engagementScore={engagementProgress / 100}
+            insights={engagementInsights.insights}
+            dwellTime={calculateTotalDwellTime()}
+            interactionDepth={calculateInteractionDepth()}
+          />
         </div>
-      </section>
-      <TechStack />
-      <Solution />
-      <Expert />
-      <Process />
-      <Testimonials />
-      <section className="py-20 bg-white" id="contact">
+      )}
+      <div className="py-24 md:py-28">
+        <CompareHero />
+      </div>
+      <div className="py-24 md:py-28">
+        <StrategyFlow />
+      </div>
+      <div className="py-24 md:py-28">
+        <TechStack />
+      </div>
+      <div className="py-24 md:py-28">
+        <Solution />
+      </div>
+      <div className="py-24 md:py-28">
+        <Expert />
+      </div>
+      <div className="py-24 md:py-28">
+        <Process />
+      </div>
+      <div className="py-24 md:py-28">
+        <Testimonials />
+      </div>
+      <section className="py-24 md:py-28 bg-white" id="contact">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">
             Jetzt kostenloses Website-Audit sichern
           </h2>
           <MultiStepForm />
         </div>
       </section>
-      <FAQs />
+      <div className="py-24 md:py-28">
+        <FAQs />
+      </div>
       <Footer />
     </div>
   );

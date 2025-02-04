@@ -3,29 +3,29 @@ import { Brain, Rocket, Target, ChartBar } from "lucide-react";
 
 export const TechStack = () => {
   return (
-    <section className="py-20 bg-primary-dark overflow-hidden">
+    <section className="py-24 md:py-28 bg-primary-dark overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16 text-white"
+          className="text-3xl md:text-4xl font-bold text-center mb-16 md:mb-20 text-white"
         >
           Technologie-Stack 2025
         </motion.h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="backdrop-blur-md bg-white/10 p-8 rounded-lg border border-white/20"
+            className="backdrop-blur-md bg-white/10 p-8 md:p-10 rounded-lg border border-white/20"
           >
-            <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-6">
               <Brain className="w-6 h-6 text-primary-dark" />
             </div>
-            <h3 className="text-xl font-semibold mb-3 text-white">KI-gestützte Optimierung</h3>
-            <p className="text-gray-300">
+            <h3 className="text-xl md:text-2xl font-semibold mb-4 text-white">KI-gestützte Optimierung</h3>
+            <p className="text-gray-300 text-lg">
               Selbstlernende Systeme für kontinuierliche Verbesserung der Conversion-Rate
             </p>
           </motion.div>
