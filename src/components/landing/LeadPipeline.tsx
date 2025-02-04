@@ -43,6 +43,9 @@ const steps = [
   }
 ];
 
+const CARD_HEIGHT = 160; // Höhe der Card inkl. Padding
+const CARD_SPACING = 20; // Abstand zwischen Card und Dot
+
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
@@ -79,11 +82,12 @@ const StepContent = ({
         opacity,
         scale,
         left: `${dotPosition.x}px`,
-        top: `${dotPosition.y - 120}px`,
-        transform: 'translateX(-50%)'
+        top: `${dotPosition.y - (CARD_HEIGHT + CARD_SPACING)}px`,
+        transform: 'translateX(-50%)',
+        width: '280px'
       }}
     >
-      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20">
+      <Card className="bg-white/5 backdrop-blur-sm border-accent/20">
         <CardContent className="p-4 flex flex-col items-center text-center">
           <Icon className="w-6 h-6 text-accent mb-2" />
           <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
