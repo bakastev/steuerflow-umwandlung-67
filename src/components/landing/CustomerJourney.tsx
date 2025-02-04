@@ -31,12 +31,12 @@ export const CustomerJourney = () => {
       description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
-      icon: HandshakeIcon,
+      icon: LineChart,
       title: "Lead-Qualifizierung",
       description: "Automatische Bewertung & Verhaltens-Scoring",
     },
     {
-      icon: LineChart,
+      icon: HandshakeIcon,
       title: "Gezielte Conversion",
       description: "Gezielte Conversion & personalisierte Angebote",
     },
