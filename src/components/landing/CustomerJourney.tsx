@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Eye, Bot, Target, Star, LineChart, HandshakeIcon } from "lucide-react";
+import { Eye, Bot, Target, HandshakeIcon, LineChart, Star } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -29,9 +29,9 @@ export const CustomerJourney = () => {
       description: "Maßgeschneiderte Inhalte & dynamische Anpassung",
     },
     {
-      icon: HandshakeIcon,
-      title: "Abschluss",
-      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
+      icon: Star,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
     },
     {
       icon: LineChart,
@@ -39,19 +39,21 @@ export const CustomerJourney = () => {
       description: "Gezielte Conversion & personalisierte Angebote",
     },
     {
-      icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
+      icon: HandshakeIcon,
+      title: "Abschluss",
+      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
   ];
 
-  // Für Mobile: erste 3 Elemente normal, dann 4. und 5. tauschen, letztes bleibt
+  // Für Mobile: Reihenfolge wie gewünscht
   const orderedSteps = isMobile 
     ? [
-        ...journeySteps.slice(0, 3),
-        journeySteps[4], // LineChart (ursprünglich 5.)
-        journeySteps[3], // HandshakeIcon (ursprünglich 4.)
-        journeySteps[5]  // Star (bleibt am Ende)
+        journeySteps[0], // Website-Besuch
+        journeySteps[1], // KI-Analyse
+        journeySteps[2], // Personalisierung
+        journeySteps[3], // Lead-Qualifizierung
+        journeySteps[4], // Gezielte Conversion
+        journeySteps[5]  // Abschluss
       ]
     : journeySteps;
 
@@ -79,7 +81,7 @@ export const CustomerJourney = () => {
                     : "M100 100 H600 H1100 V300 H600 H100" // Horizontale Linie für Desktop
                   }
                   stroke="#C5A572"
-                  strokeWidth="2"
+                  strokeWidth="1"
                   strokeDasharray="8 8"
                   style={{
                     pathLength: scrollYProgress
