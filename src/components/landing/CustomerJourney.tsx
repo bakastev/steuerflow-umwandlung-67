@@ -1,5 +1,6 @@
 import React from "react";
 import { Eye, Bot, Target, Star, LineChart, HandshakeIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const CustomerJourney = () => {
   const journeySteps = [
@@ -42,11 +43,34 @@ export const CustomerJourney = () => {
           Ihre Customer Journey
         </h2>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto relative">
+          {/* Timeline Path */}
+          <svg
+            className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10"
+            viewBox="0 0 1200 400"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <motion.path
+              d="M100 100 H400 H700 V300 H400 H100"
+              stroke="#C5A572"
+              strokeWidth="2"
+              strokeDasharray="8 8"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            />
+          </svg>
+
           <div className="grid grid-cols-3 gap-8">
             {journeySteps.slice(0, 3).map((step, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                           hover:bg-white/10 transition-colors duration-300"
               >
@@ -63,14 +87,18 @@ export const CustomerJourney = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           <div className="grid grid-cols-3 gap-8 mt-24">
             {journeySteps.slice(3).map((step, index) => (
-              <div
+              <motion.div
                 key={index + 3}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (index + 3) * 0.2 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                           hover:bg-white/10 transition-colors duration-300"
               >
@@ -87,7 +115,7 @@ export const CustomerJourney = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
