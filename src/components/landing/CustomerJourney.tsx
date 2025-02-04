@@ -45,25 +45,28 @@ export const CustomerJourney = () => {
 
         <div className="max-w-6xl mx-auto relative">
           {/* Timeline Path */}
-          <svg
-            className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10"
-            viewBox="0 0 1200 400"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <motion.path
-              d="M100 100 H400 H700 V300 H400 H100"
-              stroke="#C5A572"
-              strokeWidth="2"
-              strokeDasharray="8 8"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
-          </svg>
+          <div className="absolute inset-0 pointer-events-none">
+            <svg
+              className="w-full h-full"
+              viewBox="0 0 1200 400"
+              preserveAspectRatio="none"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <motion.path
+                d="M100 100 H600 H1100 V300 H600 H100"
+                stroke="#C5A572"
+                strokeWidth="4"
+                strokeDasharray="8 8"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+              />
+            </svg>
+          </div>
 
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {journeySteps.slice(0, 3).map((step, index) => (
               <motion.div
                 key={index}
@@ -91,7 +94,7 @@ export const CustomerJourney = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-3 gap-8 mt-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
             {journeySteps.slice(3).map((step, index) => (
               <motion.div
                 key={index + 3}
