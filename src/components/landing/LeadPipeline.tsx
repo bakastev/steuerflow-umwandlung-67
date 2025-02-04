@@ -56,8 +56,8 @@ const StepCard = ({
   progress,
   dotPosition
 }: StepCardProps) => {
-  const opacity = useTransform(progress, [0, 0.3, 1], [0, 1, 1]);
-  const scale = useTransform(progress, [0, 0.3, 1], [0.8, 1, 1]);
+  const opacity = useTransform(progress, [0, 0.2, 0.3], [0, 0.5, 1]);
+  const scale = useTransform(progress, [0, 0.2, 0.3], [0.8, 0.9, 1]);
   
   return (
     <>
@@ -84,7 +84,8 @@ const StepCard = ({
         r="6"
         fill="#C5A572"
         style={{
-          opacity: progress
+          scale: useTransform(progress, [0, 0.2], [0, 1]),
+          opacity: useTransform(progress, [0, 0.2], [0, 1])
         }}
       />
     </>
@@ -97,7 +98,7 @@ export const LeadPipeline = () => {
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start center", "end center"]
   });
 
   const desktopPositions = [
@@ -137,9 +138,12 @@ export const LeadPipeline = () => {
   ];
 
   const cardProgresses = steps.map((_, index) => {
+    const start = index / steps.length;
+    const end = (index + 1) / steps.length;
+    
     return useTransform(
       scrollYProgress,
-      [index / steps.length, (index + 0.5) / steps.length],
+      [start, Math.min(start + 0.1, 1)],
       [0, 1]
     );
   });
