@@ -64,7 +64,7 @@ const StepCard = ({
   
   return (
     <motion.div 
-      className={`absolute ${className}`}
+      className={`absolute ${className} z-20`}
       style={{ 
         opacity,
         scale,
@@ -157,7 +157,7 @@ export const LeadPipeline = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative h-[300vh]"
+      className="relative h-[400vh]"
       id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
@@ -183,7 +183,7 @@ export const LeadPipeline = () => {
 
             {/* SVG with path and dots */}
             <svg
-              className="absolute top-0 left-0 w-full h-full"
+              className="absolute top-0 left-0 w-full h-full z-10"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
