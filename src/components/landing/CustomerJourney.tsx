@@ -1,8 +1,17 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Eye, Bot, Target, Star, LineChart, HandshakeIcon } from "lucide-react";
 
 export const CustomerJourney = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+
   const journeySteps = [
     {
       icon: Eye,
@@ -43,44 +52,44 @@ export const CustomerJourney = () => {
   ];
 
   return (
-    <section className="py-24 bg-primary-dark overflow-hidden" id="customer-journey">
-      <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16 text-white"
-        >
-          Ihre Customer Journey
-        </motion.h2>
+    <section 
+      ref={containerRef}
+      className="min-h-[200vh] relative py-24 bg-primary-dark" 
+      id="customer-journey"
+    >
+      <div className="sticky top-0 h-screen flex items-center">
+        <div className="container mx-auto px-4">
+          <motion.h2
+            style={{ opacity }}
+            className="text-3xl md:text-4xl font-bold text-center mb-16 text-white"
+          >
+            Ihre Customer Journey
+          </motion.h2>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Desktop Timeline (versteckt auf Mobile) */}
-          <div className="hidden md:block absolute top-0 left-0 w-full h-full">
-            <svg className="w-full h-full" viewBox="0 0 1000 300" preserveAspectRatio="none">
+          <div className="relative max-w-6xl mx-auto">
+            {/* Timeline SVG */}
+            <svg 
+              className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10" 
+              viewBox="0 0 1200 300" 
+              fill="none"
+            >
               {/* Hintergrund-Glow */}
               <motion.path
-                d="M0 100 C250 100, 250 200, 500 200 C750 200, 750 100, 1000 100"
+                d="M100 50 H400 C500 50, 500 150, 600 150 H900 C1000 150, 1000 250, 1100 250"
                 stroke="rgba(197, 165, 114, 0.2)"
                 strokeWidth="20"
+                strokeLinecap="round"
                 fill="none"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                viewport={{ once: true }}
               />
               
-              {/* Hauptlinie */}
+              {/* Hauptlinie mit Animation */}
               <motion.path
-                d="M0 100 C250 100, 250 200, 500 200 C750 200, 750 100, 1000 100"
+                d="M100 50 H400 C500 50, 500 150, 600 150 H900 C1000 150, 1000 250, 1100 250"
                 stroke="url(#timeline-gradient)"
                 strokeWidth="4"
-                fill="none"
                 strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-                viewport={{ once: true }}
+                fill="none"
+                style={{ pathLength }}
               />
 
               {/* Gradient Definition */}
@@ -92,39 +101,38 @@ export const CustomerJourney = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </div>
 
-          {/* Journey Steps Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-            {journeySteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: step.delay,
-                  ease: "easeOut",
-                }}
-                viewport={{ once: true }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
-                          hover:bg-white/10 transition-colors duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-accent/10">
-                    <step.icon className="w-6 h-6 text-accent" />
+            {/* Journey Steps Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+              {journeySteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  style={{
+                    opacity: useTransform(
+                      scrollYProgress,
+                      [index * 0.15, (index * 0.15) + 0.15],
+                      [0, 1]
+                    )
+                  }}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
+                            hover:bg-white/10 transition-colors duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-accent/10">
+                      <step.icon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-400">
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-400">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
