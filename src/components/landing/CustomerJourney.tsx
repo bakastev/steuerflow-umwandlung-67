@@ -43,7 +43,7 @@ export const CustomerJourney = () => {
   ];
 
   return (
-    <div ref={containerRef} className="min-h-[400vh]">
+    <div ref={containerRef} className="min-h-[300vh]">
       <section className="sticky top-0 h-screen flex items-center bg-primary-dark">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
