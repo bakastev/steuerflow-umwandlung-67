@@ -26,9 +26,9 @@ export const CustomerJourney = () => {
       description: "Maßgeschneiderte Inhalte & dynamische Anpassung",
     },
     {
-      icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
+      icon: HandshakeIcon,
+      title: "Abschluss",
+      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
     {
       icon: LineChart,
@@ -36,9 +36,9 @@ export const CustomerJourney = () => {
       description: "Gezielte Conversion & personalisierte Angebote",
     },
     {
-      icon: HandshakeIcon,
-      title: "Abschluss",
-      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
+      icon: Star,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
     },
   ];
 
