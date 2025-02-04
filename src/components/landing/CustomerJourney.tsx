@@ -26,9 +26,9 @@ export const CustomerJourney = () => {
       description: "Maßgeschneiderte Inhalte & dynamische Anpassung",
     },
     {
-      icon: HandshakeIcon,
-      title: "Abschluss",
-      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
+      icon: Star,
+      title: "Lead-Qualifizierung",
+      description: "Automatische Bewertung & Verhaltens-Scoring",
     },
     {
       icon: LineChart,
@@ -36,9 +36,9 @@ export const CustomerJourney = () => {
       description: "Gezielte Conversion & personalisierte Angebote",
     },
     {
-      icon: Star,
-      title: "Lead-Qualifizierung",
-      description: "Automatische Bewertung & Verhaltens-Scoring",
+      icon: HandshakeIcon,
+      title: "Abschluss",
+      description: "Erfolgreicher Abschluss & automatisierte Nachbetreuung",
     },
   ];
 
@@ -106,7 +106,7 @@ export const CustomerJourney = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-              {journeySteps.slice(3).map((step, index) => {
+              {[journeySteps[3], journeySteps[4], journeySteps[5]].map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
                   [0.45 + index * 0.15, 0.45 + index * 0.15 + 0.1],
