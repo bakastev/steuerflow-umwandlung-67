@@ -1,105 +1,163 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
-import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const steps = [
   {
     title: "Website-Besuch",
     description: "Interessent besucht deine Website",
-    highlight: "KI-gestützte Personalisierung",
-    icon: User
+    highlight: "KI-gestützte Personalisierung"
   },
   {
     title: "Lead-Generierung",
     description: "Conversion durch optimierte Formulare",
-    highlight: "Automatische Datenerfassung",
-    icon: FileSpreadsheet
+    highlight: "Automatische Datenerfassung"
   },
   {
     title: "Lead-Qualifizierung",
     description: "Automatische Lead-Segmentierung",
-    highlight: "KI-basiertes Scoring",
-    icon: Database
+    highlight: "KI-basiertes Scoring"
   },
   {
     title: "Personalisierte Kommunikation",
-    description: "Automatisierte Followduelle Ansprache",
-    icon: MessageSquare
+    description: "Automatisierte Follow-ups",
+    highlight: "Individuelle Ansprache"
   },
   {
     title: "CRM-Integration",
     description: "Nahtlose Systemintegration",
-    highlight: "Zentrale Datenverwaltung",
-    icon: Mail
+    highlight: "Zentrale Datenverwaltung"
   },
   {
     title: "Abschluss",
     description: "Erfolgreicher Verkaufsabschluss",
-    highlight: "Messbare Ergebnisse",
-    icon: Handshake
+    highlight: "Messbare Ergebnisse"
   }
 ];
 
+const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
+const mobilePath = "M150,50 C150,150 150,250 150,800";
+
+interface StepCardProps {
+  title: string;
+  description: string;
+  highlight: string;
+  className: string;
+  progress: any;
+}
+
+interface StepDotProps {
+  progress: any;
+  position: { x: number; y: number };
+}
+
+const StepCard = ({ 
+  title, 
+  description, 
+  highlight, 
+  className, 
+  progress
+}: StepCardProps) => {
+  const opacity = useTransform(progress, [0, 0.3, 0.5], [0, 0.5, 1]);
+  const scale = useTransform(progress, [0, 0.3, 0.5], [0.8, 0.9, 1]);
+  
+  return (
+    <motion.div 
+      className={`absolute ${className} z-20`}
+      style={{ 
+        opacity,
+        scale,
+      }}
+    >
+      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
+        <CardHeader>
+          <CardTitle className="text-lg text-white">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-gray-300 mb-2">{description}</p>
+          <p className="text-sm text-accent">{highlight}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
+
+const StepDot = ({ progress, position }: StepDotProps) => {
+  return (
+    <motion.circle
+      cx={position.x}
+      cy={position.y}
+      r="6"
+      fill="#C5A572"
+      style={{
+        scale: useTransform(progress, [0, 0.2], [0, 1]),
+        opacity: useTransform(progress, [0, 0.2], [0, 1])
+      }}
+    />
+  );
+};
+
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [path, setPath] = useState<string>("M 0,0 L 0,0");
+  const isMobile = useIsMobile();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
-  const pathLength = scrollYProgress;
+  const desktopPositions = [
+    "left-[50px] top-[20px]",
+    "left-[400px] top-[20px]",
+    "right-[50px] top-[20px]",
+    "left-[50px] top-[220px]",
+    "left-[400px] top-[420px]",
+    "right-[50px] top-[420px]"
+  ];
 
-  useEffect(() => {
-    const calculatePath = () => {
-      if (!containerRef.current) return;
+  const mobilePositions = [
+    "left-[180px] top-[50px]",
+    "left-[180px] top-[200px]",
+    "left-[180px] top-[350px]",
+    "left-[180px] top-[500px]",
+    "left-[180px] top-[650px]",
+    "left-[180px] top-[800px]"
+  ];
 
-      const iconPositions = iconRefs.current.map(ref => {
-        if (!ref) return null;
-        const rect = ref.getBoundingClientRect();
-        const container = containerRef.current?.getBoundingClientRect();
-        if (!container) return null;
-        
-        return {
-          x: rect.left - container.left + rect.width / 2,
-          y: rect.top - container.top + rect.height / 2
-        };
-      }).filter((pos): pos is { x: number; y: number } => pos !== null);
+  const desktopDotPositions = [
+    { x: 100, y: 100 },
+    { x: 400, y: 100 },
+    { x: 700, y: 100 },
+    { x: 200, y: 300 },
+    { x: 400, y: 500 },
+    { x: 700, y: 500 }
+  ];
 
-      if (iconPositions.length === 6) {
-        const pathCommands = [
-          `M ${iconPositions[0].x},${iconPositions[0].y}`,
-          `L ${iconPositions[1].x},${iconPositions[1].y}`,
-          `L ${iconPositions[3].x},${iconPositions[3].y}`,
-          `L ${iconPositions[2].x},${iconPositions[2].y}`,
-          `L ${iconPositions[4].x},${iconPositions[4].y}`,
-          `L ${iconPositions[5].x},${iconPositions[5].y}`
-        ];
-        
-        setPath(pathCommands.join(" "));
-      }
-    };
+  const mobileDotPositions = [
+    { x: 150, y: 50 },
+    { x: 150, y: 200 },
+    { x: 150, y: 350 },
+    { x: 150, y: 500 },
+    { x: 150, y: 650 },
+    { x: 150, y: 800 }
+  ];
 
-    // Initial calculation
-    calculatePath();
+  const cardProgresses = steps.map((_, index) => {
+    const start = index / steps.length;
+    const end = Math.min(start + 0.5, 1);
     
-    // Recalculate on resize
-    window.addEventListener('resize', calculatePath);
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('resize', calculatePath);
-    };
-  }, []);
+    return useTransform(
+      scrollYProgress,
+      [start, end],
+      [0, 1]
+    );
+  });
 
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen py-24"
+      className="relative h-[400vh]"
       id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
@@ -112,58 +170,48 @@ export const LeadPipeline = () => {
             Automatisierte Lead-Pipeline
           </h2>
           
-          <div className="relative max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-2 gap-8 gap-y-48">
-              {steps.map((step, index) => {
-                const Icon = step.icon;
-                const delay = index * 0.1;
-                
-                return (
-                  <motion.div
-                    key={step.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay }}
-                    className="relative"
-                  >
-                    <Card className="bg-white/5 backdrop-blur-sm border-accent/20 h-full">
-                      <CardContent className="p-6 flex flex-col items-center text-center h-full">
-                        <div 
-                          ref={el => iconRefs.current[index] = el}
-                          className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4"
-                        >
-                          <Icon className="w-6 h-6 text-accent" />
-                        </div>
-                        <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
-                        <p className="text-sm text-gray-300 mb-3">{step.description}</p>
-                        <span className="text-sm text-accent mt-auto">{step.highlight}</span>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <svg 
-              className="absolute top-0 left-0 w-full h-full pointer-events-none"
-              style={{ 
-                transform: 'translateZ(0)',
-                zIndex: -1
-              }}
-            >
-              <motion.path
-                d={path}
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                className="text-accent"
-                style={{
-                  pathLength,
-                  opacity
-                }}
-                initial={{ pathLength: 0 }}
+          <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
+            {/* Render Cards outside of SVG */}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
               />
+            ))}
+
+            {/* SVG with path and dots */}
+            <svg
+              className="absolute top-0 left-0 w-full h-full z-10"
+              viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <path
+                d={isMobile ? mobilePath : desktopPath}
+                stroke="rgba(197, 165, 114, 0.2)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <motion.path
+                d={isMobile ? mobilePath : desktopPath}
+                stroke="#C5A572"
+                strokeWidth="4"
+                strokeLinecap="round"
+                fill="none"
+                style={{
+                  pathLength: scrollYProgress
+                }}
+              />
+              {steps.map((_, index) => (
+                <StepDot
+                  key={index}
+                  progress={cardProgresses[index]}
+                  position={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
+                />
+              ))}
             </svg>
           </div>
         </div>
