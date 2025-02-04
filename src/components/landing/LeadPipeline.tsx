@@ -39,40 +39,55 @@ const steps = [
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
+interface StepCardProps {
+  title: string;
+  description: string;
+  highlight: string;
+  className: string;
+  progress: any; // Temporär 'any' um TypeScript-Fehler zu beheben
+  dotPosition: { x: number; y: number };
+}
+
 const StepCard = ({ 
   title, 
   description, 
   highlight, 
   className, 
-  progress 
-}: { 
-  title: string;
-  description: string;
-  highlight: string;
-  className: string;
-  progress: MotionValue<number>;
-}) => {
+  progress,
+  dotPosition
+}: StepCardProps) => {
   const opacity = useTransform(progress, [0, 0.3, 1], [0, 0, 1]);
   const scale = useTransform(progress, [0, 0.3, 1], [0.8, 0.8, 1]);
   
   return (
-    <motion.div 
-      className={`absolute ${className}`}
-      style={{ 
-        opacity,
-        scale
-      }}
-    >
-      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
-        <CardHeader>
-          <CardTitle className="text-lg text-white">{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-300 mb-2">{description}</p>
-          <p className="text-sm text-accent">{highlight}</p>
-        </CardContent>
-      </Card>
-    </motion.div>
+    <>
+      <motion.div 
+        className={`absolute ${className}`}
+        style={{ 
+          opacity,
+          scale
+        }}
+      >
+        <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
+          <CardHeader>
+            <CardTitle className="text-lg text-white">{title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-300 mb-2">{description}</p>
+            <p className="text-sm text-accent">{highlight}</p>
+          </CardContent>
+        </Card>
+      </motion.div>
+      <motion.circle
+        cx={dotPosition.x}
+        cy={dotPosition.y}
+        r="6"
+        fill="#C5A572"
+        style={{
+          opacity: progress
+        }}
+      />
+    </>
   );
 };
 
@@ -85,13 +100,14 @@ export const LeadPipeline = () => {
     offset: ["start start", "end end"]
   });
 
+  // Angepasste Desktop-Positionen basierend auf der Timeline
   const desktopPositions = [
-    "left-[50px] top-[50px]",
-    "left-[300px] top-[50px]",
-    "right-[50px] top-[50px]",
-    "left-[50px] top-[250px]",
-    "left-[300px] top-[450px]",
-    "right-[50px] top-[450px]"
+    "left-[50px] top-[20px]",      // Startpunkt
+    "left-[400px] top-[20px]",     // Erste horizontale Linie
+    "right-[50px] top-[20px]",     // Ende erste horizontale Linie
+    "left-[50px] top-[220px]",     // Zweite horizontale Linie Start
+    "left-[400px] top-[420px]",    // Dritte horizontale Linie
+    "right-[50px] top-[420px]"     // Endpunkt
   ];
 
   const mobilePositions = [
@@ -103,10 +119,34 @@ export const LeadPipeline = () => {
     "left-[180px] top-[800px]"
   ];
 
+  // Definiere die Punkte auf der Timeline, wo die Cards erscheinen sollen
+  const desktopDotPositions = [
+    { x: 100, y: 100 },   // Start
+    { x: 400, y: 100 },   // Mitte erste Linie
+    { x: 700, y: 100 },   // Ende erste Linie
+    { x: 200, y: 300 },   // Start zweite Linie
+    { x: 400, y: 500 },   // Mitte dritte Linie
+    { x: 700, y: 500 }    // Endpunkt
+  ];
+
+  const mobileDotPositions = [
+    { x: 150, y: 50 },
+    { x: 150, y: 200 },
+    { x: 150, y: 350 },
+    { x: 150, y: 500 },
+    { x: 150, y: 650 },
+    { x: 150, y: 800 }
+  ];
+
   const cardProgresses = steps.map((_, index) => {
-    return useTransform(scrollYProgress, 
-      [index / steps.length, (index + 1) / steps.length], 
-      [0, 1]
+    const segmentSize = 1 / (steps.length - 1);
+    const startProgress = index * segmentSize;
+    const endProgress = startProgress + segmentSize;
+    
+    return useTransform(
+      scrollYProgress,
+      [Math.max(0, startProgress - 0.1), startProgress, endProgress],
+      [0, 1, 1]
     );
   });
 
@@ -150,16 +190,16 @@ export const LeadPipeline = () => {
                   pathLength: scrollYProgress
                 }}
               />
+              {steps.map((step, index) => (
+                <StepCard
+                  key={step.title}
+                  {...step}
+                  className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                  progress={cardProgresses[index]}
+                  dotPosition={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
+                />
+              ))}
             </svg>
-
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.title}
-                {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
-              />
-            ))}
           </div>
         </div>
       </div>
