@@ -1,4 +1,4 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,39 +36,46 @@ const steps = [
   }
 ];
 
-// SVG-Pfad für Desktop - angepasst für bessere Verteilung
-const desktopPath = "M100,100 C150,100 150,200 200,200 H400 C450,200 450,300 500,300 H700 C750,300 750,400 700,400 H200";
-
-// SVG-Pfad für Mobile - vertikal mit gleichmäßigen Abständen
+// Original SVG-Pfad wiederhergestellt
+const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
-const StepCard = ({ title, description, highlight, className, progress }: { 
+const StepCard = ({ 
+  title, 
+  description, 
+  highlight, 
+  className, 
+  progress 
+}: { 
   title: string;
   description: string;
   highlight: string;
   className: string;
   progress: number;
-}) => (
-  <motion.div 
-    className={`absolute ${className}`}
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ 
-      opacity: progress >= 1 ? 1 : 0,
-      scale: progress >= 1 ? 1 : 0.8,
-      transition: { duration: 0.5 }
-    }}
-  >
-    <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
-      <CardHeader>
-        <CardTitle className="text-lg text-white">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-gray-300 mb-2">{description}</p>
-        <p className="text-sm text-accent">{highlight}</p>
-      </CardContent>
-    </Card>
-  </motion.div>
-);
+}) => {
+  const opacity = useTransform(progress, [0, 0.3, 1], [0, 0, 1]);
+  const scale = useTransform(progress, [0, 0.3, 1], [0.8, 0.8, 1]);
+  
+  return (
+    <motion.div 
+      className={`absolute ${className}`}
+      style={{ 
+        opacity,
+        scale
+      }}
+    >
+      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
+        <CardHeader>
+          <CardTitle className="text-lg text-white">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-gray-300 mb-2">{description}</p>
+          <p className="text-sm text-accent">{highlight}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
 
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,25 +86,32 @@ export const LeadPipeline = () => {
     offset: ["start start", "end end"]
   });
 
-  // Desktop Positionen für die Cards - besser verteilt
+  // Desktop Positionen - gleichmäßig entlang des Pfades verteilt
   const desktopPositions = [
     "left-[50px] top-[50px]",
-    "left-[400px] top-[150px]",
-    "right-[50px] top-[250px]",
-    "left-[50px] top-[350px]",
-    "left-[400px] top-[450px]",
-    "right-[50px] top-[550px]"
+    "left-[300px] top-[50px]",
+    "right-[50px] top-[50px]",
+    "left-[50px] top-[250px]",
+    "left-[300px] top-[450px]",
+    "right-[50px] top-[450px]"
   ];
 
-  // Mobile Positionen für die Cards - gleichmäßig verteilt
+  // Mobile Positionen - vertikal gleichmäßig verteilt
   const mobilePositions = [
-    "left-[180px] top-[100px]",
-    "left-[180px] top-[250px]",
-    "left-[180px] top-[400px]",
-    "left-[180px] top-[550px]",
-    "left-[180px] top-[700px]",
-    "left-[180px] top-[850px]"
+    "left-[180px] top-[50px]",
+    "left-[180px] top-[200px]",
+    "left-[180px] top-[350px]",
+    "left-[180px] top-[500px]",
+    "left-[180px] top-[650px]",
+    "left-[180px] top-[800px]"
   ];
+
+  // Erstelle individuelle Progress-Werte für jede Card
+  const cardProgresses = steps.map((_, index) => {
+    const start = index / steps.length;
+    const end = (index + 1) / steps.length;
+    return useTransform(scrollYProgress, [start, end], [0, 1]);
+  });
 
   return (
     <section 
@@ -145,19 +159,14 @@ export const LeadPipeline = () => {
             </svg>
 
             {/* Cards */}
-            {steps.map((step, index) => {
-              const stepProgress = 6; // Anzahl der Steps
-              const stepThreshold = (index + 1) / stepProgress;
-              
-              return (
-                <StepCard
-                  key={step.title}
-                  {...step}
-                  className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                  progress={scrollYProgress.get() / stepThreshold}
-                />
-              );
-            })}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
           </div>
         </div>
       </div>
