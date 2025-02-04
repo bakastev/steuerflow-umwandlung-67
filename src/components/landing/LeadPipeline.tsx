@@ -73,18 +73,49 @@ export const LeadPipeline = () => {
             Automatisierte Lead-Pipeline
           </h2>
           
-          <div className="relative max-w-4xl mx-auto">
-            {/* Timeline Line */}
-            <motion.div 
-              className="absolute left-0 top-[60px] w-full h-1 bg-accent/30"
-              style={{
-                scaleX: scrollYProgress
-              }}
-            />
+          <div className="relative max-w-5xl mx-auto">
+            {/* SVG Path für die geschlängelte Linie */}
+            <svg
+              className="absolute top-0 left-0 w-full h-[600px]"
+              viewBox="0 0 1000 600"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              {/* Hintergrund-Pfad */}
+              <path
+                d="M100,100 H900 C950,100 950,300 900,300 H100 C50,300 50,500 100,500 H900"
+                stroke="rgba(197, 165, 114, 0.2)"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+              {/* Animierter Pfad */}
+              <motion.path
+                d="M100,100 H900 C950,100 950,300 900,300 H100 C50,300 50,500 100,500 H900"
+                stroke="#C5A572"
+                strokeWidth="4"
+                strokeLinecap="round"
+                style={{
+                  pathLength: scrollYProgress
+                }}
+                initial={{ pathLength: 0 }}
+              />
+            </svg>
 
             {/* Timeline Steps */}
-            <div className="relative">
+            <div className="relative pt-16">
               {steps.map((step, index) => {
+                const row = Math.floor(index / 2);
+                const isEvenRow = row % 2 === 0;
+                const isLastInRow = index % 2 === 1;
+                
+                // Berechne die horizontale Position basierend auf der Reihe
+                const xPos = isEvenRow 
+                  ? (index % 2) * 100 
+                  : 100 - ((index % 2) * 100);
+                
+                // Berechne die vertikale Position
+                const yPos = row * 200;
+
                 const progress = useTransform(
                   scrollYProgress,
                   [index * 0.15, (index + 1) * 0.15],
@@ -94,11 +125,11 @@ export const LeadPipeline = () => {
                 return (
                   <motion.div
                     key={step.title}
-                    className={`absolute left-0 w-64 ${
-                      index % 2 === 0 ? "-top-24" : "top-12"
-                    }`}
+                    className="absolute w-72"
                     style={{
-                      left: `${(index / (steps.length - 1)) * 100}%`,
+                      left: `${xPos}%`,
+                      top: yPos,
+                      x: isEvenRow ? '-50%' : '-50%',
                       opacity: progress,
                       y: useTransform(progress, [0, 1], [20, 0])
                     }}
@@ -109,15 +140,17 @@ export const LeadPipeline = () => {
                     </div>
 
                     {/* Content Card */}
-                    <div className="relative mt-8 bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-accent/20">
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-full bg-accent/20">
-                          <step.icon className="w-5 h-5 text-accent" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-accent mb-1">{step.title}</h3>
-                          <p className="text-sm text-white/90 mb-1">{step.description}</p>
-                          <p className="text-xs text-accent/80">{step.highlight}</p>
+                    <div className={`relative mt-8 ${index % 2 === 0 ? 'mt-8' : '-mt-32'}`}>
+                      <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-accent/20">
+                        <div className="flex items-start gap-3">
+                          <div className="p-2 rounded-full bg-accent/20">
+                            <step.icon className="w-5 h-5 text-accent" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-accent mb-1">{step.title}</h3>
+                            <p className="text-sm text-white/90 mb-1">{step.description}</p>
+                            <p className="text-xs text-accent/80">{step.highlight}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
