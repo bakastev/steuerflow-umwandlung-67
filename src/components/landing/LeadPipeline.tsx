@@ -43,7 +43,7 @@ const steps = [
   }
 ];
 
-const LeadPipeline = () => {
+export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   
@@ -97,7 +97,6 @@ const LeadPipeline = () => {
               })}
             </div>
 
-            {/* Progress Line */}
             <motion.div 
               className="absolute left-0 bottom-0 h-0.5 bg-accent"
               style={{
@@ -111,5 +110,3 @@ const LeadPipeline = () => {
     </section>
   );
 };
-
-export default LeadPipeline;
