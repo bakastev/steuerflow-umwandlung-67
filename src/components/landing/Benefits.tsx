@@ -6,31 +6,31 @@ import { useToast } from "@/hooks/use-toast";
 
 const initialBenefits = [
   {
-    title: "KI-gestützte Optimierung",
-    description: "Ihre Website lernt von jedem Besucher und optimiert sich kontinuierlich selbst.",
+    title: "Automatisierte Lead-Gewinnung",
+    description: "Deine Website arbeitet 24/7 für dich und generiert qualifizierte Leads während du dich auf das Wesentliche konzentrierst.",
     icon: Brain,
   },
   {
-    title: "Datenbasierte Entscheidungen",
-    description: "Wissenschaftlich fundierte Conversion-Optimierung statt Bauchgefühl.",
+    title: "Intelligente Conversion-Optimierung",
+    description: "KI-gestützte Analyse und automatische Anpassung deiner Website für maximale Performance.",
     icon: ChartBarIcon,
   },
   {
-    title: "Maximale Performance",
-    description: "Blitzschnelle Ladezeiten und optimale User Experience für höhere Conversions.",
+    title: "Effiziente Lead-Bearbeitung",
+    description: "Automatisierte Prozesse sparen Zeit und stellen sicher, dass kein wichtiger Lead verloren geht.",
     icon: Rocket,
   },
 ];
 
 const extendedBenefits = [
   {
-    title: "ROI-Fokussiert",
-    description: "Messbare Ergebnisse und konkrete Conversion-Steigerungen für Ihr Unternehmen.",
+    title: "Messbare Ergebnisse",
+    description: "Transparente Auswertung aller Kennzahlen und konkrete Conversion-Steigerungen für dein Unternehmen.",
     icon: Target,
   },
   {
-    title: "Verkaufspsychologie",
-    description: "Wissenschaftlich fundierte Verkaufspsychologie für maximale Überzeugungskraft.",
+    title: "Verkaufspsychologie & KI",
+    description: "Wissenschaftlich fundierte Methoden kombiniert mit modernster KI-Technologie für maximale Überzeugungskraft.",
     icon: Brain,
   }
 ];
