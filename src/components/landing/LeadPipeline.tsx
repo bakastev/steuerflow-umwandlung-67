@@ -36,8 +36,8 @@ const steps = [
   }
 ];
 
-const desktopPath = "M100,100 L400,100 C450,100 450,100 500,100 L700,100 C750,100 750,300 700,300 L500,300 C450,300 450,300 400,300 L100,300";
-const mobilePath = "M150,100 C150,200 150,350 150,900";
+const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
+const mobilePath = "M150,50 C150,150 150,250 150,800";
 
 interface StepCardProps {
   title: string;
@@ -64,7 +64,7 @@ const StepCard = ({
   
   return (
     <motion.div 
-      className={`absolute ${className}`}
+      className={`absolute ${className} z-20`}
       style={{ 
         opacity,
         scale,
@@ -109,11 +109,11 @@ export const LeadPipeline = () => {
 
   const desktopPositions = [
     "left-[50px] top-[20px]",
-    "left-[350px] top-[20px]",
+    "left-[400px] top-[20px]",
     "right-[50px] top-[20px]",
     "left-[50px] top-[220px]",
-    "left-[350px] top-[220px]",
-    "right-[50px] top-[220px]"
+    "left-[400px] top-[420px]",
+    "right-[50px] top-[420px]"
   ];
 
   const mobilePositions = [
@@ -129,23 +129,23 @@ export const LeadPipeline = () => {
     { x: 100, y: 100 },
     { x: 400, y: 100 },
     { x: 700, y: 100 },
-    { x: 100, y: 300 },
-    { x: 400, y: 300 },
-    { x: 700, y: 300 }
+    { x: 200, y: 300 },
+    { x: 400, y: 500 },
+    { x: 700, y: 500 }
   ];
 
   const mobileDotPositions = [
-    { x: 150, y: 100 },
-    { x: 150, y: 250 },
-    { x: 150, y: 400 },
-    { x: 150, y: 550 },
-    { x: 150, y: 700 },
-    { x: 150, y: 850 }
+    { x: 150, y: 50 },
+    { x: 150, y: 200 },
+    { x: 150, y: 350 },
+    { x: 150, y: 500 },
+    { x: 150, y: 650 },
+    { x: 150, y: 800 }
   ];
 
   const cardProgresses = steps.map((_, index) => {
-    const start = (index / steps.length) * 0.8;
-    const end = Math.min(start + 0.3, 0.8);
+    const start = (index / steps.length) * 0.8; // Reduziert auf 80% des Scroll-Bereichs
+    const end = Math.min(start + 0.3, 0.8); // Begrenzt auf 80%
     
     return useTransform(
       scrollYProgress,
@@ -157,7 +157,7 @@ export const LeadPipeline = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative h-[500vh]"
+      className="relative h-[500vh]" // Erhöhte Höhe für mehr Scroll-Raum
       id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
@@ -170,10 +170,21 @@ export const LeadPipeline = () => {
             Automatisierte Lead-Pipeline
           </h2>
           
-          <div className="relative w-full max-w-[1200px] mx-auto h-[600px]">
+          <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
+            {/* Render Cards outside of SVG */}
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
+
+            {/* SVG with path and dots */}
             <svg
               className="absolute top-0 left-0 w-full h-full z-10"
-              viewBox="0 0 800 400"
+              viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -202,15 +213,6 @@ export const LeadPipeline = () => {
                 />
               ))}
             </svg>
-
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.title}
-                {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
-              />
-            ))}
           </div>
         </div>
       </div>
