@@ -109,7 +109,7 @@ export const CustomerJourney = () => {
               {[journeySteps[3], journeySteps[4], journeySteps[5]].map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
-                  [0.45 + index * 0.15, 0.45 + index * 0.15 + 0.1],
+                  [0.45 + (2 - index) * 0.15, 0.45 + (2 - index) * 0.15 + 0.1],
                   [0, 1]
                 );
 
