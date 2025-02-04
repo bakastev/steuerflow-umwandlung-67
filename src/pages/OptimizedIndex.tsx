@@ -57,10 +57,10 @@ const OptimizedIndex = () => {
       <TrustBar />
       <Problems />
       <CustomerJourney />
-      <TechStack />
-      <StrategyFlow />
       <Solution />
       <Benefits />
+      <TechStack />
+      <StrategyFlow />
       <CompareHero />
       <Expert />
       <Process />
