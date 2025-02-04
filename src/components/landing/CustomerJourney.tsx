@@ -106,7 +106,7 @@ export const CustomerJourney = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-              {[journeySteps[3], journeySteps[4], journeySteps[5]].map((step, index) => {
+              {[journeySteps[3], journeySteps[4], journeySteps[5]].reverse().map((step, index) => {
                 const cardProgress = useTransform(
                   scrollYProgress,
                   [0.45 + index * 0.15, 0.45 + index * 0.15 + 0.1],
