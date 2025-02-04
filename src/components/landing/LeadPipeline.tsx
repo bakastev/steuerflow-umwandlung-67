@@ -36,8 +36,8 @@ const steps = [
   }
 ];
 
-const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
-const mobilePath = "M150,50 C150,150 150,250 150,800";
+const desktopPath = "M100,200 C150,200 150,200 200,200 H700 C750,200 750,400 700,400 H200 C150,400 150,600 200,600 H700";
+const mobilePath = "M150,100 C150,200 150,350 150,900";
 
 interface StepCardProps {
   title: string;
@@ -64,7 +64,7 @@ const StepCard = ({
   
   return (
     <motion.div 
-      className={`absolute ${className}`} // z-index wird jetzt durch die Position bestimmt
+      className={`absolute ${className}`}
       style={{ 
         opacity,
         scale,
@@ -112,8 +112,8 @@ export const LeadPipeline = () => {
     "left-[400px] top-[20px] z-20",
     "right-[50px] top-[20px] z-20",
     "left-[50px] top-[220px] z-20",
-    "left-[400px] top-[420px] z-10", // Letzte zwei Cards mit z-10
-    "right-[50px] top-[420px] z-10"  // Letzte zwei Cards mit z-10
+    "left-[400px] top-[220px] z-20",
+    "right-[50px] top-[220px] z-20"
   ];
 
   const mobilePositions = [
@@ -121,31 +121,31 @@ export const LeadPipeline = () => {
     "left-[180px] top-[200px] z-20",
     "left-[180px] top-[350px] z-20",
     "left-[180px] top-[500px] z-20",
-    "left-[180px] top-[650px] z-10", // Letzte zwei Cards mit z-10
-    "left-[180px] top-[800px] z-10"  // Letzte zwei Cards mit z-10
+    "left-[180px] top-[650px] z-20",
+    "left-[180px] top-[800px] z-20"
   ];
 
   const desktopDotPositions = [
-    { x: 100, y: 100 },
-    { x: 400, y: 100 },
-    { x: 700, y: 100 },
-    { x: 200, y: 300 },
-    { x: 400, y: 500 },
-    { x: 700, y: 500 }
+    { x: 100, y: 200 },
+    { x: 400, y: 200 },
+    { x: 700, y: 200 },
+    { x: 200, y: 400 },
+    { x: 400, y: 600 },
+    { x: 700, y: 600 }
   ];
 
   const mobileDotPositions = [
-    { x: 150, y: 50 },
-    { x: 150, y: 200 },
-    { x: 150, y: 350 },
-    { x: 150, y: 500 },
-    { x: 150, y: 650 },
-    { x: 150, y: 800 }
+    { x: 150, y: 100 },
+    { x: 150, y: 250 },
+    { x: 150, y: 400 },
+    { x: 150, y: 550 },
+    { x: 150, y: 700 },
+    { x: 150, y: 850 }
   ];
 
   const cardProgresses = steps.map((_, index) => {
-    const start = (index / steps.length) * 0.8; // Reduziert auf 80% des Scroll-Bereichs
-    const end = Math.min(start + 0.3, 0.8); // Begrenzt auf 80%
+    const start = (index / steps.length) * 0.8;
+    const end = Math.min(start + 0.3, 0.8);
     
     return useTransform(
       scrollYProgress,
@@ -170,7 +170,7 @@ export const LeadPipeline = () => {
             Automatisierte Lead-Pipeline
           </h2>
           
-          <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
+          <div className="relative w-full max-w-[1200px] mx-auto h-[800px] md:h-[1000px]">
             {/* Cards vor der Timeline rendern */}
             {steps.map((step, index) => (
               <StepCard
@@ -183,8 +183,8 @@ export const LeadPipeline = () => {
 
             {/* SVG mit Timeline */}
             <svg
-              className="absolute top-0 left-0 w-full h-full z-15"
-              viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
+              className="absolute top-0 left-0 w-full h-full z-10"
+              viewBox={isMobile ? "0 0 300 1000" : "0 0 800 800"}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
