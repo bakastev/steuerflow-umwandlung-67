@@ -107,10 +107,9 @@ export const CustomerJourney = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
               {[journeySteps[3], journeySteps[4], journeySteps[5]].map((step, index) => {
-                // Hier passen wir die Animation-Reihenfolge an, indem wir den Index in der richtigen Reihenfolge verwenden
                 const cardProgress = useTransform(
                   scrollYProgress,
-                  [0.45 + (2 - index) * 0.15, 0.45 + (2 - index) * 0.15 + 0.1],
+                  [0.45 + index * 0.15, 0.45 + index * 0.15 + 0.1],
                   [0, 1]
                 );
 
