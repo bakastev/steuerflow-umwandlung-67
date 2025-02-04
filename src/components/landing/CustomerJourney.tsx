@@ -55,28 +55,49 @@ export const CustomerJourney = () => {
         </motion.h2>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* SVG Timeline */}
+          {/* SVG Timeline with improved visibility and animation */}
           <svg
-            className="absolute top-0 left-0 w-full h-full -z-10 hidden md:block"
+            className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10 hidden md:block"
             viewBox="0 0 1200 600"
-            fill="none"
             preserveAspectRatio="none"
           >
+            {/* Background glow effect */}
+            <motion.path
+              d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
+              stroke="url(#glow)"
+              strokeWidth="8"
+              fill="none"
+              initial={{ pathLength: 0, opacity: 0.3 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              viewport={{ once: true }}
+              className="stroke-accent/10"
+            />
+            
+            {/* Main timeline path */}
             <motion.path
               d="M100 100 H500 C600 100, 600 300, 700 300 H1100 C1000 300, 1000 500, 900 500 H100"
               stroke="url(#gradient)"
               strokeWidth="4"
+              fill="none"
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
               transition={{ duration: 2, ease: "easeInOut" }}
               viewport={{ once: true }}
-              className="stroke-accent/30"
+              className="stroke-accent"
             />
+            
+            {/* Gradient definitions */}
             <defs>
               <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#C5A572" stopOpacity="0.2" />
-                <stop offset="50%" stopColor="#C5A572" stopOpacity="0.5" />
+                <stop offset="50%" stopColor="#C5A572" stopOpacity="1" />
                 <stop offset="100%" stopColor="#C5A572" stopOpacity="0.2" />
+              </linearGradient>
+              <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#C5A572" stopOpacity="0.1" />
+                <stop offset="50%" stopColor="#C5A572" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#C5A572" stopOpacity="0.1" />
               </linearGradient>
             </defs>
           </svg>
@@ -98,6 +119,7 @@ export const CustomerJourney = () => {
                   bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
                   hover:bg-white/10 transition-colors duration-300
                   ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}
+                  relative z-10
                 `}
               >
                 <div className="flex items-start gap-4">
