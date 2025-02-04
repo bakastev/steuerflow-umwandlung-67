@@ -96,20 +96,20 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-primary-dark">
       <Header />
       <Hero />
-      <div className="py-8 md:py-12">
+      <div className="py-12">
         <TrustBar />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Problems />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Benefits />
       </div>
       {engagementInsights && (
-        <div className="py-24 md:py-28">
+        <div className="py-24 md:py-32">
           <AIExperience 
             engagementScore={engagementProgress / 100}
             insights={engagementInsights.insights}
@@ -118,36 +118,36 @@ const Index = () => {
           />
         </div>
       )}
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <CompareHero />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <StrategyFlow />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <TechStack />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Solution />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Expert />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Process />
       </div>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <Testimonials />
       </div>
-      <section className="py-24 md:py-28 bg-white" id="contact">
+      <section className="py-24 md:py-32 bg-primary-dark" id="contact">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Jetzt kostenloses Website-Audit sichern
           </h2>
           <MultiStepForm />
         </div>
       </section>
-      <div className="py-24 md:py-28">
+      <div className="py-24 md:py-32">
         <FAQs />
       </div>
       <Footer />
