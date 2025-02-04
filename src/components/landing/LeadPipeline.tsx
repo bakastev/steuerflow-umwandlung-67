@@ -7,37 +7,49 @@ const steps = [
     icon: MousePointerClick,
     title: "Website-Besuch",
     description: "Interessent besucht deine Website",
-    highlight: "KI-gestützte Personalisierung"
+    highlight: "KI-gestützte Personalisierung",
+    row: 0,
+    direction: "right"
   },
   {
     icon: UserPlus,
     title: "Lead-Generierung",
     description: "Conversion durch optimierte Formulare",
-    highlight: "Automatische Datenerfassung"
+    highlight: "Automatische Datenerfassung",
+    row: 0,
+    direction: "right"
   },
   {
     icon: Filter,
     title: "Lead-Qualifizierung",
     description: "Automatische Lead-Segmentierung",
-    highlight: "KI-basiertes Scoring"
+    highlight: "KI-basiertes Scoring",
+    row: 1,
+    direction: "left"
   },
   {
     icon: MessageSquare,
     title: "Personalisierte Kommunikation",
     description: "Automatisierte Follow-ups",
-    highlight: "Individuelle Ansprache"
+    highlight: "Individuelle Ansprache",
+    row: 1,
+    direction: "left"
   },
   {
     icon: Database,
     title: "CRM-Integration",
     description: "Nahtlose Systemintegration",
-    highlight: "Zentrale Datenverwaltung"
+    highlight: "Zentrale Datenverwaltung",
+    row: 2,
+    direction: "right"
   },
   {
     icon: CheckCircle,
     title: "Abschluss",
     description: "Erfolgreicher Verkaufsabschluss",
-    highlight: "Messbare Ergebnisse"
+    highlight: "Messbare Ergebnisse",
+    row: 2,
+    direction: "right"
   }
 ];
 
@@ -49,7 +61,7 @@ export const LeadPipeline = () => {
   });
 
   return (
-    <section id="lead-pipeline-section" className="relative h-[400vh]" ref={containerRef}>
+    <section id="lead-pipeline-section" className="relative h-[300vh]" ref={containerRef}>
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-radial from-accent/20 via-primary-dark to-primary-dark opacity-80" />
@@ -72,49 +84,64 @@ export const LeadPipeline = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
             Automatisierte Lead-Pipeline
           </h2>
-          <div className="relative flex flex-col items-center gap-8 max-w-4xl mx-auto">
-            {steps.map((step, index) => {
-              const opacity = useTransform(
-                scrollYProgress,
-                [
-                  index * 0.15,
-                  index * 0.15 + 0.05,
-                  index * 0.15 + 0.1,
-                  index * 0.15 + 0.15
-                ],
-                [0, 1, 1, 0]
-              );
+          <div className="relative flex flex-col gap-32 max-w-6xl mx-auto">
+            {[0, 1, 2].map((row) => (
+              <div key={row} className="relative w-full flex items-center justify-between gap-8">
+                {steps
+                  .filter((step) => step.row === row)
+                  .map((step, index) => {
+                    const stepIndex = steps.findIndex((s) => s.title === step.title);
+                    const progress = useTransform(
+                      scrollYProgress,
+                      [stepIndex * 0.15, (stepIndex + 1) * 0.15],
+                      [0, 1]
+                    );
 
-              const x = useTransform(
-                scrollYProgress,
-                [
-                  index * 0.15,
-                  index * 0.15 + 0.05,
-                  index * 0.15 + 0.1,
-                  index * 0.15 + 0.15
-                ],
-                [100, 0, 0, -100]
-              );
+                    const x = useTransform(
+                      progress,
+                      [0, 1],
+                      step.direction === "right" 
+                        ? [-100, 0]
+                        : [100, 0]
+                    );
 
-              return (
-                <motion.div
-                  key={index}
-                  style={{ opacity, x }}
-                  className="absolute w-full max-w-xl bg-white/10 backdrop-blur-lg rounded-lg p-6 border border-accent/20"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-full bg-accent/20">
-                      <step.icon className="w-6 h-6 text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-accent mb-2">{step.title}</h3>
-                      <p className="text-white/90 mb-2">{step.description}</p>
-                      <p className="text-accent/80 text-sm">{step.highlight}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+                    return (
+                      <motion.div
+                        key={step.title}
+                        style={{ x, opacity: progress }}
+                        className={`relative w-[calc(50%-1rem)] ${
+                          step.direction === "right" ? "ml-auto" : "mr-auto"
+                        } bg-white/10 backdrop-blur-lg rounded-lg p-6 border border-accent/20`}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="p-3 rounded-full bg-accent/20">
+                            <step.icon className="w-6 h-6 text-accent" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold text-accent mb-2">{step.title}</h3>
+                            <p className="text-white/90 mb-2">{step.description}</p>
+                            <p className="text-accent/80 text-sm">{step.highlight}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                {row < 2 && (
+                  <motion.div
+                    style={{
+                      opacity: useTransform(
+                        scrollYProgress,
+                        [(row * 2 + 1) * 0.15, (row * 2 + 2) * 0.15],
+                        [0, 1]
+                      )
+                    }}
+                    className={`absolute ${
+                      row === 0 ? "bottom-0 right-0" : "bottom-0 left-0"
+                    } w-0.5 h-16 bg-accent/50`}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
