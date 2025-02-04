@@ -69,13 +69,16 @@ export const CustomerJourney = () => {
           <div className="relative max-w-6xl mx-auto">
             {/* Timeline SVG */}
             <svg 
-              className="absolute top-1/2 left-0 w-full h-full -translate-y-1/2 -z-10" 
-              viewBox="0 0 1200 300" 
+              className="absolute top-1/2 left-0 w-full h-[200%] -translate-y-1/2 -z-10" 
+              viewBox="0 0 1200 600" 
               fill="none"
+              preserveAspectRatio="xMidYMid meet"
             >
               {/* Hintergrund-Glow */}
               <motion.path
-                d="M100 50 H400 C500 50, 500 150, 600 150 H900 C1000 150, 1000 250, 1100 250"
+                d="M100 100 H400 C500 100, 500 100, 600 100 H900 
+                   M900 100 C1000 100, 1000 300, 1100 300
+                   M1100 300 H800 C700 300, 700 300, 600 300 H100"
                 stroke="rgba(197, 165, 114, 0.2)"
                 strokeWidth="20"
                 strokeLinecap="round"
@@ -84,7 +87,9 @@ export const CustomerJourney = () => {
               
               {/* Hauptlinie mit Animation */}
               <motion.path
-                d="M100 50 H400 C500 50, 500 150, 600 150 H900 C1000 150, 1000 250, 1100 250"
+                d="M100 100 H400 C500 100, 500 100, 600 100 H900 
+                   M900 100 C1000 100, 1000 300, 1100 300
+                   M1100 300 H800 C700 300, 700 300, 600 300 H100"
                 stroke="url(#timeline-gradient)"
                 strokeWidth="4"
                 strokeLinecap="round"
@@ -103,14 +108,46 @@ export const CustomerJourney = () => {
             </svg>
 
             {/* Journey Steps Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-              {journeySteps.map((step, index) => (
+            <div className="grid grid-cols-3 gap-8 relative z-10">
+              {journeySteps.slice(0, 3).map((step, index) => (
                 <motion.div
                   key={index}
                   style={{
                     opacity: useTransform(
                       scrollYProgress,
                       [index * 0.15, (index * 0.15) + 0.15],
+                      [0, 1]
+                    )
+                  }}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6
+                            hover:bg-white/10 transition-colors duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-accent/10">
+                      <step.icon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-400">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Zweite Reihe */}
+            <div className="grid grid-cols-3 gap-8 relative z-10 mt-24">
+              {journeySteps.slice(3).map((step, index) => (
+                <motion.div
+                  key={index + 3}
+                  style={{
+                    opacity: useTransform(
+                      scrollYProgress,
+                      [(index + 3) * 0.15, ((index + 3) * 0.15) + 0.15],
                       [0, 1]
                     )
                   }}
