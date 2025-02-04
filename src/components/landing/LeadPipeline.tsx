@@ -36,7 +36,7 @@ const steps = [
   }
 ];
 
-const desktopPath = "M100,200 C150,200 150,200 200,200 H700 C750,200 750,400 700,400 H200 C150,400 150,600 200,600 H700";
+const desktopPath = "M100,100 L400,100 C450,100 450,100 500,100 L700,100 C750,100 750,300 700,300 L500,300 C450,300 450,300 400,300 L100,300";
 const mobilePath = "M150,100 C150,200 150,350 150,900";
 
 interface StepCardProps {
@@ -108,30 +108,30 @@ export const LeadPipeline = () => {
   });
 
   const desktopPositions = [
-    "left-[50px] top-[20px] z-20",
-    "left-[400px] top-[20px] z-20",
-    "right-[50px] top-[20px] z-20",
-    "left-[50px] top-[220px] z-20",
-    "left-[400px] top-[220px] z-20",
-    "right-[50px] top-[220px] z-20"
+    "left-[50px] top-[20px]",
+    "left-[350px] top-[20px]",
+    "right-[50px] top-[20px]",
+    "left-[50px] top-[220px]",
+    "left-[350px] top-[220px]",
+    "right-[50px] top-[220px]"
   ];
 
   const mobilePositions = [
-    "left-[180px] top-[50px] z-20",
-    "left-[180px] top-[200px] z-20",
-    "left-[180px] top-[350px] z-20",
-    "left-[180px] top-[500px] z-20",
-    "left-[180px] top-[650px] z-20",
-    "left-[180px] top-[800px] z-20"
+    "left-[180px] top-[50px]",
+    "left-[180px] top-[200px]",
+    "left-[180px] top-[350px]",
+    "left-[180px] top-[500px]",
+    "left-[180px] top-[650px]",
+    "left-[180px] top-[800px]"
   ];
 
   const desktopDotPositions = [
-    { x: 100, y: 200 },
-    { x: 400, y: 200 },
-    { x: 700, y: 200 },
-    { x: 200, y: 400 },
-    { x: 400, y: 600 },
-    { x: 700, y: 600 }
+    { x: 100, y: 100 },
+    { x: 400, y: 100 },
+    { x: 700, y: 100 },
+    { x: 100, y: 300 },
+    { x: 400, y: 300 },
+    { x: 700, y: 300 }
   ];
 
   const mobileDotPositions = [
@@ -170,21 +170,10 @@ export const LeadPipeline = () => {
             Automatisierte Lead-Pipeline
           </h2>
           
-          <div className="relative w-full max-w-[1200px] mx-auto h-[800px] md:h-[1000px]">
-            {/* Cards vor der Timeline rendern */}
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.title}
-                {...step}
-                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
-              />
-            ))}
-
-            {/* SVG mit Timeline */}
+          <div className="relative w-full max-w-[1200px] mx-auto h-[600px]">
             <svg
               className="absolute top-0 left-0 w-full h-full z-10"
-              viewBox={isMobile ? "0 0 300 1000" : "0 0 800 800"}
+              viewBox="0 0 800 400"
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -213,6 +202,15 @@ export const LeadPipeline = () => {
                 />
               ))}
             </svg>
+
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                {...step}
+                className={isMobile ? mobilePositions[index] : desktopPositions[index]}
+                progress={cardProgresses[index]}
+              />
+            ))}
           </div>
         </div>
       </div>
