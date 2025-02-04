@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -43,8 +43,8 @@ const steps = [
   }
 ];
 
-const CARD_HEIGHT = 160; // Höhe der Card inkl. Padding
-const CARD_SPACING = 20; // Abstand zwischen Card und Dot
+const CARD_HEIGHT = 160;
+const CARD_SPACING = 20;
 
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
@@ -56,12 +56,14 @@ interface StepContentProps {
   icon: any;
   dotPosition: { x: number; y: number };
   progress: any;
+  index: number; // Hinzugefügt für Debug
 }
 
 interface StepDotProps {
   progress: any;
   position: { x: number; y: number };
   icon: any;
+  index: number; // Hinzugefügt für Debug
 }
 
 const StepContent = ({ 
@@ -70,21 +72,34 @@ const StepContent = ({
   highlight,
   icon: Icon,
   dotPosition,
-  progress
+  progress,
+  index
 }: StepContentProps) => {
-  const opacity = useTransform(progress, [0, 0.1, 0.3], [0, 0, 1]);
-  const scale = useTransform(progress, [0, 0.1, 0.3], [0.8, 0.8, 1]);
-  
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (cardRef.current) {
+      const cardRect = cardRef.current.getBoundingClientRect();
+      console.log(`Card ${index} Position:`, {
+        top: cardRect.top,
+        left: cardRect.left,
+        width: cardRect.width,
+        height: cardRect.height,
+        dotX: dotPosition.x,
+        dotY: dotPosition.y
+      });
+    }
+  }, [dotPosition, index]);
+
   return (
     <motion.div 
-      className="absolute z-20"
+      ref={cardRef}
+      className="absolute z-20 w-[280px]"
       style={{ 
-        opacity,
-        scale,
         left: `${dotPosition.x}px`,
         top: `${dotPosition.y - (CARD_HEIGHT + CARD_SPACING)}px`,
         transform: 'translateX(-50%)',
-        width: '280px'
+        opacity: 1, // Temporär auf 1 gesetzt für Debug
       }}
     >
       <Card className="bg-white/5 backdrop-blur-sm border-accent/20">
@@ -93,25 +108,44 @@ const StepContent = ({
           <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
           <p className="text-sm text-gray-300 mb-1">{description}</p>
           <span className="text-sm text-accent">{highlight}</span>
+          {/* Debug-Linie zum Dot */}
+          <div 
+            className="absolute bottom-0 left-1/2 w-0.5 bg-red-500" 
+            style={{ 
+              height: `${CARD_SPACING}px`,
+              transform: 'translateX(-50%)'
+            }} 
+          />
         </CardContent>
       </Card>
     </motion.div>
   );
 };
 
-const StepDot = ({ progress, position, icon: Icon }: StepDotProps) => {
-  const scale = useTransform(progress, [0, 0.1], [0, 1]);
-  const opacity = useTransform(progress, [0, 0.1], [0, 1]);
+const StepDot = ({ progress, position, icon: Icon, index }: StepDotProps) => {
+  const dotRef = useRef<SVGCircleElement>(null);
+
+  useEffect(() => {
+    if (dotRef.current) {
+      const dotRect = dotRef.current.getBoundingClientRect();
+      console.log(`Dot ${index} Position:`, {
+        top: dotRect.top,
+        left: dotRect.left,
+        x: position.x,
+        y: position.y
+      });
+    }
+  }, [position, index]);
 
   return (
     <motion.circle
+      ref={dotRef}
       cx={position.x}
       cy={position.y}
       r="6"
       fill="#C5A572"
       style={{
-        scale,
-        opacity
+        opacity: 1 // Temporär auf 1 gesetzt für Debug
       }}
     />
   );
@@ -119,8 +153,30 @@ const StepDot = ({ progress, position, icon: Icon }: StepDotProps) => {
 
 export const LeadPipeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const isMobile = useIsMobile();
   
+  useEffect(() => {
+    if (containerRef.current && svgRef.current) {
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const svgRect = svgRef.current.getBoundingClientRect();
+      
+      console.log('Container Dimensions:', {
+        top: containerRect.top,
+        left: containerRect.left,
+        width: containerRect.width,
+        height: containerRect.height
+      });
+      
+      console.log('SVG Dimensions:', {
+        top: svgRect.top,
+        left: svgRect.left,
+        width: svgRect.width,
+        height: svgRect.height
+      });
+    }
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end start"]
@@ -147,12 +203,7 @@ export const LeadPipeline = () => {
   const stepProgresses = steps.map((_, index) => {
     const start = index / steps.length;
     const end = Math.min((index + 1) / steps.length, 1);
-    
-    return useTransform(
-      scrollYProgress,
-      [start, end],
-      [0, 1]
-    );
+    return useTransform(scrollYProgress, [start, end], [0, 1]);
   });
 
   return (
@@ -178,10 +229,12 @@ export const LeadPipeline = () => {
                 {...step}
                 dotPosition={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
                 progress={stepProgresses[index]}
+                index={index}
               />
             ))}
 
             <svg
+              ref={svgRef}
               className="absolute top-0 left-0 w-full h-full z-10"
               viewBox={isMobile ? "0 0 300 900" : "0 0 800 600"}
               fill="none"
@@ -210,6 +263,7 @@ export const LeadPipeline = () => {
                   progress={stepProgresses[index]}
                   position={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
                   icon={step.icon}
+                  index={index}
                 />
               ))}
             </svg>
