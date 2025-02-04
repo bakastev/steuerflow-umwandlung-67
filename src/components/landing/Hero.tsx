@@ -7,13 +7,13 @@ export const HeroComponent = () => {
     <Hero
       title={
         <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
-          Steigern Sie Ihren Online-Umsatz durch verkaufspsychologisch optimierte Webseiten
+          Steigere deine Conversion mit intelligenten Webseiten und automatisierter Lead-Gewinnung
         </span>
       }
       subtitle={
         <>
           <span className="text-base sm:text-lg md:text-xl">
-            Wissenschaftlich fundierte Conversion-Optimierung für B2B Unternehmen
+            Nutze die Kraft von KI und Verkaufspsychologie für mehr Anfragen und effiziente Lead-Bearbeitung
           </span>
           <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 text-accent text-xs sm:text-sm">
             <div className="flex items-center gap-2">
@@ -22,7 +22,7 @@ export const HeroComponent = () => {
             </div>
             <div className="flex items-center gap-2">
               <ChartBar className="h-4 w-4" />
-              <span>Datenbasiert</span>
+              <span>Automatisiert</span>
             </div>
             <div className="flex items-center gap-2">
               <Target className="h-4 w-4" />
