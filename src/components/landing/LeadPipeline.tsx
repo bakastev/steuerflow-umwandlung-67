@@ -104,7 +104,7 @@ export const LeadPipeline = () => {
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: ["start center", "end start"]
   });
 
   const desktopPositions = [
@@ -144,8 +144,8 @@ export const LeadPipeline = () => {
   ];
 
   const cardProgresses = steps.map((_, index) => {
-    const start = index / steps.length;
-    const end = Math.min(start + 0.5, 1);
+    const start = (index / steps.length) * 0.8; // Reduziert auf 80% des Scroll-Bereichs
+    const end = Math.min(start + 0.3, 0.8); // Begrenzt auf 80%
     
     return useTransform(
       scrollYProgress,
@@ -157,7 +157,7 @@ export const LeadPipeline = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative h-[400vh]"
+      className="relative h-[500vh]" // Erhöhte Höhe für mehr Scroll-Raum
       id="lead-pipeline-section"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
@@ -202,7 +202,7 @@ export const LeadPipeline = () => {
                 strokeLinecap="round"
                 fill="none"
                 style={{
-                  pathLength: scrollYProgress
+                  pathLength: useTransform(scrollYProgress, [0, 0.8], [0, 1])
                 }}
               />
               {steps.map((_, index) => (
