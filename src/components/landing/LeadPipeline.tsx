@@ -49,6 +49,14 @@ export const LeadPipeline = () => {
     offset: ["start center", "end center"]
   });
 
+  // SVG-Pfad, der exakt durch die Icon-Zentren läuft
+  const svgPath = `M 200,78 
+                   L 1000,78 
+                   L 1000,318 
+                   L 200,318 
+                   L 200,558 
+                   L 1000,558`;
+
   return (
     <section 
       ref={containerRef}
@@ -66,7 +74,7 @@ export const LeadPipeline = () => {
           </h2>
           
           <div className="relative max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-2 gap-8 gap-y-24">
+            <div className="grid grid-cols-2 gap-8 gap-y-48">
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 const delay = index * 0.1;
@@ -103,12 +111,7 @@ export const LeadPipeline = () => {
               }}
             >
               <motion.path
-                d={`M 300,50 
-                   L 900,50 
-                   L 900,290 
-                   L 300,290 
-                   L 300,530 
-                   L 900,530`}
+                d={svgPath}
                 stroke="currentColor"
                 strokeWidth="2"
                 fill="none"
