@@ -33,7 +33,7 @@ export const HeroComponent = () => {
       }
       actions={[
         {
-          label: "Kostenloses Website-Audit anfordern",
+          label: "Dein kostenloses Website-Audit anfordern",
           href: "#contact",
           variant: "default"
         }

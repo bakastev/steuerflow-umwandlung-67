@@ -33,7 +33,7 @@ export const Solution = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-center mb-16 md:mb-20 text-white"
         >
-          Was macht uns einzigartig?
+          Was macht deine Website einzigartig?
         </motion.h2>
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto">
           {solutions.map((solution, index) => (
