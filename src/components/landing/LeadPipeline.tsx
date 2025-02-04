@@ -1,48 +1,55 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User, Mail, FileSpreadsheet, MessageSquare, Database, Handshake } from "lucide-react";
 
 const steps = [
   {
     title: "Website-Besuch",
     description: "Interessent besucht deine Website",
-    highlight: "KI-gestützte Personalisierung"
+    highlight: "KI-gestützte Personalisierung",
+    icon: User
   },
   {
     title: "Lead-Generierung",
     description: "Conversion durch optimierte Formulare",
-    highlight: "Automatische Datenerfassung"
+    highlight: "Automatische Datenerfassung",
+    icon: FileSpreadsheet
   },
   {
     title: "Lead-Qualifizierung",
     description: "Automatische Lead-Segmentierung",
-    highlight: "KI-basiertes Scoring"
+    highlight: "KI-basiertes Scoring",
+    icon: Database
   },
   {
     title: "Personalisierte Kommunikation",
     description: "Automatisierte Follow-ups",
-    highlight: "Individuelle Ansprache"
+    highlight: "Individuelle Ansprache",
+    icon: MessageSquare
   },
   {
     title: "CRM-Integration",
     description: "Nahtlose Systemintegration",
-    highlight: "Zentrale Datenverwaltung"
+    highlight: "Zentrale Datenverwaltung",
+    icon: Mail
   },
   {
     title: "Abschluss",
     description: "Erfolgreicher Verkaufsabschluss",
-    highlight: "Messbare Ergebnisse"
+    highlight: "Messbare Ergebnisse",
+    icon: Handshake
   }
 ];
 
 const desktopPath = "M100,100 C150,100 150,100 200,100 H700 C750,100 750,300 700,300 H200 C150,300 150,500 200,500 H700";
 const mobilePath = "M150,50 C150,150 150,250 150,800";
 
-interface StepCardProps {
+interface StepTextProps {
   title: string;
   description: string;
   highlight: string;
+  icon: any;
   className: string;
   progress: any;
 }
@@ -50,40 +57,37 @@ interface StepCardProps {
 interface StepDotProps {
   progress: any;
   position: { x: number; y: number };
+  icon: any;
 }
 
-const StepCard = ({ 
+const StepText = ({ 
   title, 
   description, 
-  highlight, 
+  highlight,
+  icon: Icon,
   className, 
   progress
-}: StepCardProps) => {
+}: StepTextProps) => {
   const opacity = useTransform(progress, [0, 0.1, 0.3], [0, 0, 1]);
   const scale = useTransform(progress, [0, 0.1, 0.3], [0.8, 0.8, 1]);
   
   return (
     <motion.div 
-      className={`absolute ${className} z-20 -translate-x-1/2`}
+      className={`absolute ${className} z-20 -translate-x-1/2 flex flex-col items-center text-center`}
       style={{ 
         opacity,
         scale,
       }}
     >
-      <Card className="w-[280px] bg-white/5 backdrop-blur-sm border-accent/20 hover:border-accent/40 transition-colors">
-        <CardHeader>
-          <CardTitle className="text-lg text-white">{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-300 mb-2">{description}</p>
-          <p className="text-sm text-accent">{highlight}</p>
-        </CardContent>
-      </Card>
+      <Icon className="w-6 h-6 text-accent mb-2" />
+      <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
+      <p className="text-sm text-gray-300 mb-1 max-w-[200px]">{description}</p>
+      <span className="text-sm text-accent">{highlight}</span>
     </motion.div>
   );
 };
 
-const StepDot = ({ progress, position }: StepDotProps) => {
+const StepDot = ({ progress, position, icon: Icon }: StepDotProps) => {
   const scale = useTransform(progress, [0, 0.1], [0, 1]);
   const opacity = useTransform(progress, [0, 0.1], [0, 1]);
 
@@ -111,21 +115,21 @@ export const LeadPipeline = () => {
   });
 
   const desktopPositions = [
-    `left-[${100}px] top-[20px]`,      // Website-Besuch
-    `left-[${400}px] top-[20px]`,     // Lead-Generierung
-    `left-[${700}px] top-[20px]`,     // Lead-Qualifizierung
-    `left-[${200}px] top-[220px]`,    // Personalisierte Kommunikation
-    `left-[${400}px] top-[420px]`,    // CRM-Integration
-    `left-[${700}px] top-[420px]`     // Abschluss
+    `left-[${100}px] top-[-80px]`,     // Website-Besuch
+    `left-[${400}px] top-[-80px]`,     // Lead-Generierung
+    `left-[${700}px] top-[-80px]`,     // Lead-Qualifizierung
+    `left-[${200}px] top-[120px]`,     // Personalisierte Kommunikation
+    `left-[${400}px] top-[320px]`,     // CRM-Integration
+    `left-[${700}px] top-[320px]`      // Abschluss
   ];
 
   const mobilePositions = [
-    "left-[150px] top-[50px]",
-    "left-[150px] top-[200px]",
-    "left-[150px] top-[350px]",
-    "left-[150px] top-[500px]",
-    "left-[150px] top-[650px]",
-    "left-[150px] top-[800px]"
+    "left-[150px] top-[-60px]",
+    "left-[150px] top-[90px]",
+    "left-[150px] top-[240px]",
+    "left-[150px] top-[390px]",
+    "left-[150px] top-[540px]",
+    "left-[150px] top-[690px]"
   ];
 
   const desktopDotPositions = [
@@ -146,7 +150,7 @@ export const LeadPipeline = () => {
     { x: 150, y: 800 }
   ];
 
-  const cardProgresses = steps.map((_, index) => {
+  const stepProgresses = steps.map((_, index) => {
     const start = index / steps.length;
     const end = Math.min((index + 1) / steps.length, 1);
     
@@ -175,11 +179,11 @@ export const LeadPipeline = () => {
           
           <div className="relative w-full max-w-[1200px] mx-auto h-[600px] md:h-[800px]">
             {steps.map((step, index) => (
-              <StepCard
+              <StepText
                 key={step.title}
                 {...step}
                 className={isMobile ? mobilePositions[index] : desktopPositions[index]}
-                progress={cardProgresses[index]}
+                progress={stepProgresses[index]}
               />
             ))}
 
@@ -206,11 +210,12 @@ export const LeadPipeline = () => {
                   pathLength: scrollYProgress
                 }}
               />
-              {steps.map((_, index) => (
+              {steps.map((step, index) => (
                 <StepDot
                   key={index}
-                  progress={cardProgresses[index]}
+                  progress={stepProgresses[index]}
                   position={isMobile ? mobileDotPositions[index] : desktopDotPositions[index]}
+                  icon={step.icon}
                 />
               ))}
             </svg>
