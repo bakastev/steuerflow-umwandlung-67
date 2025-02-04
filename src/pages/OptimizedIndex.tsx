@@ -20,6 +20,7 @@ import { Progress } from "@/components/ui/progress";
 import { EngagementInsights } from "@/types/tracking";
 import { TechStack } from "@/components/landing/TechStack";
 import { CompareHero } from "@/components/landing/CompareHero";
+import { CustomerJourney } from "@/components/landing/CustomerJourney";
 
 const OptimizedIndex = () => {
   const { predictEngagement, behaviorRef } = useTFTracking();
@@ -55,6 +56,7 @@ const OptimizedIndex = () => {
       <Hero />
       <TrustBar />
       <Problems />
+      <CustomerJourney />
       <TechStack />
       <StrategyFlow />
       <Solution />
