@@ -40,10 +40,17 @@ export const Benefits = () => {
   const { behaviorRef, predictEngagement } = useTFTracking();
   const { toast } = useToast();
   const containerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  useEffect(() => {
+    // Initialisiere die Refs für jede Karte
+    cardRefs.current = cardRefs.current.slice(0, initialBenefits.length);
+  }, []);
   
   useEffect(() => {
     const checkEngagement = async () => {
@@ -74,7 +81,7 @@ export const Benefits = () => {
 
     const interval = setInterval(checkEngagement, 1000);
     return () => clearInterval(interval);
-  }, [showExtendedContent, behaviorRef, toast]);
+  }, [showExtendedContent, behaviorRef, toast, predictEngagement]);
 
   return (
     <section id="benefits-section" className="relative h-[400vh]" ref={containerRef}>
@@ -93,22 +100,28 @@ export const Benefits = () => {
           </motion.h2>
           <div className="relative flex flex-col items-center gap-8 max-w-6xl mx-auto">
             {initialBenefits.map((benefit, index) => {
-              const opacity = useTransform(
+              const progress = useTransform(
                 scrollYProgress,
-                [
-                  index * 0.3,
-                  index * 0.3 + 0.1,
-                  index * 0.3 + 0.2,
-                  index * 0.3 + 0.3
-                ],
-                [0, 1, 1, 0]
+                [index * 0.25, (index + 1) * 0.25],
+                [0, 1]
               );
+
+              const opacity = useTransform(progress, [0, 0.5, 1], [0, 1, 0]);
+              const y = useTransform(progress, [0, 0.5, 1], [50, 0, -50]);
 
               return (
                 <motion.div
                   key={index}
-                  style={{ opacity }}
-                  className="absolute backdrop-blur-md bg-white/10 p-8 rounded-lg shadow-xl border border-white/20 w-full md:w-2/3"
+                  ref={el => cardRefs.current[index] = el}
+                  style={{ 
+                    opacity,
+                    y,
+                    position: 'absolute',
+                    width: '100%',
+                    left: '50%',
+                    transform: 'translateX(-50%)'
+                  }}
+                  className="backdrop-blur-md bg-white/10 p-8 rounded-lg shadow-xl border border-white/20 w-full md:w-2/3"
                 >
                   <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-4">
                     <benefit.icon className="w-6 h-6 text-primary-dark" />
